@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { t } from "@/lib/i18n";
 import { visibleNavItems } from "./visible-nav-items";
 
 export function TabBar() {
@@ -10,7 +11,7 @@ export function TabBar() {
 
   return (
     <nav
-      aria-label="Peamenüü"
+      aria-label={t("nav.aria")}
       className="fixed inset-x-0 bottom-0 z-10 flex border-t border-border bg-surface md:hidden"
     >
       {items.map((item) => {
@@ -24,7 +25,7 @@ export function TabBar() {
               active ? "text-accent" : "text-foreground/70"
             }`}
           >
-            {item.label}
+            {t(item.labelKey)}
           </Link>
         );
       })}

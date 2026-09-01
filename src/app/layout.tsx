@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Fraunces, Source_Sans_3 } from "next/font/google";
 import { NavRail } from "@/components/nav/NavRail";
 import { TabBar } from "@/components/nav/TabBar";
+import { t } from "@/lib/i18n";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 
@@ -18,8 +19,8 @@ const fontSans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "Lai matemaatika",
-  description: "Riigieksami ettevalmistusplatvorm",
+  title: t("meta.title"),
+  description: t("meta.description"),
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

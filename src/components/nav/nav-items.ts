@@ -1,16 +1,21 @@
 import type { FlagName } from "@/lib/flags";
+import type { TranslationKey } from "@/lib/i18n";
 
 export type NavItem = {
-  label: string;
+  labelKey: TranslationKey;
   href: string;
   flag?: FlagName;
 };
 
 export const NAV_ITEMS: NavItem[] = [
-  { label: "Teemad", href: "/lai-matemaatika/teemad" },
-  { label: "Harjuta", href: "/lai-matemaatika/harjuta" },
-  { label: "Kalender", href: "/kalender", flag: "kalender" },
-  { label: "Statistika", href: "/statistika", flag: "statistika" },
-  { label: "Eksamirežiim", href: "/eksam", flag: "eksamirezhiim" },
-  { label: "Märkmed", href: "/markmed", flag: "markmed" },
+  { labelKey: "nav.teemad", href: "/lai-matemaatika/teemad" },
+  { labelKey: "nav.harjuta", href: "/lai-matemaatika/harjuta" },
+  { labelKey: "nav.kalender", href: "/kalender", flag: "kalender" },
+  { labelKey: "nav.statistika", href: "/statistika", flag: "statistika" },
+  {
+    labelKey: "nav.eksamirezhiim",
+    href: "/eksam",
+    flag: "eksamirezhiim",
+  },
+  { labelKey: "nav.markmed", href: "/markmed", flag: "markmed" },
 ];

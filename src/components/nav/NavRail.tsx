@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { t } from "@/lib/i18n";
 import { visibleNavItems } from "./visible-nav-items";
 
 export function NavRail() {
@@ -10,7 +11,7 @@ export function NavRail() {
 
   return (
     <nav
-      aria-label="Peamenüü"
+      aria-label={t("nav.aria")}
       className="hidden md:flex md:w-56 md:shrink-0 md:flex-col md:gap-1 md:border-r md:border-border md:bg-surface md:p-4"
     >
       {items.map((item) => {
@@ -26,7 +27,7 @@ export function NavRail() {
                 : "text-foreground hover:bg-border/50"
             }`}
           >
-            {item.label}
+            {t(item.labelKey)}
           </Link>
         );
       })}
