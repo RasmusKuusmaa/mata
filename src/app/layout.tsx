@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { NavRail } from "@/components/nav/NavRail";
+import { TabBar } from "@/components/nav/TabBar";
 import "./globals.css";
+
+const fontDisplay = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600"],
+});
+
+const fontSans = Source_Sans_3({
+  variable: "--font-sans",
+  subsets: ["latin", "latin-ext"],
+});
 
 export const metadata: Metadata = {
   title: "Lai matemaatika",
@@ -9,8 +23,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html
+      lang="et"
+      className={`${fontDisplay.variable} ${fontSans.variable} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col font-sans md:flex-row">
+        <NavRail />
+        <main className="flex-1 pb-16 md:pb-0">{children}</main>
+        <TabBar />
+      </body>
     </html>
   );
 }

@@ -1,23 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbfaf8;
+  --foreground: #1c1917;
+  --surface: #ffffff;
+  --border: #e7e5e4;
+  --accent: #0f5b52;
+  --accent-foreground: #f4faf9;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #16150f;
+    --foreground: #f2f0ea;
+    --surface: #1e1c16;
+    --border: #33312a;
+    --accent: #6fbdb0;
+    --accent-foreground: #0c1614;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/*
+ * Typographic scale for math-heavy content (explanations, worked solutions).
+ * Generous line-height and vertical rhythm so KaTeX display blocks (added in
+ * Ship 0.7) don't feel cramped against surrounding prose.
+ */
+.prose-math {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.prose-math h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.3;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-math h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  line-height: 1.4;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-math p {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
 }
