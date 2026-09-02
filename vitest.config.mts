@@ -16,6 +16,7 @@ export default defineConfig({
           name: "lib",
           environment: "node",
           include: ["src/**/*.test.ts"],
+          exclude: ["**/__fixtures__/**", "**/node_modules/**"],
         },
       },
       {
@@ -25,6 +26,7 @@ export default defineConfig({
           name: "components",
           environment: "jsdom",
           include: ["src/**/*.test.tsx"],
+          exclude: ["**/__fixtures__/**", "**/node_modules/**"],
         },
       },
     ],
