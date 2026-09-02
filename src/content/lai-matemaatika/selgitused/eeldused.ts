@@ -38,4 +38,23 @@ Levinud viga on liita murde nii, et lugejad ja nimetajad liidetakse eraldi
 erineva nimetajaga murrud tuleb enne viia ühisele nimetajale.
 `,
   },
+  "E-kumnendmurrud": {
+    definitsioon: `
+Kümnendmurd on murd, mille nimetaja on <Math>{"10"}</Math>,
+<Math>{"100"}</Math>, <Math>{"1000"}</Math> vms. Kümnendmurdude liitmisel ja
+lahutamisel kirjutatakse arvud nii, et komad on üksteise all — siis liidetakse
+või lahutatakse nagu täisarve.
+
+**Ümardamine.** Arvu ümardamisel antud kohani vaadatakse järgmist kohta:
+- kui see number on <Math>{"0, 1, 2, 3, 4"}</Math>, jäetakse eelmine koht muutmata,
+- kui see number on <Math>{"5, 6, 7, 8, 9"}</Math>, suurendatakse eelmist kohta ühe võrra.
+`,
+    naide: `
+Ümardame arvu <Math>{"3,47"}</Math> lähima kümnendikuni. Sajandike kohal on
+number <Math>{"7"}</Math>, mis on <Math>{"5"}</Math> või suurem, seega
+kümnendik suureneb ühe võrra:
+
+<MathBlock>{"3{,}47 \\\\approx 3{,}5"}</MathBlock>
+`,
+  },
 };
