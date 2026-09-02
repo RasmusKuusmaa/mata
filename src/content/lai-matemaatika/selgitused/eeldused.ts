@@ -99,4 +99,26 @@ töölisi) teevad sama töö poole kiiremini:
 <MathBlock>{"3 \\\\cdot 8 = 6 \\\\cdot x \\\\quad\\\\Rightarrow\\\\quad x = 4"}</MathBlock>
 `,
   },
+  "E-sulgude-avamine": {
+    definitsioon: `
+Sulgude avamisel korrutatakse sulu ees olev arv (või avaldis) läbi iga sulus
+oleva liikmega — **distributiivsusreegel**:
+<MathBlock>{"a(b + c) = ab + ac"}</MathBlock>
+
+Kui sulu ees on miinusmärk, muutuvad kõik sulus olevad märgid avamisel
+vastupidiseks:
+<MathBlock>{"-(b + c) = -b - c"}</MathBlock>
+
+Pärast sulgude avamist liidetakse **sarnased liikmed** (samasuguse
+tähtosaga liikmed) kokku.
+`,
+    naide: `
+Avame sulud ja lihtsustame avaldise <Math>{"3(x + 2) - 2(x - 1)"}</Math>:
+
+<MathBlock>{"3(x + 2) - 2(x - 1) = 3x + 6 - 2x + 2 = x + 8"}</MathBlock>
+
+Pane tähele, et teise sulu ees oleva miinusmärgi tõttu muutus
+<Math>{"-1"}</Math> avamisel <Math>{"+2"}</Math>-ks.
+`,
+  },
 };
