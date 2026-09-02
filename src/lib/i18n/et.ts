@@ -24,4 +24,8 @@ export const et = {
   "teemad.otsiKoht": "Otsi teema nime või õpitulemuse järgi",
   "teemad.tulemusiEi": "Otsingule ei vastanud ühtegi teemat.",
   "teemad.mitteKaetud": "2027. aasta eksamil ei käsitleta",
+  "teema.selgitusPuudub": "Selgitus lisatakse peagi.",
+  "teema.opitulemused": "Õpitulemused",
+  "teema.eeldused": "Eeldused",
+  "teema.harjuta": "Harjuta seda teemat",
 } as const;
