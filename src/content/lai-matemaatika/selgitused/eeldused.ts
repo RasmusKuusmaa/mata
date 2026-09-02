@@ -57,4 +57,25 @@ kümnendik suureneb ühe võrra:
 <MathBlock>{"3{,}47 \\\\approx 3{,}5"}</MathBlock>
 `,
   },
+  "E-protsendi-pohiulesanded": {
+    definitsioon: `
+Protsent tähendab sajandikku: <Math>{"1\\\\% = \\\\dfrac{1}{100}"}</Math>.
+Kolm põhiülesannet:
+
+1. **Arvust protsendi leidmine** — arvu <Math>{"a"}</Math> korrutatakse
+   protsendimääraga:
+   <MathBlock>{"a \\\\cdot \\\\dfrac{p}{100}"}</MathBlock>
+2. **Arvu leidmine protsendi järgi** — kui teame, et <Math>{"p\\\\%"}</Math>
+   arvust <Math>{"x"}</Math> on <Math>{"b"}</Math>, siis:
+   <MathBlock>{"x = b : \\\\dfrac{p}{100}"}</MathBlock>
+3. **Ühe arvu leidmine teise protsendina** — mitu protsenti on
+   <Math>{"b"}</Math> arvust <Math>{"a"}</Math>:
+   <MathBlock>{"\\\\dfrac{b}{a} \\\\cdot 100\\\\%"}</MathBlock>
+`,
+    naide: `
+Arvu <Math>{"40"}</Math> mitu protsenti on <Math>{"8"}</Math>?
+
+<MathBlock>{"\\\\dfrac{8}{40} \\\\cdot 100\\\\% = 20\\\\%"}</MathBlock>
+`,
+  },
 };
