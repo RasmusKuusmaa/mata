@@ -1,6 +1,6 @@
 import type { ExactForm } from "@/lib/format/number";
 import { int, nonZeroInt, pick } from "./rng";
-import type { Rng } from "./types";
+import type { ArvVaartus, Rng, Vastus } from "./types";
 
 /**
  * Any value a generator is allowed to hand back as an answer or an
@@ -95,6 +95,28 @@ export function isNice(value: number): boolean {
     if (Math.abs(numerator - Math.round(numerator)) < 1e-9) return true;
   }
   return false;
+}
+
+function arvVaartusToNumber(value: ArvVaartus): number {
+  return value.kuju === "taisarv" ? value.vaartus : value.lugeja / value.nimetaja;
+}
+
+/**
+ * Checks whether a generated `Vastus` counts as nice. `arv`/`hulk` values
+ * are checked numerically via `isNice`; `tapne` (an exact irrational form)
+ * and `valik` (a choice among strings) are nice by construction — there is
+ * no numeric niceness question to ask of them.
+ */
+export function vastusIsNice(vastus: Vastus): boolean {
+  switch (vastus.tuup) {
+    case "arv":
+      return isNice(arvVaartusToNumber(vastus));
+    case "hulk":
+      return vastus.vaartused.every((v) => isNice(arvVaartusToNumber(v)));
+    case "tapne":
+    case "valik":
+      return true;
+  }
 }
 
 /**

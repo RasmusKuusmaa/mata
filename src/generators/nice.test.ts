@@ -11,6 +11,7 @@ import {
   nicelyIntegrable,
   niceTriangle,
   redrawUntilNice,
+  vastusIsNice,
 } from "./nice";
 
 describe("PYTHAGOREAN_TRIPLES", () => {
@@ -182,5 +183,55 @@ describe("niceTriangle", () => {
       expect(a * a + b * b).toBe(c * c);
       expect(c).toBeLessThanOrEqual(100);
     }
+  });
+});
+
+describe("vastusIsNice", () => {
+  it("accepts an integer arv", () => {
+    expect(vastusIsNice({ tuup: "arv", kuju: "taisarv", vaartus: 5 })).toBe(
+      true,
+    );
+  });
+
+  it("accepts an arv fraction with denominator ≤ 12", () => {
+    expect(
+      vastusIsNice({ tuup: "arv", kuju: "murd", lugeja: 5, nimetaja: 8 }),
+    ).toBe(true);
+  });
+
+  it("rejects an arv fraction with denominator > 12", () => {
+    expect(
+      vastusIsNice({ tuup: "arv", kuju: "murd", lugeja: 5, nimetaja: 17 }),
+    ).toBe(false);
+  });
+
+  it("accepts a hulk only when every member is nice", () => {
+    expect(
+      vastusIsNice({
+        tuup: "hulk",
+        vaartused: [
+          { kuju: "taisarv", vaartus: 2 },
+          { kuju: "murd", lugeja: 1, nimetaja: 3 },
+        ],
+      }),
+    ).toBe(true);
+    expect(
+      vastusIsNice({
+        tuup: "hulk",
+        vaartused: [
+          { kuju: "taisarv", vaartus: 2 },
+          { kuju: "murd", lugeja: 1, nimetaja: 17 },
+        ],
+      }),
+    ).toBe(false);
+  });
+
+  it("always accepts tapne and valik answers", () => {
+    expect(
+      vastusIsNice({ tuup: "tapne", vorm: { kind: "pi", numerator: 1 } }),
+    ).toBe(true);
+    expect(
+      vastusIsNice({ tuup: "valik", oige: "a", eksitajad: ["b", "c"] }),
+    ).toBe(true);
   });
 });
