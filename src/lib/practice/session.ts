@@ -47,6 +47,8 @@ export type Seeria = {
 };
 
 export type KontrolliTulemus = {
+  teemaId: TeemaId;
+  raskus: Raskus;
   oige: boolean;
   vastus: Vastus;
   lahendus: string[];
@@ -155,6 +157,8 @@ export async function kontrolliVastust(
 
   const ulesanne = generaator.genereeri(mulberry32(kirje.seed));
   return {
+    teemaId: kirje.teemaId,
+    raskus: kirje.raskus,
     oige: checkAnswer(sisend, ulesanne.vastus),
     vastus: ulesanne.vastus,
     lahendus: ulesanne.lahendus,

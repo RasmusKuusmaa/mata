@@ -1,6 +1,8 @@
 "use server";
 
 import type { Raskus, TeemaId } from "@/content/types";
+import { recordAttempt } from "@/lib/db/guest-sessions";
+import { getGuestId } from "@/lib/session/server";
 import * as session from "./session";
 import type { KontrolliTulemus, Seeria } from "./session";
 
@@ -15,10 +17,21 @@ export async function alustaSeeria(
   return session.alustaSeeria(teemaId, raskus, kogus);
 }
 
+/** Grades the answer, then records it against the caller's guest session
+ * (Ship 1.7) — progress persists across visits even before there's an
+ * account to attach it to. */
 export async function kontrolliVastust(
   token: string,
   indeks: number,
   sisend: string,
 ): Promise<KontrolliTulemus> {
-  return session.kontrolliVastust(token, indeks, sisend);
+  const tulemus = await session.kontrolliVastust(token, indeks, sisend);
+  const guestId = await getGuestId();
+  await recordAttempt({
+    guestId,
+    teemaId: tulemus.teemaId,
+    raskus: tulemus.raskus,
+    oige: tulemus.oige,
+  });
+  return tulemus;
 }
