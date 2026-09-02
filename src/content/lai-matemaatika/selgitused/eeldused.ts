@@ -78,4 +78,25 @@ Arvu <Math>{"40"}</Math> mitu protsenti on <Math>{"8"}</Math>?
 <MathBlock>{"\\\\dfrac{8}{40} \\\\cdot 100\\\\% = 20\\\\%"}</MathBlock>
 `,
   },
+  "E-suhe-ja-vordeline-soltuvus": {
+    definitsioon: `
+**Suhe** <Math>{"a : b"}</Math> võrdleb kahte suurust jagatisena; suhet
+lihtsustatakse mõlema poole jagamisel nende suurima ühisteguriga.
+
+**Otsene võrdeline sõltuvus**: kui üks suurus suureneb, suureneb teine sama
+palju kordi, ja suhe jääb püsivaks:
+<MathBlock>{"\\\\dfrac{y_1}{x_1} = \\\\dfrac{y_2}{x_2}"}</MathBlock>
+
+**Pöördvõrdeline sõltuvus**: kui üks suurus suureneb, väheneb teine sama
+palju kordi, ja korrutis jääb püsivaks:
+<MathBlock>{"x_1 \\\\cdot y_1 = x_2 \\\\cdot y_2"}</MathBlock>
+`,
+    naide: `
+Kui <Math>{"3"}</Math> töölist teevad töö ära <Math>{"8"}</Math> päevaga, siis
+<Math>{"6"}</Math> töölist (pöördvõrdeline sõltuvus, kaks korda rohkem
+töölisi) teevad sama töö poole kiiremini:
+
+<MathBlock>{"3 \\\\cdot 8 = 6 \\\\cdot x \\\\quad\\\\Rightarrow\\\\quad x = 4"}</MathBlock>
+`,
+  },
 };
