@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** X kursus "Tuletise rakendused" — docs/ainekava-2025.pdf lk 12. */
 const opitulemused = [
@@ -12,7 +12,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("10", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "10-puutuja-vorrand",
     "Puutuja võrrand",
@@ -59,4 +60,6 @@ export const teemad = [
     "Rakenduslikud ekstreemumülesanded",
     "Reaalelulised probleemid, mis lahenevad ekstreemumi leidmisega.",
   ),
-];
+  ],
+  ["09-tuletiste-tabel"],
+);

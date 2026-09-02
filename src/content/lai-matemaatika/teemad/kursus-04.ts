@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** IV kursus "Trigonomeetria II" — docs/ainekava-2025.pdf lk 10. */
 const opitulemused = [
@@ -15,7 +15,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("04", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "04-nurga-moiste-uldistamine",
     "Nurga mõiste üldistamine",
@@ -101,4 +102,6 @@ export const teemad = [
     "Trigonomeetria rakendusülesanded",
     "Reaalelulised probleemid, mis lahenevad trigonomeetria abil.",
   ),
-];
+  ],
+  ["03-taisnurkse-kolmnurga-lahendamine"],
+);

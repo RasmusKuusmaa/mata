@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** XIII kursus "Stereomeetria" — docs/ainekava-2025.pdf lk 13. */
 const opitulemused = [
@@ -10,7 +10,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("13", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "13-prisma",
     "Prisma pindala ja ruumala",
@@ -64,4 +65,6 @@ export const teemad = [
     "Stereomeetria rakendusülesanded",
     "Reaalelulised probleemid, mis lahenevad stereomeetria abil.",
   ),
-];
+  ],
+  ["12-ruumigeomeetria-rakendusulesanded"],
+);

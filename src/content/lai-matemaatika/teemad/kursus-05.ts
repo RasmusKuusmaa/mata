@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** V kursus "Vektor tasandil. Joone võrrand" — docs/ainekava-2025.pdf lk 10. */
 const opitulemused = [
@@ -13,7 +13,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("05", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "05-kahe-punkti-vaheline-kaugus",
     "Kahe punkti vaheline kaugus",
@@ -126,4 +127,6 @@ export const teemad = [
     "Kahe joone lõikepunkt",
     "Lõikepunktide leidmine võrrandisüsteemi lahendades.",
   ),
-];
+  ],
+  ["04-trigonomeetria-rakendusulesanded"],
+);

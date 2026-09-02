@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /**
  * IX kursus "Trigonomeetrilised funktsioonid. Funktsiooni piirväärtus ja
@@ -15,7 +15,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("09", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "09-funktsiooni-perioodilisus",
     "Funktsiooni perioodilisus",
@@ -143,4 +144,7 @@ export const teemad = [
     "Tuletiste tabel",
     "Põhifunktsioonide tuletiste koondtabel.",
   ),
-];
+  ],
+  ["08-eksponent-ja-logaritmmudelid"],
+  { 8: ["07-funktsiooni-moiste-ja-uldtahis"] },
+);

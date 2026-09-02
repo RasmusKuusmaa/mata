@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** II kursus "Võrrandid ja võrrandisüsteemid" — docs/ainekava-2025.pdf lk 9. */
 const opitulemused = [
@@ -14,7 +14,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("02", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "02-vordus-samasus-vorrand",
     "Võrdus, samasus, võrrand",
@@ -76,4 +77,6 @@ export const teemad = [
     "Tekstülesanded võrrandi abil",
     "Reaalelulise probleemi tõlkimine võrrandiks ja lahendamine.",
   ),
-];
+  ],
+  ["01-protsentulesanded"],
+);

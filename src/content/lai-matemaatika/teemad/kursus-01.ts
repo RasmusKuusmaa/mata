@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** I kursus "Avaldised ja arvuhulgad" — docs/ainekava-2025.pdf lk 9. */
 const opitulemused = [
@@ -12,7 +12,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("01", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "01-arvuhulgad",
     "Arvuhulgad N, Z, Q, I, R",
@@ -69,4 +70,6 @@ export const teemad = [
     "Protsentülesanded",
     "Protsendi kolm põhiülesannet ja liitprotsent reaalelulistes probleemides.",
   ),
-];
+  ],
+  ["E-murdarvud", "E-kumnendmurrud"],
+);

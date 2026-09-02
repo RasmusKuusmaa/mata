@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** VI kursus "Tõenäosus, statistika" — docs/ainekava-2025.pdf lk 10-11. */
 const opitulemused = [
@@ -16,7 +16,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("06", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "06-permutatsioonid",
     "Permutatsioonid",
@@ -135,4 +136,6 @@ export const teemad = [
     "Keskväärtuse usaldusvahemik",
     "Üldkogumi keskväärtuse usalduspiirkonna leidmine.",
   ),
-];
+  ],
+  ["05-kahe-joone-loikepunkt"],
+);

@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** XII kursus "Sirge ja tasand ruumis" — docs/ainekava-2025.pdf lk 12. */
 const opitulemused = [
@@ -12,7 +12,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("12", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "12-ruumigeomeetria-asendilaused",
     "Ruumigeomeetria asendilaused",
@@ -123,4 +124,7 @@ export const teemad = [
     "Ruumigeomeetria rakendusülesanded",
     "Reaalelulised probleemid, mis lahenevad ruumigeomeetria abil.",
   ),
-];
+  ],
+  ["11-rakenduslikud-planimeetriaulesanded"],
+  { 10: ["12-punkti-kohavektor", "05-vektori-moiste-ja-liigid"] },
+);

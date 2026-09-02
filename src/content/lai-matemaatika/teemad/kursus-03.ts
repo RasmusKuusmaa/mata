@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** III kursus "Võrratused. Trigonomeetria I" — docs/ainekava-2025.pdf lk 9. */
 const opitulemused = [
@@ -13,7 +13,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("03", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "03-vorratuse-moiste-ja-omadused",
     "Võrratuse mõiste ja omadused",
@@ -60,4 +61,7 @@ export const teemad = [
     "Täisnurkse kolmnurga lahendamine",
     "Kolmnurga tundmatute külgede ja nurkade leidmine.",
   ),
-];
+  ],
+  ["02-tekstulesanded"],
+  { 6: ["E-pythagorase-teoreem"] },
+);

@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /**
  * XIV kursus "Matemaatika rakendused, reaalsete protsesside uurimine" —
@@ -16,7 +16,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("14", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "14-matemaatilise-mudeli-moiste",
     "Matemaatilise mudeli mõiste",
@@ -72,4 +73,6 @@ export const teemad = [
     "Rakendused tehnoloogias",
     "Matemaatikamudelid tehniliste protsesside kirjeldamiseks.",
   ),
-];
+  ],
+  ["13-stereomeetria-rakendusulesanded"],
+);

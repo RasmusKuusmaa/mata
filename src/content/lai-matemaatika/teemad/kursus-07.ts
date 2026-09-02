@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** VII kursus "Funktsioonid. Arvjadad" — docs/ainekava-2025.pdf lk 11. */
 const opitulemused = [
@@ -14,7 +14,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("07", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "07-funktsiooni-moiste-ja-uldtahis",
     "Funktsiooni mõiste ja üldtähis",
@@ -121,4 +122,7 @@ export const teemad = [
     "Jadade rakendusülesanded",
     "Reaalelulised probleemid, mis lahenduvad jadade abil.",
   ),
-];
+  ],
+  ["06-keskvaartuse-usaldusvahemik"],
+  { 12: ["07-funktsiooni-moiste-ja-uldtahis"] },
+);

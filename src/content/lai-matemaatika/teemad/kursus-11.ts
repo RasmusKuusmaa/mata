@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** XI kursus "Integraal. Planimeetria" — docs/ainekava-2025.pdf lk 12. */
 const opitulemused = [
@@ -12,7 +12,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("11", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "11-algfunktsioon",
     "Algfunktsioon",
@@ -175,4 +176,7 @@ export const teemad = [
     "Rakenduslikud planimeetriaülesanded",
     "Reaalelulised probleemid, mis lahenevad planimeetria abil.",
   ),
-];
+  ],
+  ["10-rakenduslikud-ekstreemumulesanded"],
+  { 12: ["03-taisnurkse-kolmnurga-lahendamine", "E-pythagorase-teoreem"] },
+);

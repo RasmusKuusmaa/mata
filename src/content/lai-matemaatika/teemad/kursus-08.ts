@@ -1,4 +1,4 @@
-import { makeTeemaFactory } from "./helpers";
+import { makeTeemaFactory, withSequentialEeldused } from "./helpers";
 
 /** VIII kursus "Eksponent- ja logaritmfunktsioon" — docs/ainekava-2025.pdf lk 11. */
 const opitulemused = [
@@ -15,7 +15,8 @@ const opitulemused = [
 
 const teema = makeTeemaFactory("08", opitulemused);
 
-export const teemad = [
+export const teemad = withSequentialEeldused(
+  [
   teema(
     "08-liitprotsendiline-kasvamine-ja-kahanemine",
     "Liitprotsendiline kasvamine ja kahanemine",
@@ -78,4 +79,6 @@ export const teemad = [
     "Eksponent- ja logaritmmudelid",
     "Reaalelulised protsessid, mis kirjeldatavad nende funktsioonidega.",
   ),
-];
+  ],
+  ["07-jadade-rakendusulesanded"],
+);
