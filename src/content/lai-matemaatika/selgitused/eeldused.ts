@@ -143,4 +143,221 @@ kirjutada <Math>{"6x + 9"}</Math> ekslikult kujul <Math>{"3(2x + 9)"}</Math>,
 kus <Math>{"9"}</Math> on jäetud kolmega jagamata.
 `,
   },
+  "E-abivalemid": {
+    definitsioon: `
+Kolm sageli kasutatavat lühendvalemit:
+
+<MathBlock>{"(a+b)^2 = a^2 + 2ab + b^2"}</MathBlock>
+<MathBlock>{"(a-b)^2 = a^2 - 2ab + b^2"}</MathBlock>
+<MathBlock>{"(a-b)(a+b) = a^2 - b^2"}</MathBlock>
+
+Need valemid kiirendavad nii avaldiste teisendamist kui ka teatud arvutuste
+peastarvutamist, kui üks tegur on ümardatava arvu lähedal.
+`,
+    naide: `
+Arvutame <Math>{"52^2"}</Math> ilma korrutamata: <Math>{"52 = 50 + 2"}</Math>,
+seega
+
+<MathBlock>{"52^2 = (50+2)^2 = 50^2 + 2 \\\\cdot 50 \\\\cdot 2 + 2^2 = 2500 + 200 + 4 = 2704"}</MathBlock>
+`,
+  },
+  "E-ruutkolmliikme-tegurdamine": {
+    definitsioon: `
+Ruutkolmliiget <Math>{"x^2 + bx + c"}</Math> tegurdatakse kujule
+<Math>{"(x - r_1)(x - r_2)"}</Math>, kus <Math>{"r_1"}</Math> ja
+<Math>{"r_2"}</Math> on kaks arvu, mille:
+
+- **summa** on <Math>{"-b"}</Math>,
+- **korrutis** on <Math>{"c"}</Math>.
+`,
+    naide: `
+Teguriks <Math>{"x^2 - x - 6"}</Math>. Otsime kaks arvu, mille summa on
+<Math>{"1"}</Math> ja korrutis <Math>{"-6"}</Math> — need on
+<Math>{"3"}</Math> ja <Math>{"-2"}</Math>:
+
+<MathBlock>{"x^2 - x - 6 = (x - 3)(x + 2)"}</MathBlock>
+`,
+  },
+  "E-astmed-naturaalarvulise-astendajaga": {
+    definitsioon: `
+Aste <Math>{"a^n"}</Math> (kus <Math>{"n"}</Math> on naturaalarv) tähendab,
+et <Math>{"a"}</Math> on tegurina <Math>{"n"}</Math> korda:
+<MathBlock>{"a^n = \\\\underbrace{a \\\\cdot a \\\\cdots a}_{n \\\\text{ tegurit}}"}</MathBlock>
+
+Tehted sama alusega astmetega:
+<MathBlock>{"a^m \\\\cdot a^n = a^{m+n} \\\\qquad a^m : a^n = a^{m-n} \\\\qquad (a^m)^n = a^{mn}"}</MathBlock>
+`,
+    naide: `
+<MathBlock>{"2^3 \\\\cdot 2^4 = 2^{3+4} = 2^7 = 128"}</MathBlock>
+`,
+  },
+  "E-ruutjuur": {
+    definitsioon: `
+Arvu <Math>{"a"}</Math> ruutjuur <Math>{"\\\\sqrt{a}"}</Math> (kus
+<Math>{"a \\\\ge 0"}</Math>) on mittenegatiivne arv, mille ruut on
+<Math>{"a"}</Math>. Kui juurealune arv pole täisruut, eraldatakse sellest
+suurim täisruudust tegur:
+<MathBlock>{"\\\\sqrt{k^2 \\\\cdot m} = k\\\\sqrt{m}"}</MathBlock>
+`,
+    naide: `
+<MathBlock>{"\\\\sqrt{72} = \\\\sqrt{36 \\\\cdot 2} = \\\\sqrt{36} \\\\cdot \\\\sqrt{2} = 6\\\\sqrt{2}"}</MathBlock>
+`,
+  },
+  "E-koordinaattasand": {
+    definitsioon: `
+Koordinaattasand jaguneb kahe telje — <Math>{"x"}</Math>-telje ja
+<Math>{"y"}</Math>-telje — poolt neljaks **veerandiks (kvadrandiks)**.
+Punkti <Math>{"(x, y)"}</Math> asukoht sõltub koordinaatide märkidest:
+
+- I veerand: <Math>{"x > 0"}</Math>, <Math>{"y > 0"}</Math>
+- II veerand: <Math>{"x < 0"}</Math>, <Math>{"y > 0"}</Math>
+- III veerand: <Math>{"x < 0"}</Math>, <Math>{"y < 0"}</Math>
+- IV veerand: <Math>{"x > 0"}</Math>, <Math>{"y < 0"}</Math>
+
+Peegeldamisel <Math>{"x"}</Math>-telje suhtes muudab <Math>{"y"}</Math>
+märki, <Math>{"y"}</Math>-telje suhtes muudab <Math>{"x"}</Math> märki, ja
+alguspunkti suhtes muudavad mõlemad märki.
+`,
+    naide: `
+Punkt <Math>{"(3, -5)"}</Math> asub IV veerandis (<Math>{"x > 0"}</Math>,
+<Math>{"y < 0"}</Math>). Selle peegelpilt alguspunkti suhtes on
+<Math>{"(-3, 5)"}</Math>.
+`,
+  },
+  "E-kolmnurga-umbermoot-ja-pindala": {
+    definitsioon: `
+Kolmnurga **ümbermõõt** on kõigi külgede pikkuste summa:
+<MathBlock>{"P = a + b + c"}</MathBlock>
+
+Kolmnurga **pindala**, kui teame alust ja sellele vastavat kõrgust:
+<MathBlock>{"S = \\\\dfrac{a \\\\cdot h}{2}"}</MathBlock>
+
+Täisnurkse kolmnurga korral võib kaatetid võtta aluseks ja kõrguseks, sest
+need on risti:
+<MathBlock>{"S = \\\\dfrac{\\\\text{kaatet}_1 \\\\cdot \\\\text{kaatet}_2}{2}"}</MathBlock>
+`,
+    naide: `
+Täisnurkse kolmnurga kaatetid on <Math>{"3"}</Math> ja <Math>{"4"}</Math>:
+
+<MathBlock>{"S = \\\\dfrac{3 \\\\cdot 4}{2} = 6"}</MathBlock>
+`,
+  },
+  "E-pythagorase-teoreem": {
+    definitsioon: `
+Täisnurkses kolmnurgas on **hüpotenuus** <Math>{"c"}</Math> (täisnurga
+vastas olev külg) ja **kaatetid** <Math>{"a"}</Math>, <Math>{"b"}</Math>
+seotud valemiga:
+<MathBlock>{"a^2 + b^2 = c^2"}</MathBlock>
+
+Seda saab kasutada nii hüpotenuusi kui ka kaateti leidmiseks, samuti
+kontrollimaks, kas kolmnurk on täisnurkne.
+`,
+    naide: `
+Kaatetid on <Math>{"6"}</Math> ja <Math>{"8"}</Math>:
+
+<MathBlock>{"c = \\\\sqrt{6^2 + 8^2} = \\\\sqrt{36 + 64} = \\\\sqrt{100} = 10"}</MathBlock>
+`,
+  },
+  "E-ringjoone-pikkus-ja-ringi-pindala": {
+    definitsioon: `
+Ringjoone pikkus ja ringi pindala raadiuse <Math>{"r"}</Math> kaudu:
+<MathBlock>{"l = 2\\\\pi r \\\\qquad S = \\\\pi r^2"}</MathBlock>
+
+Kui teada on diameeter <Math>{"d"}</Math>, siis <Math>{"r = \\\\dfrac{d}{2}"}</Math>.
+`,
+    naide: `
+Ringi raadius on <Math>{"5"}</Math>:
+
+<MathBlock>{"l = 2\\\\pi \\\\cdot 5 = 10\\\\pi \\\\qquad S = \\\\pi \\\\cdot 5^2 = 25\\\\pi"}</MathBlock>
+`,
+  },
+  "E-nelinurkade-pindalad": {
+    definitsioon: `
+Levinumate nelinurkade pindalavalemid:
+
+- **Ristkülik**: <Math>{"S = a \\\\cdot b"}</Math>
+- **Romb**: <Math>{"S = \\\\dfrac{d_1 \\\\cdot d_2}{2}"}</Math> (diagonaalide kaudu)
+- **Rööpkülik**: <Math>{"S = a \\\\cdot h"}</Math>
+- **Trapets**: <Math>{"S = \\\\dfrac{a + b}{2} \\\\cdot h"}</Math>
+`,
+    naide: `
+Trapetsi alused on <Math>{"6"}</Math> ja <Math>{"10"}</Math>, kõrgus
+<Math>{"4"}</Math>:
+
+<MathBlock>{"S = \\\\dfrac{6 + 10}{2} \\\\cdot 4 = 32"}</MathBlock>
+`,
+  },
+  "E-risttahuka-ja-kuubi-ruumala": {
+    definitsioon: `
+**Kuubi** ruumala ja pindala serva <Math>{"a"}</Math> kaudu:
+<MathBlock>{"V = a^3 \\\\qquad S = 6a^2"}</MathBlock>
+
+**Risttahuka** ruumala ja pindala mõõtmete <Math>{"a, b, c"}</Math> kaudu:
+<MathBlock>{"V = a \\\\cdot b \\\\cdot c \\\\qquad S = 2(ab + bc + ca)"}</MathBlock>
+`,
+    naide: `
+Risttahuka mõõtmed on <Math>{"2"}</Math>, <Math>{"3"}</Math> ja
+<Math>{"4"}</Math>:
+
+<MathBlock>{"V = 2 \\\\cdot 3 \\\\cdot 4 = 24"}</MathBlock>
+`,
+  },
+  "E-uhikute-teisendamine": {
+    definitsioon: `
+Suuremast ühikust väiksemasse teisendamisel **korrutatakse** teisendusteguriga,
+väiksemast suuremasse teisendamisel **jagatakse** sellega.
+
+Levinud teisendustegurid:
+- pikkus: <Math>{"1\\\\ \\\\text{km} = 1000\\\\ \\\\text{m}"}</Math>,
+  <Math>{"1\\\\ \\\\text{m} = 100\\\\ \\\\text{cm}"}</Math>
+- pindala: <Math>{"1\\\\ \\\\text{m}^2 = 10\\\\,000\\\\ \\\\text{cm}^2"}</Math>
+- ruumala: <Math>{"1\\\\ \\\\text{m}^3 = 1\\\\,000\\\\,000\\\\ \\\\text{cm}^3"}</Math>
+`,
+    naide: `
+<MathBlock>{"3\\\\ \\\\text{m} = 3 \\\\cdot 100\\\\ \\\\text{cm} = 300\\\\ \\\\text{cm}"}</MathBlock>
+`,
+  },
+  "E-diagrammide-lugemine": {
+    definitsioon: `
+Andmeid esitatakse sageli diagrammidena:
+
+- **Tulpdiagramm** — iga tulba kõrgus näitab vastava kategooria väärtust.
+- **Sektordiagramm** — iga sektori suurus näitab osakaalu tervikust.
+- **Joondiagramm** — punktide asukoht näitab väärtuse muutumist ajas.
+
+Diagrammilt lugemisel tuleb esmalt selgitada välja teljel/legendis näidatud
+ühikud ja skaala.
+`,
+    naide: `
+Kui tulpdiagrammil on esmaspäeval müüdud <Math>{"12"}</Math> ja teisipäeval
+<Math>{"18"}</Math> toodet, siis teisipäeval müüdi <Math>{"6"}</Math>
+toodet rohkem.
+`,
+  },
+  "E-aritmeetiline-keskmine": {
+    definitsioon: `
+Arvuhulga aritmeetiline keskmine on kõigi arvude summa jagatud arvude
+arvuga:
+<MathBlock>{"\\\\bar{x} = \\\\dfrac{x_1 + x_2 + \\\\cdots + x_n}{n}"}</MathBlock>
+`,
+    naide: `
+Arvude <Math>{"4, 7, 9"}</Math> keskmine:
+
+<MathBlock>{"\\\\bar{x} = \\\\dfrac{4 + 7 + 9}{3} = \\\\dfrac{20}{3} \\\\approx 6{,}67"}</MathBlock>
+`,
+  },
+  "E-lineaarvorrand": {
+    definitsioon: `
+Lineaarvõrrand on kujul <Math>{"ax + b = c"}</Math>. Lahendamiseks viiakse
+tundmatuga liikmed võrrandi ühele poole ja arvud teisele poole, muutes märki
+sammu ületamisel, ning seejärel jagatakse mõlemad pooled tundmatu
+kordajaga.
+`,
+    naide: `
+Lahendame võrrandi <Math>{"3x + 5 = 2x + 9"}</Math>:
+
+<MathBlock>{"3x - 2x = 9 - 5"}</MathBlock>
+<MathBlock>{"x = 4"}</MathBlock>
+`,
+  },
 };

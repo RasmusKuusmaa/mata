@@ -265,20 +265,6 @@ const TODO_ALLOWLIST = new Set<TeemaId>([
   "14-rakendused-loodusteaduses",
   "14-rakendused-majanduses",
   "14-rakendused-tehnoloogias",
-  "E-abivalemid",
-  "E-ruutkolmliikme-tegurdamine",
-  "E-lineaarvorrand",
-  "E-astmed-naturaalarvulise-astendajaga",
-  "E-ruutjuur",
-  "E-koordinaattasand",
-  "E-kolmnurga-umbermoot-ja-pindala",
-  "E-pythagorase-teoreem",
-  "E-ringjoone-pikkus-ja-ringi-pindala",
-  "E-nelinurkade-pindalad",
-  "E-risttahuka-ja-kuubi-ruumala",
-  "E-uhikute-teisendamine",
-  "E-diagrammide-lugemine",
-  "E-aritmeetiline-keskmine",
 ]);
 
 /** High-water mark: the allowlist may only shrink from here, never grow. */
