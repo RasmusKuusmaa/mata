@@ -1,10 +1,12 @@
 import type { SelgitusProps } from "@/components/explanation/Selgitus";
 import type { TeemaId } from "@/content/types";
+import { selgitused as eeldusteSelgitused } from "./eeldused";
 
 /**
- * Per-topic explanation content, keyed by topic id. Empty until Ship 1.8
- * (prerequisites + course one) starts authoring; content ships add entries
- * here (or split across sibling files re-exported from this module) as
- * they go — never delete a topic's entry, only add or edit one.
+ * Per-topic explanation content, keyed by topic id. Split into one sibling
+ * file per course (or the E-series), re-exported and merged here — content
+ * ships add entries as they go, never deleting a topic's entry.
  */
-export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {};
+export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {
+  ...eeldusteSelgitused,
+};
