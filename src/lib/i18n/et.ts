@@ -19,4 +19,9 @@ export const et = {
   "selgitus.naide": "Näide",
   "selgitus.tuupvead": "Tüüpvead",
   "selgitus.valemid": "Valemid",
+  "teemad.pealkiri": "Teemad",
+  "teemad.otsiSilt": "Otsi teemat",
+  "teemad.otsiKoht": "Otsi teema nime või õpitulemuse järgi",
+  "teemad.tulemusiEi": "Otsingule ei vastanud ühtegi teemat.",
+  "teemad.mitteKaetud": "2027. aasta eksamil ei käsitleta",
 } as const;
