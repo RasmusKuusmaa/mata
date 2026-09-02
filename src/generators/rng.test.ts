@@ -119,7 +119,7 @@ describe("pickWeighted", () => {
       { value: "common", weight: 1000 },
       { value: "rare", weight: 0.001 },
     ];
-    const counts = { common: 0, rare: 0 };
+    const counts: Record<string, number> = { common: 0, rare: 0 };
     for (let i = 0; i < 200; i++) counts[pickWeighted(rng, items)]++;
     expect(counts.common).toBeGreaterThan(counts.rare);
   });
