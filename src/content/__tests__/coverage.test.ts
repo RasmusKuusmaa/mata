@@ -265,7 +265,6 @@ const TODO_ALLOWLIST = new Set<TeemaId>([
   "14-rakendused-loodusteaduses",
   "14-rakendused-majanduses",
   "14-rakendused-tehnoloogias",
-  "E-uhisteguri-valja-toomine",
   "E-abivalemid",
   "E-ruutkolmliikme-tegurdamine",
   "E-lineaarvorrand",

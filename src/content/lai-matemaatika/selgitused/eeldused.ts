@@ -121,4 +121,26 @@ Pane tähele, et teise sulu ees oleva miinusmärgi tõttu muutus
 <Math>{"-1"}</Math> avamisel <Math>{"+2"}</Math>-ks.
 `,
   },
+  "E-uhisteguri-valja-toomine": {
+    definitsioon: `
+Ühisteguri sulgudest välja toomine on sulgude avamise pöördtehe:
+avaldise iga liige jagatakse nende **suurima ühisteguriga** ja see tegur
+kirjutatakse sulu ette:
+<MathBlock>{"ab + ac = a(b + c)"}</MathBlock>
+
+Suurim ühistegur on suurim arv, mis jagub kõikide liikmete kordajatesse
+täpselt.
+`,
+    naide: `
+Teguriks avaldis <Math>{"6x + 9"}</Math>. Arvude <Math>{"6"}</Math> ja
+<Math>{"9"}</Math> suurim ühistegur on <Math>{"3"}</Math>:
+
+<MathBlock>{"6x + 9 = 3(2x + 3)"}</MathBlock>
+`,
+    tuupvead: `
+Levinud viga on unustada jagada mõni liikmetest ühisteguriga — näiteks
+kirjutada <Math>{"6x + 9"}</Math> ekslikult kujul <Math>{"3(2x + 9)"}</Math>,
+kus <Math>{"9"}</Math> on jäetud kolmega jagamata.
+`,
+  },
 };
