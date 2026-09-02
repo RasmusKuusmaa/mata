@@ -1,16 +1,31 @@
 import type { Raskus, TeemaId } from "@/content/types";
 import { checkAnswer } from "@/lib/answer/check";
 import { buildRegistry, forDifficulty } from "@/generators/registry";
-import { mulberry32 } from "@/generators/rng";
+import { mulberry32, shuffle } from "@/generators/rng";
 import type { Rng, Ulesanne, Vastus } from "@/generators/types";
+
+/**
+ * The shape the practice UI (Ship 1.6) needs to pick an input widget for a
+ * question, without the giveaway a full `Vastus` would carry. `valik`
+ * carries every option in one shuffled, client-safe list — the correct
+ * answer is in there, but which one it is isn't.
+ */
+export type KlientVastuseTuup =
+  | { tuup: "arv" }
+  | { tuup: "tapne" }
+  | { tuup: "valik"; valikud: string[] }
+  | { tuup: "hulk" };
 
 /**
  * What the client is allowed to see before submitting: everything about an
  * `Ulesanne` except its answer and worked solution (todo.md Ship 1.5's
  * non-negotiable — answers and solutions never reach the client before
- * submission).
+ * submission) — plus enough about the answer's shape to render the right
+ * input widget.
  */
-export type KlientUlesanne = Omit<Ulesanne, "vastus" | "lahendus">;
+export type KlientUlesanne = Omit<Ulesanne, "vastus" | "lahendus"> & {
+  vastuseTuup: KlientVastuseTuup;
+};
 
 type SeeriaKirje = {
   teemaId: TeemaId;
@@ -51,9 +66,27 @@ function decodeToken(token: string): SeeriaKirje[] {
   return parsed as SeeriaKirje[];
 }
 
-function toKlientUlesanne(ulesanne: Ulesanne): KlientUlesanne {
-  const { vastus: _vastus, lahendus: _lahendus, ...klient } = ulesanne;
-  return klient;
+function toKlientVastuseTuup(vastus: Vastus, rng: Rng): KlientVastuseTuup {
+  switch (vastus.tuup) {
+    case "arv":
+      return { tuup: "arv" };
+    case "tapne":
+      return { tuup: "tapne" };
+    case "valik":
+      return {
+        tuup: "valik",
+        valikud: shuffle(rng, [vastus.oige, ...vastus.eksitajad]),
+      };
+    case "hulk":
+      return { tuup: "hulk" };
+  }
+}
+
+/** Exported for direct unit testing — building a `KlientUlesanne` needs no
+ * filesystem access, unlike `alustaSeeria`. */
+export function toKlientUlesanne(ulesanne: Ulesanne, rng: Rng): KlientUlesanne {
+  const { vastus, lahendus: _lahendus, ...klient } = ulesanne;
+  return { ...klient, vastuseTuup: toKlientVastuseTuup(vastus, rng) };
 }
 
 /**
@@ -89,7 +122,7 @@ export async function alustaSeeria(
     const ulesanne = generaatorid[generaatorIndeks].genereeri(mulberry32(seed));
 
     kirjed.push({ teemaId, raskus, generaatorIndeks, seed });
-    ulesanded.push(toKlientUlesanne(ulesanne));
+    ulesanded.push(toKlientUlesanne(ulesanne, rng));
   }
 
   return { token: encodeToken(kirjed), ulesanded };

@@ -1,8 +1,9 @@
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { alustaSeeria, kontrolliVastust } from "./session";
+import { alustaSeeria, kontrolliVastust, toKlientUlesanne } from "./session";
 import { mulberry32 } from "@/generators/rng";
+import type { Ulesanne } from "@/generators/types";
 
 const FIXTURES_ROOT = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -32,6 +33,14 @@ describe("alustaSeeria", () => {
       expect(ulesanne).not.toHaveProperty("vastus");
       expect(ulesanne).not.toHaveProperty("lahendus");
     }
+  });
+
+  it("tells the client the answer's shape via vastuseTuup", async () => {
+    const seeria = await alustaSeeria(TEEMA, "kerge", 1, {
+      root: FIXTURES_ROOT,
+      rng: mulberry32(1),
+    });
+    expect(seeria.ulesanded[0].vastuseTuup).toEqual({ tuup: "arv" });
   });
 
   it("throws for a topic/difficulty with no registered generator", async () => {
@@ -96,5 +105,29 @@ describe("kontrolliVastust", () => {
       root: FIXTURES_ROOT,
     });
     expect(tulemus.oige).toBe(true);
+  });
+});
+
+describe("toKlientUlesanne", () => {
+  function valikUlesanne(): Ulesanne {
+    return {
+      seed: 1,
+      kysimus: "2 + 2 = ?",
+      vastus: { tuup: "valik", oige: "4", eksitajad: ["3", "5", "6"] },
+      lahendus: ["2 + 2 = 4"],
+    };
+  }
+
+  it("carries every option for a valik answer without marking which is correct", () => {
+    const klient = toKlientUlesanne(valikUlesanne(), mulberry32(1));
+    expect(klient.vastuseTuup.tuup).toBe("valik");
+    if (klient.vastuseTuup.tuup !== "valik") throw new Error("unreachable");
+    expect(klient.vastuseTuup.valikud.sort()).toEqual(["3", "4", "5", "6"]);
+  });
+
+  it("never leaks vastus or lahendus regardless of answer type", () => {
+    const klient = toKlientUlesanne(valikUlesanne(), mulberry32(1));
+    expect(klient).not.toHaveProperty("vastus");
+    expect(klient).not.toHaveProperty("lahendus");
   });
 });
