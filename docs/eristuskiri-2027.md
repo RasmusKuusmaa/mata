@@ -78,3 +78,9 @@ avaldatakse hiljem eraldi dokumendina, laadida see alla ja uuendada
 `eksamiKate[2027]` iga teema kohta (vt Ship 0.17). Kuni selle avaldamiseni
 märgitakse **kõik** teemad eksamikõlblikuks: `eksamiKate: { 2027: true }` iga
 Ship 0.10–0.16 loodud teema kohta.
+
+**Kontrollitud 2026-09-02:** `harno.ee/riigieksamid` viitab veel 2026. aasta
+materjalidele; `projektid.edu.ee`'s THO-ruumi 2027. aasta lehel on ainsa
+matemaatika dokumendina üleval sama eristuskiri (Lisa 4), eraldi välistusloendit
+ei leidu. Ship 0.17 rakendub praeguse vaikeväärtusega — kõik teemad jäävad
+eksamikõlblikuks —, kuni loend avaldatakse.
