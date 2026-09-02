@@ -15,6 +15,16 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   eslintConfigPrettier,
   {
+    // A leading underscore marks a parameter or binding as intentionally
+    // unused (e.g. a trivial stub implementation awaiting a later ship).
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
+  },
+  {
     // No user-visible text may be hardcoded here — it belongs in
     // src/lib/i18n/et.ts and is pulled in through t().
     files: [
