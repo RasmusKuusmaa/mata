@@ -14,4 +14,9 @@ export const et = {
   "nav.statistika": "Statistika",
   "nav.eksamirezhiim": "Eksamirežiim",
   "nav.markmed": "Märkmed",
+  "selgitus.intuitsioon": "Intuitsioon",
+  "selgitus.definitsioon": "Definitsioon",
+  "selgitus.naide": "Näide",
+  "selgitus.tuupvead": "Tüüpvead",
+  "selgitus.valemid": "Valemid",
 } as const;
