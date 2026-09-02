@@ -1,35 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { teemad as kursuseTeemad } from "@/content/lai-matemaatika/teemad";
-import { teemad as eeldusteemad } from "@/content/lai-matemaatika/teemad/eeldused";
+import { allTeemad, allTeemaIds, isFullyAuthored } from "@/content/coverage";
 import type { TeemaId } from "@/content/types";
-
-type CoverageTeema = {
-  id: TeemaId;
-  opitulemused: string[];
-  eeldused: TeemaId[];
-};
-
-const allTeemad: CoverageTeema[] = [...kursuseTeemad, ...eeldusteemad];
-const allIds = new Set(allTeemad.map((t) => t.id));
-
-const DIFFICULTIES = ["kerge", "keskmine", "raske"] as const;
-
-/**
- * Explanations (Ship 1.1's `<Selgitus>`) and generators (Ship 0.20-0.24's
- * registry) don't exist yet, so these always report "none". Replace their
- * bodies with real lookups once those ships land — every call site here
- * stays the same, only the answer changes, same pattern as the trivial
- * MasteryModel/ReviewScheduler in Ship 0.26.
- */
-function hasExplanation(_id: TeemaId): boolean {
-  return false;
-}
-
-function generatorCountByDifficulty(
-  _id: TeemaId,
-): Record<(typeof DIFFICULTIES)[number], number> {
-  return { kerge: 0, keskmine: 0, raske: 0 };
-}
 
 /**
  * Topics not yet fully authored: no explanation and/or fewer than three
@@ -339,14 +310,14 @@ describe("curriculum coverage gate", () => {
   it("has no dangling eeldused reference", () => {
     for (const t of allTeemad) {
       for (const prereqId of t.eeldused) {
-        expect(allIds.has(prereqId)).toBe(true);
+        expect(allTeemaIds.has(prereqId)).toBe(true);
       }
     }
   });
 
   it("only allowlists ids that name a real topic", () => {
     for (const id of TODO_ALLOWLIST) {
-      expect(allIds.has(id)).toBe(true);
+      expect(allTeemaIds.has(id)).toBe(true);
     }
   });
 
@@ -357,15 +328,7 @@ describe("curriculum coverage gate", () => {
   it("gives every non-allowlisted topic an explanation and full generator coverage", () => {
     for (const t of allTeemad) {
       if (TODO_ALLOWLIST.has(t.id)) continue;
-
-      expect(hasExplanation(t.id)).toBe(true);
-
-      const counts = generatorCountByDifficulty(t.id);
-      const total = counts.kerge + counts.keskmine + counts.raske;
-      expect(total).toBeGreaterThanOrEqual(3);
-      for (const level of DIFFICULTIES) {
-        expect(counts[level]).toBeGreaterThan(0);
-      }
+      expect(isFullyAuthored(t.id)).toBe(true);
     }
   });
 });
