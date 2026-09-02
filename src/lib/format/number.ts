@@ -51,7 +51,7 @@ export function formatFraction(numerator: number, denominator: number): string {
   return `${n < 0 ? "-" : ""}${formatNumber(Math.abs(n))}/${formatNumber(d)}`;
 }
 
-type ExactForm =
+export type ExactForm =
   | { kind: "sqrt"; radicand: number; numerator: number; denominator?: number }
   | { kind: "pi"; numerator: number; denominator?: number };
 
