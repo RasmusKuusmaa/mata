@@ -1,6 +1,7 @@
 import { teemad as kursuseTeemad } from "@/content/lai-matemaatika/teemad";
 import { teemad as eeldusteemad } from "@/content/lai-matemaatika/teemad/eeldused";
 import { selgitused } from "@/content/lai-matemaatika/selgitused";
+import { buildRegistry, forDifficulty } from "@/generators/registry";
 import type { TeemaId } from "@/content/types";
 
 export type CoverageTeema = {
@@ -22,17 +23,19 @@ export function hasExplanation(id: TeemaId): boolean {
 }
 
 /**
- * Generators (Ship 0.20-0.24's registry) exist as a mechanism but have no
- * authored content yet, so this always reports "none" until Ship 1.8+
- * drops files under `src/generators/<aine>/kursus-NN/`. Replace this body
- * with a real lookup once that content exists — every call site here
- * stays the same, only the answer changes, same pattern as the trivial
- * MasteryModel/ReviewScheduler in Ship 0.26.
+ * Discovered once at module load (Ship 1.8) — top-level await, same as the
+ * niceness harness. Node-only (walks the real filesystem), which is fine:
+ * every caller of this module is a test or the `coverage:content` script,
+ * never app code shipped to a client.
  */
-export function generatorCountByDifficulty(
-  _id: TeemaId,
-): Record<Raskus, number> {
-  return { kerge: 0, keskmine: 0, raske: 0 };
+const registry = await buildRegistry();
+
+export function generatorCountByDifficulty(id: TeemaId): Record<Raskus, number> {
+  return {
+    kerge: forDifficulty(registry, id, "kerge").length,
+    keskmine: forDifficulty(registry, id, "keskmine").length,
+    raske: forDifficulty(registry, id, "raske").length,
+  };
 }
 
 export function hasFullGeneratorCoverage(id: TeemaId): boolean {

@@ -3,6 +3,7 @@ import { mulberry32 } from "./rng";
 import {
   PYTHAGOREAN_TRIPLES,
   SPECIAL_ANGLES,
+  arvVaartus,
   exactPowers,
   exactValueToNumber,
   factorableQuadratic,
@@ -11,6 +12,7 @@ import {
   nicelyIntegrable,
   niceTriangle,
   redrawUntilNice,
+  reduceFraction,
   vastusIsNice,
 } from "./nice";
 
@@ -233,5 +235,38 @@ describe("vastusIsNice", () => {
     expect(
       vastusIsNice({ tuup: "valik", oige: "a", eksitajad: ["b", "c"] }),
     ).toBe(true);
+  });
+});
+
+describe("reduceFraction", () => {
+  it("reduces to lowest terms", () => {
+    expect(reduceFraction(6, 8)).toEqual([3, 4]);
+  });
+
+  it("puts the sign on the numerator", () => {
+    expect(reduceFraction(6, -8)).toEqual([-3, 4]);
+    expect(reduceFraction(-6, -8)).toEqual([3, 4]);
+  });
+
+  it("reduces zero to 0/1", () => {
+    expect(reduceFraction(0, 5)).toEqual([0, 1]);
+  });
+
+  it("leaves an already-reduced fraction unchanged", () => {
+    expect(reduceFraction(3, 4)).toEqual([3, 4]);
+  });
+});
+
+describe("arvVaartus", () => {
+  it("returns taisarv when the fraction reduces to a whole number", () => {
+    expect(arvVaartus(6, 3)).toEqual({ kuju: "taisarv", vaartus: 2 });
+  });
+
+  it("returns a reduced murd otherwise", () => {
+    expect(arvVaartus(6, 8)).toEqual({ kuju: "murd", lugeja: 3, nimetaja: 4 });
+  });
+
+  it("defaults the denominator to 1", () => {
+    expect(arvVaartus(5)).toEqual({ kuju: "taisarv", vaartus: 5 });
   });
 });

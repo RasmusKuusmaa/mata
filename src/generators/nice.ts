@@ -101,6 +101,36 @@ function arvVaartusToNumber(value: ArvVaartus): number {
   return value.kuju === "taisarv" ? value.vaartus : value.lugeja / value.nimetaja;
 }
 
+/** Reduces a fraction to lowest terms with the sign on the numerator, e.g.
+ * `(6, -8) -> (-3, 4)`. Generators use this to present an arithmetic
+ * result (a fraction sum, product, ...) as the reduced answer a student
+ * would actually write down. */
+export function reduceFraction(
+  numerator: number,
+  denominator: number,
+): [number, number] {
+  const sign = numerator < 0 !== denominator < 0 ? -1 : 1;
+  let n = Math.abs(numerator);
+  const d = Math.abs(denominator);
+  if (n === 0) return [0, 1];
+  let a = n;
+  let b = d;
+  while (b !== 0) [a, b] = [b, a % b];
+  const divisor = a || 1;
+  n /= divisor;
+  return [sign * n, d / divisor];
+}
+
+/** Builds a reduced `ArvVaartus` from a numerator/denominator pair —
+ * `taisarv` when it reduces to a whole number, `murd` otherwise. The
+ * common way generators turn an arithmetic result into an answer. */
+export function arvVaartus(numerator: number, denominator = 1): ArvVaartus {
+  const [n, d] = reduceFraction(numerator, denominator);
+  return d === 1
+    ? { kuju: "taisarv", vaartus: n }
+    : { kuju: "murd", lugeja: n, nimetaja: d };
+}
+
 /**
  * Checks whether a generated `Vastus` counts as nice. `arv`/`hulk` values
  * are checked numerically via `isNice`; `tapne` (an exact irrational form)
