@@ -292,3 +292,25 @@ export function niceTriangle(rng: Rng): NiceTriangle {
     return sides[2] <= MAX_NICE_HYPOTENUSE ? { sides } : null;
   }, rng);
 }
+
+/**
+ * The only entries in `PYTHAGOREAN_TRIPLES` whose side ratios are all nice
+ * fractions (denominator ≤ 12) once reduced — every other triple's
+ * hypotenuse is a prime (or has a prime factor) greater than 12, e.g.
+ * `5/13` from `(5, 12, 13)`. A right triangle's angle can only stand in
+ * for a trig-ratio question (sin/cos/tan as a plain fraction, not an
+ * evaluated decimal) when its sides come from here — `niceTriangle`'s
+ * full list is for topics that only need integer side lengths, not ratios.
+ */
+export const NICE_TRIG_TRIPLES: readonly [number, number, number][] = [
+  [3, 4, 5],
+  [6, 8, 10],
+  [9, 12, 15],
+  [12, 16, 20],
+  [15, 20, 25],
+];
+
+export function niceTrigTriangle(rng: Rng): NiceTriangle {
+  const [a, b, c] = pick(rng, NICE_TRIG_TRIPLES);
+  return { sides: [a, b, c] };
+}

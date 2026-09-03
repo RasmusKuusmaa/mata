@@ -10,16 +10,6 @@ import type { TeemaId } from "@/content/types";
  * add one back. `does not grow` below enforces that direction.
  */
 const TODO_ALLOWLIST = new Set<TeemaId>([
-  "03-vorratuse-moiste-ja-omadused",
-  "03-lineaarvorratus",
-  "03-ruutvorratus",
-  "03-intervallmeetod",
-  "03-murdvorratus",
-  "03-vorratusesusteemid",
-  "03-teravnurga-funktsioonid",
-  "03-taiendusnurga-funktsioonid",
-  "03-trigonomeetria-pohiseosed",
-  "03-taisnurkse-kolmnurga-lahendamine",
   "04-nurga-moiste-uldistamine",
   "04-kraadi-ja-radiaanmoot",
   "04-mis-tahes-nurga-funktsioonid",

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { mulberry32 } from "./rng";
 import {
+  NICE_TRIG_TRIPLES,
   PYTHAGOREAN_TRIPLES,
   SPECIAL_ANGLES,
   arvVaartus,
@@ -11,6 +12,7 @@ import {
   nicelyDifferentiable,
   nicelyIntegrable,
   niceTriangle,
+  niceTrigTriangle,
   redrawUntilNice,
   reduceFraction,
   vastusIsNice,
@@ -184,6 +186,30 @@ describe("niceTriangle", () => {
       } = niceTriangle(rng);
       expect(a * a + b * b).toBe(c * c);
       expect(c).toBeLessThanOrEqual(100);
+    }
+  });
+});
+
+describe("NICE_TRIG_TRIPLES / niceTrigTriangle", () => {
+  it("every triple satisfies a² + b² = c²", () => {
+    for (const [a, b, c] of NICE_TRIG_TRIPLES) {
+      expect(a * a + b * b).toBe(c * c);
+    }
+  });
+
+  it("every side-ratio (sin, cos, and tan of either acute angle) is nice", () => {
+    for (const [a, b, c] of NICE_TRIG_TRIPLES) {
+      expect(isNice(a / c)).toBe(true);
+      expect(isNice(b / c)).toBe(true);
+      expect(isNice(a / b)).toBe(true);
+    }
+  });
+
+  it("draws only from NICE_TRIG_TRIPLES", () => {
+    const rng = mulberry32(6);
+    for (let i = 0; i < 200; i++) {
+      const { sides } = niceTrigTriangle(rng);
+      expect(NICE_TRIG_TRIPLES).toContainEqual(sides);
     }
   });
 });
