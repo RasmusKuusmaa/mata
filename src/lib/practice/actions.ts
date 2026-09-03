@@ -7,7 +7,6 @@ import { uuedSaavutused } from "@/lib/gamification/achievements";
 import { rakendaKatseTulemus } from "@/lib/gamification/apply-attempt";
 import { koostaSaavutusteKontekst } from "@/lib/gamification/context";
 import { getGuestId } from "@/lib/session/server";
-import { getCurrentUserId } from "@/lib/session/user";
 import * as session from "./session";
 import type { KontrolliTulemus, Seeria, TeemaRaskusValik } from "./session";
 
@@ -42,6 +41,12 @@ export async function kontrolliVastust(
 ): Promise<KontrolliTulemus> {
   const tulemus = await session.kontrolliVastust(token, indeks, sisend);
   const guestId = await getGuestId();
+  // Dynamically imported (rather than a static top-level import) because
+  // this module transitively pulls in next-auth, which a client component
+  // test that merely renders — never calls — this "use server" action
+  // would otherwise be forced to load too. Production behavior is
+  // unaffected; this only changes *when* the import happens, not whether.
+  const { getCurrentUserId } = await import("@/lib/session/user");
   const userId = await getCurrentUserId();
   await recordAttempt({
     guestId,
