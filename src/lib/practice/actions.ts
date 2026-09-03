@@ -3,6 +3,7 @@
 import type { Raskus, TeemaId } from "@/content/types";
 import { getUnlockedAchievementIds, unlockAchievements } from "@/lib/db/achievements";
 import { recordAttempt } from "@/lib/db/guest-sessions";
+import { paivitaMasterySeis } from "@/lib/db/topic-state";
 import { uuedSaavutused } from "@/lib/gamification/achievements";
 import { rakendaKatseTulemus } from "@/lib/gamification/apply-attempt";
 import { koostaSaavutusteKontekst } from "@/lib/gamification/context";
@@ -59,6 +60,7 @@ export async function kontrolliVastust(
   // Gamification only accumulates for real accounts — there's no schema for
   // guest xp/streaks/achievements, and that's intentional (todo.md Ship 4).
   if (userId) {
+    await paivitaMasterySeis(userId, tulemus.teemaId);
     await rakendaKatseTulemus(userId, {
       teemaId: tulemus.teemaId,
       raskus: tulemus.raskus,
