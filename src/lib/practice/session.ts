@@ -125,13 +125,34 @@ export async function alustaKohandatudSeeria(
 
   const kirjed: SeeriaKirje[] = [];
   const ulesanded: KlientUlesanne[] = [];
+  /** A generator throwing (a content bug slipping past the niceness
+   * harness) skips just that one draw rather than killing the whole
+   * session (todo.md Ship 6.4) — bounded so a systemic failure still
+   * surfaces instead of spinning forever. */
+  const MAX_KATSEID_KUSIMUSE_KOHTA = 5;
 
   for (let i = 0; i < kogus; i++) {
-    const valik = saadaval[Math.floor(rng() * saadaval.length)];
-    const generaatorid = forDifficulty(registry, valik.teemaId, valik.raskus);
-    const generaatorIndeks = Math.floor(rng() * generaatorid.length);
-    const seed = Math.floor(rng() * 2 ** 31);
-    const ulesanne = generaatorid[generaatorIndeks].genereeri(mulberry32(seed));
+    let ulesanne: Ulesanne | null = null;
+    let valik: TeemaRaskusValik | null = null;
+    let generaatorIndeks = -1;
+    let seed = 0;
+
+    for (let katse = 0; katse < MAX_KATSEID_KUSIMUSE_KOHTA; katse++) {
+      valik = saadaval[Math.floor(rng() * saadaval.length)];
+      const generaatorid = forDifficulty(registry, valik.teemaId, valik.raskus);
+      generaatorIndeks = Math.floor(rng() * generaatorid.length);
+      seed = Math.floor(rng() * 2 ** 31);
+      try {
+        ulesanne = generaatorid[generaatorIndeks].genereeri(mulberry32(seed));
+        break;
+      } catch (viga) {
+        console.error(
+          `generator failed for ${valik.teemaId}:${valik.raskus} — skipping this draw`,
+          viga,
+        );
+      }
+    }
+    if (ulesanne === null || valik === null) continue;
 
     kirjed.push({
       teemaId: valik.teemaId,
