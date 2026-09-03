@@ -4,6 +4,7 @@ import { selgitused } from "@/content/lai-matemaatika/selgitused";
 import { Selgitus } from "@/components/explanation/Selgitus";
 import { t } from "@/lib/i18n";
 import { findEeldused, findTeema, kokkuTeemad } from "./lookup";
+import { TeemaKontoPaneel } from "./TeemaKontoPaneel";
 
 export function generateStaticParams() {
   return kokkuTeemad.map((teema) => ({ aine: teema.aine, teemaId: teema.id }));
@@ -69,6 +70,8 @@ export default async function TeemaDetailPage({
       >
         {t("teema.harjuta")}
       </Link>
+
+      <TeemaKontoPaneel teemaId={teema.id} />
     </div>
   );
 }
