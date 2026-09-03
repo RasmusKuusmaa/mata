@@ -18,4 +18,5 @@ export const NAV_ITEMS: NavItem[] = [
     flag: "eksamirezhiim",
   },
   { labelKey: "nav.markmed", href: "/markmed", flag: "markmed" },
+  { labelKey: "nav.valemileht", href: "/valemileht" },
 ];
