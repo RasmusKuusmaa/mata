@@ -10,23 +10,6 @@ import type { TeemaId } from "@/content/types";
  * add one back. `does not grow` below enforces that direction.
  */
 const TODO_ALLOWLIST = new Set<TeemaId>([
-  "04-nurga-moiste-uldistamine",
-  "04-kraadi-ja-radiaanmoot",
-  "04-mis-tahes-nurga-funktsioonid",
-  "04-tapsed-vaartused",
-  "04-sama-nurga-funktsioonide-seosed",
-  "04-taandamisvalemid",
-  "04-negatiivse-ja-taispoordest-suurema-nurga-funktsioonid",
-  "04-kahe-nurga-summa-ja-vahe",
-  "04-kahekordse-nurga-valemid",
-  "04-trigonomeetriliste-avaldiste-teisendamine",
-  "04-ringjoone-kaare-pikkus",
-  "04-ringi-sektori-pindala",
-  "04-kolmnurga-pindala-valemid",
-  "04-siinusteoreem",
-  "04-koosinusteoreem",
-  "04-kolmnurga-lahendamine",
-  "04-trigonomeetria-rakendusulesanded",
   "05-kahe-punkti-vaheline-kaugus",
   "05-vektori-moiste-ja-liigid",
   "05-vektori-koordinaadid",

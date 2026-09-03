@@ -6,7 +6,9 @@ import {
   SPECIAL_ANGLES,
   arvVaartus,
   exactPowers,
+  exactValueToLatex,
   exactValueToNumber,
+  exactValueToVastus,
   factorableQuadratic,
   isNice,
   nicelyDifferentiable,
@@ -294,5 +296,77 @@ describe("arvVaartus", () => {
 
   it("defaults the denominator to 1", () => {
     expect(arvVaartus(5)).toEqual({ kuju: "taisarv", vaartus: 5 });
+  });
+});
+
+describe("exactValueToVastus", () => {
+  it("converts an integer to arv/taisarv", () => {
+    expect(exactValueToVastus({ kind: "integer", value: -1 })).toEqual({
+      tuup: "arv",
+      kuju: "taisarv",
+      vaartus: -1,
+    });
+  });
+
+  it("converts a fraction to arv/murd", () => {
+    expect(exactValueToVastus({ kind: "fraction", numerator: 1, denominator: 2 })).toEqual({
+      tuup: "arv",
+      kuju: "murd",
+      lugeja: 1,
+      nimetaja: 2,
+    });
+  });
+
+  it("converts a sqrt form to tapne", () => {
+    expect(
+      exactValueToVastus({ kind: "sqrt", radicand: 3, numerator: 1, denominator: 2 }),
+    ).toEqual({
+      tuup: "tapne",
+      vorm: { kind: "sqrt", radicand: 3, numerator: 1, denominator: 2 },
+    });
+  });
+
+  it("every vastusIsNice(vastus) it produces is nice", () => {
+    for (const values of Object.values(SPECIAL_ANGLES)) {
+      for (const value of [values.sin, values.cos, values.tan]) {
+        if (value === null) continue;
+        expect(vastusIsNice(exactValueToVastus(value))).toBe(true);
+      }
+    }
+  });
+});
+
+describe("exactValueToLatex", () => {
+  it("renders an integer plainly", () => {
+    expect(exactValueToLatex({ kind: "integer", value: -3 })).toBe("-3");
+  });
+
+  it("renders a fraction as \\dfrac", () => {
+    expect(exactValueToLatex({ kind: "fraction", numerator: 1, denominator: 2 })).toBe(
+      "\\dfrac{1}{2}",
+    );
+  });
+
+  it("renders a unit sqrt coefficient without a leading 1", () => {
+    expect(
+      exactValueToLatex({ kind: "sqrt", radicand: 3, numerator: 1, denominator: 2 }),
+    ).toBe("\\dfrac{\\sqrt{3}}{2}");
+  });
+
+  it("renders a negative sqrt coefficient", () => {
+    expect(exactValueToLatex({ kind: "sqrt", radicand: 3, numerator: -1 })).toBe("-\\sqrt{3}");
+  });
+
+  it("renders pi with an integer coefficient", () => {
+    expect(exactValueToLatex({ kind: "pi", numerator: 2 })).toBe("2\\pi");
+  });
+
+  it("produces valid KaTeX for every SPECIAL_ANGLES value", () => {
+    for (const values of Object.values(SPECIAL_ANGLES)) {
+      for (const value of [values.sin, values.cos, values.tan]) {
+        if (value === null) continue;
+        expect(() => exactValueToLatex(value)).not.toThrow();
+      }
+    }
   });
 });

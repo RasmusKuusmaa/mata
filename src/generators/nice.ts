@@ -101,6 +101,62 @@ function arvVaartusToNumber(value: ArvVaartus): number {
   return value.kuju === "taisarv" ? value.vaartus : value.lugeja / value.nimetaja;
 }
 
+/** Converts an `ExactValue` into the `Vastus` a generator hands back: `arv`
+ * for a plain integer/fraction, `tapne` for an exact irrational form. */
+export function exactValueToVastus(value: ExactValue): Vastus {
+  switch (value.kind) {
+    case "integer":
+      return { tuup: "arv", ...arvVaartus(value.value) };
+    case "fraction":
+      return { tuup: "arv", ...arvVaartus(value.numerator, value.denominator) };
+    case "sqrt":
+      return {
+        tuup: "tapne",
+        vorm: {
+          kind: "sqrt",
+          radicand: value.radicand,
+          numerator: value.numerator,
+          denominator: value.denominator,
+        },
+      };
+    case "pi":
+      return {
+        tuup: "tapne",
+        vorm: { kind: "pi", numerator: value.numerator, denominator: value.denominator },
+      };
+  }
+}
+
+/** Renders an `ExactValue` as a KaTeX-ready fraction/root expression, for
+ * embedding a known value (e.g. a `SPECIAL_ANGLES` entry) in a question or
+ * solution step. */
+export function exactValueToLatex(value: ExactValue): string {
+  switch (value.kind) {
+    case "integer":
+      return `${value.value}`;
+    case "fraction": {
+      const [n, d] = reduceFraction(value.numerator, value.denominator);
+      return d === 1 ? `${n}` : `\\dfrac{${n}}{${d}}`;
+    }
+    case "sqrt": {
+      const [n, d] = reduceFraction(value.numerator, value.denominator ?? 1);
+      const magnitude = Math.abs(n);
+      const sign = n < 0 ? "-" : "";
+      const coefficient = magnitude === 1 ? "" : `${magnitude}`;
+      const body = `${sign}${coefficient}\\sqrt{${value.radicand}}`;
+      return d === 1 ? body : `\\dfrac{${body}}{${d}}`;
+    }
+    case "pi": {
+      const [n, d] = reduceFraction(value.numerator, value.denominator ?? 1);
+      const magnitude = Math.abs(n);
+      const sign = n < 0 ? "-" : "";
+      const coefficient = magnitude === 1 ? "" : `${magnitude}`;
+      const body = `${sign}${coefficient}\\pi`;
+      return d === 1 ? body : `\\dfrac{${body}}{${d}}`;
+    }
+  }
+}
+
 /** Reduces a fraction to lowest terms with the sign on the numerator, e.g.
  * `(6, -8) -> (-3, 4)`. Generators use this to present an arithmetic
  * result (a fraction sum, product, ...) as the reduced answer a student
