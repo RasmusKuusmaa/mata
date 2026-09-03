@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { int } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -39,7 +40,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Vektor on } \\vec{a}=(${ax}, ${ay})\\text{. Leia } \\vec{a}\\cdot\\vec{a}\\text{ (vektori enda skalaarkorrutis).}`,
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
-          `\\vec{a}\\cdot\\vec{a} = ${ax}^2+${ay}^2 = ${value} \\text{ (see võrdub } |\\vec{a}|^2\\text{)}`,
+          `\\vec{a}\\cdot\\vec{a} = ${alus(ax)}^2+${alus(ay)}^2 = ${value} \\text{ (see võrdub } |\\vec{a}|^2\\text{)}`,
         ],
       };
     },
