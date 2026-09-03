@@ -1,8 +1,13 @@
 "use server";
 
 import type { Raskus, TeemaId } from "@/content/types";
+import { getUnlockedAchievementIds, unlockAchievements } from "@/lib/db/achievements";
 import { recordAttempt } from "@/lib/db/guest-sessions";
+import { uuedSaavutused } from "@/lib/gamification/achievements";
+import { rakendaKatseTulemus } from "@/lib/gamification/apply-attempt";
+import { koostaSaavutusteKontekst } from "@/lib/gamification/context";
 import { getGuestId } from "@/lib/session/server";
+import { getCurrentUserId } from "@/lib/session/user";
 import * as session from "./session";
 import type { KontrolliTulemus, Seeria, TeemaRaskusValik } from "./session";
 
@@ -37,11 +42,28 @@ export async function kontrolliVastust(
 ): Promise<KontrolliTulemus> {
   const tulemus = await session.kontrolliVastust(token, indeks, sisend);
   const guestId = await getGuestId();
+  const userId = await getCurrentUserId();
   await recordAttempt({
     guestId,
+    userId: userId ?? undefined,
     teemaId: tulemus.teemaId,
     raskus: tulemus.raskus,
     oige: tulemus.oige,
   });
+
+  // Gamification only accumulates for real accounts — there's no schema for
+  // guest xp/streaks/achievements, and that's intentional (todo.md Ship 4).
+  if (userId) {
+    await rakendaKatseTulemus(userId, {
+      teemaId: tulemus.teemaId,
+      raskus: tulemus.raskus,
+      oige: tulemus.oige,
+    });
+    const kontekst = await koostaSaavutusteKontekst(userId);
+    const varemSaavutatud = await getUnlockedAchievementIds(userId);
+    const uued = uuedSaavutused(kontekst, varemSaavutatud);
+    await unlockAchievements(userId, uued);
+  }
+
   return tulemus;
 }
