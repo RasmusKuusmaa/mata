@@ -175,4 +175,8 @@ export const et = {
   "nav.sobrad": "Sõbrad",
   "nav.konto": "Konto",
   "konto.pealkiri": "Konto",
+
+  "kordamine.pealkiri": "Tänane kordamine",
+  "kordamine.tyhi": "Sul pole veel harjutuste ajalugu, millest kordamist koostada. Alusta mõne teema harjutamisega.",
+  "kordamine.vaataTeemasid": "Vaata teemasid",
 } as const;
