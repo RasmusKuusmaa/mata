@@ -32,17 +32,56 @@ export default function Home() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
           href="/lai-matemaatika/teemad"
-          className="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground"
+          className="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90"
         >
           {t("kodu.prooviIlmaKontota")}
         </Link>
         <Link
+          href="/lai-matemaatika/harjuta"
+          className="rounded-md border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-surface"
+        >
+          {t("kodu.koostaTest")}
+        </Link>
+        <Link
           href="/lai-matemaatika/teemad"
-          className="rounded-md border border-border px-5 py-2.5 text-sm font-medium hover:bg-surface"
+          className="rounded-md border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-surface"
         >
           {t("kodu.vaataTeemasid")}
         </Link>
       </div>
+
+      <section className="mt-16 grid gap-4 sm:grid-cols-3">
+        <div className="rounded-md border border-border bg-surface p-5">
+          <h2 className="font-display text-base font-semibold">
+            {t("kodu.tunnusLahendusSilt")}
+          </h2>
+          <p className="mt-2 text-sm text-foreground/70">
+            {t("kodu.tunnusLahendusSelgitus")}
+          </p>
+        </div>
+        <div className="rounded-md border border-border bg-surface p-5">
+          <h2 className="font-display text-base font-semibold">
+            {t("kodu.tunnusTestSilt")}
+          </h2>
+          <p className="mt-2 text-sm text-foreground/70">
+            {t("kodu.tunnusTestSelgitus")}
+          </p>
+        </div>
+        <div className="rounded-md border border-border bg-surface p-5">
+          <h2 className="font-display text-base font-semibold">
+            {t("kodu.tunnusValemilehtSilt")}
+          </h2>
+          <p className="mt-2 text-sm text-foreground/70">
+            {t("kodu.tunnusValemilehtSelgitus")}
+          </p>
+          <Link
+            href="/valemileht"
+            className="mt-3 inline-block text-sm text-accent hover:underline"
+          >
+            {t("nav.valemileht")}
+          </Link>
+        </div>
+      </section>
 
       <section className="mt-16">
         <h2 className="font-display text-xl font-semibold">{t("kodu.miksSilt")}</h2>
