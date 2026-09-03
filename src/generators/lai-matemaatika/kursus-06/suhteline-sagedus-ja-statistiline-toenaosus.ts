@@ -1,5 +1,5 @@
 import { arvVaartus } from "@/generators/nice";
-import { int, pick } from "@/generators/rng";
+import { int } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
 const TEEMA_ID = "06-suhteline-sagedus-ja-statistiline-toenaosus";
