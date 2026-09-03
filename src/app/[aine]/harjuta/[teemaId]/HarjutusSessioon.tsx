@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import Link from "next/link";
 import { Math as Valem } from "@/components/math/Math";
 import { MathBlock } from "@/components/math/MathBlock";
+import { VastuseSisend } from "@/components/practice/VastuseSisend";
 import { t } from "@/lib/i18n";
 import { kontrolliVastust } from "@/lib/practice/actions";
 import type { KlientUlesanne, KontrolliTulemus } from "@/lib/practice/session";
@@ -31,14 +32,9 @@ export function HarjutusSessioon({ tagasiHref, token, ulesanded }: Props) {
   const [vihjeNahtav, setVihjeNahtav] = useState(false);
   const [oigeidKokku, setOigeidKokku] = useState(0);
   const [esitamisel, alustaEsitust] = useTransition();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const lopetatud = indeks >= ulesanded.length;
   const ulesanne = lopetatud ? undefined : ulesanded[indeks];
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [indeks]);
 
   const esita = useCallback(() => {
     if (!ulesanne || tulemus !== null || sisend.trim().length === 0) return;
@@ -133,48 +129,19 @@ export function HarjutusSessioon({ tagasiHref, token, ulesanded }: Props) {
       )}
 
       <div className="mt-6">
-        {vastuseTuup.tuup === "valik" ? (
-          <div className="flex flex-col gap-2">
-            {vastuseTuup.valikud.map((valik) => {
-              const onOigeVastus =
-                tulemus !== null &&
-                tulemus.vastus.tuup === "valik" &&
-                tulemus.vastus.oige === valik;
-              return (
-                <button
-                  key={valik}
-                  type="button"
-                  disabled={tulemus !== null}
-                  onClick={() => setSisend(valik)}
-                  className={`rounded-md border px-3 py-2 text-left text-sm ${
-                    onOigeVastus
-                      ? "border-accent bg-accent/10"
-                      : sisend === valik
-                        ? "border-foreground/40"
-                        : "border-border bg-surface"
-                  }`}
-                >
-                  {valik}
-                </button>
-              );
-            })}
-          </div>
-        ) : (
-          <input
-            ref={inputRef}
-            type="text"
-            inputMode={vastuseTuup.tuup === "hulk" ? "text" : "decimal"}
-            value={sisend}
-            disabled={tulemus !== null}
-            onChange={(event) => setSisend(event.target.value)}
-            placeholder={
-              vastuseTuup.tuup === "hulk"
-                ? t("harjuta.hulgiKoht")
-                : t("harjuta.sisendKoht")
-            }
-            className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm"
-          />
-        )}
+        <VastuseSisend
+          key={indeks}
+          vastuseTuup={vastuseTuup}
+          value={sisend}
+          onChange={setSisend}
+          disabled={tulemus !== null}
+          autoFocus
+          oigeVastus={
+            tulemus !== null && tulemus.vastus.tuup === "valik"
+              ? tulemus.vastus.oige
+              : undefined
+          }
+        />
       </div>
 
       {tulemus === null ? (
