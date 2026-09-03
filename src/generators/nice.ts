@@ -381,3 +381,57 @@ export function niceTrigTriangle(rng: Rng): NiceTriangle {
   const [a, b, c] = pick(rng, NICE_TRIG_TRIPLES);
   return { sides: [a, b, c] };
 }
+
+/**
+ * Integer 3D vectors `(x, y, z)` whose length is itself a nice integer
+ * (`x²+y²+z²` a perfect square — a "Pythagorean quadruple") — course 12's
+ * (Sirge ja tasand ruumis) equivalent of `PYTHAGOREAN_TRIPLES`, used so an
+ * angle-between-vectors question's cosine has a chance of reducing to a
+ * nice fraction instead of an arbitrary surd.
+ */
+export const NICE_3D_VECTORS: readonly [number, number, number, number][] = [
+  [1, 2, 2, 3],
+  [2, 3, 6, 7],
+  [2, 6, 9, 11],
+  [1, 4, 8, 9],
+  [4, 4, 7, 9],
+  [6, 6, 7, 11],
+  [3, 4, 12, 13],
+  [2, 10, 11, 15],
+];
+
+/** One of `NICE_3D_VECTORS`' component sets, with each axis independently
+ * and randomly sign-flipped — the shared magnitude is sign-independent, so
+ * this multiplies the pool's variety without touching niceness. */
+function signedNiceVector(rng: Rng): [number, number, number, number] {
+  const [x, y, z, len] = pick(rng, NICE_3D_VECTORS);
+  return [x * pick(rng, [1, -1] as const), y * pick(rng, [1, -1] as const), z * pick(rng, [1, -1] as const), len];
+}
+
+/**
+ * Two `NICE_3D_VECTORS` entries (independently sign-flipped) whose angle's
+ * cosine reduces to a nice fraction — rejection-sampled via
+ * `redrawUntilNice` rather than curated pair-by-pair, since sign flips
+ * alone already give each base pair several candidate cosines to try.
+ */
+export type NiceVectorAnglePair = {
+  a: [number, number, number];
+  b: [number, number, number];
+  /** Signed dot product and the (always positive) product of magnitudes —
+   * callers form `arvVaartus(dot, denom)` for a signed angle (two vectors)
+   * or `arvVaartus(Math.abs(dot), denom)` for an always-acute angle (two
+   * lines, or a line and a plane's normal). */
+  dot: number;
+  denom: number;
+};
+
+export function niceVectorAnglePair(rng: Rng): NiceVectorAnglePair {
+  return redrawUntilNice((r) => {
+    const [ax, ay, az, alen] = signedNiceVector(r);
+    const [bx, by, bz, blen] = signedNiceVector(r);
+    const dot = ax * bx + ay * by + az * bz;
+    const denom = alen * blen;
+    if (!isNice(dot / denom)) return null;
+    return { a: [ax, ay, az], b: [bx, by, bz], dot, denom };
+  }, rng);
+}
