@@ -8,6 +8,13 @@
       "when": 1788375867900,
       "tag": "0000_shallow_zuras",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788469795439,
+      "tag": "0001_extend_schema_for_accounts_progress",
+      "breakpoints": true
     }
   ]
 }
