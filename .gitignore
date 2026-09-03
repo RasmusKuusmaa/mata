@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated at build/dev/check time — see scripts/generate-registry-index.ts
+src/generators/generated-index.ts

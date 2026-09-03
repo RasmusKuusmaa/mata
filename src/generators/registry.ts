@@ -18,6 +18,18 @@ function isGeneraator(value: unknown): value is Generaator {
   );
 }
 
+function extractGeneraatorid(mod: Record<string, unknown>): Generaator[] {
+  const found: Generaator[] = [];
+  for (const exported of Object.values(mod)) {
+    if (isGeneraator(exported)) {
+      found.push(exported);
+    } else if (Array.isArray(exported)) {
+      found.push(...exported.filter(isGeneraator));
+    }
+  }
+  return found;
+}
+
 function listDirs(dir: string): string[] {
   try {
     return readdirSync(dir, { withFileTypes: true })
@@ -44,16 +56,16 @@ function listGeneratorFiles(dir: string): string[] {
 }
 
 /**
- * Every generator found under `<root>/<aine>/kursus-NN/*.ts` — dropping a
- * file there, exporting a `Generaator` (or an array of them) from any of
- * its top-level bindings, registers it. No central list to edit.
- *
- * Node-only: walks the real filesystem and `import()`s each module by its
- * absolute path. Generators only ever run server-side (never shipped to
- * the client), so this must only be called from server code.
+ * Walks `<root>/<aine>/kursus-NN/*.ts` on the real filesystem and
+ * `import()`s each file by its absolute path. This only works under a
+ * runtime that can load `.ts` files directly (vitest, tsx) — Next.js's
+ * bundler never sees a purely-dynamic `import()` built from a runtime
+ * string, so it can't trace or transpile the target, and plain Node's ESM
+ * loader has no idea what a `.ts` extension is. Test-only for that reason;
+ * see `discoverGenerators` for the app's actual path.
  */
-export async function discoverGenerators(
-  root: string = DEFAULT_ROOT,
+async function discoverGeneratorsFromFilesystem(
+  root: string,
 ): Promise<Generaator[]> {
   const found: Generaator[] = [];
 
@@ -67,18 +79,40 @@ export async function discoverGenerators(
         const moduleUrl = pathToFileURL(path.join(kursusPath, file)).href;
         const mod: Record<string, unknown> =
           await import(/* webpackIgnore: true */ moduleUrl);
-        for (const exported of Object.values(mod)) {
-          if (isGeneraator(exported)) {
-            found.push(exported);
-          } else if (Array.isArray(exported)) {
-            found.push(...exported.filter(isGeneraator));
-          }
-        }
+        found.push(...extractGeneraatorid(mod));
       }
     }
   }
 
   return found;
+}
+
+/**
+ * Every generator dropped under `src/generators/<aine>/kursus-NN/`,
+ * exporting a `Generaator` (or an array of them) from any top-level
+ * binding — no central list to edit.
+ *
+ * Called with no `root` (the app's real path, always): resolves through
+ * `generated-index.ts`, a static-import module `scripts/
+ * generate-registry-index.ts` regenerates from the same directory scan
+ * before every `dev`/`build`/`check` (see package.json). Static imports
+ * are what let Next.js's bundler actually include these files in the
+ * server bundle — a runtime filesystem scan plus dynamic `import()` of a
+ * raw `.ts` path (this module's old approach) throws
+ * `ERR_UNKNOWN_FILE_EXTENSION` the moment it runs inside Next.js, in dev
+ * or deployed.
+ *
+ * Called with an explicit `root` (tests only, e.g. the fixtures
+ * directory): falls back to the filesystem-scanning path above, which
+ * vitest's own `.ts`-aware transform handles fine.
+ */
+export async function discoverGenerators(root?: string): Promise<Generaator[]> {
+  if (root !== undefined) {
+    return discoverGeneratorsFromFilesystem(root);
+  }
+
+  const { GENERATOR_MODULES } = await import("./generated-index");
+  return GENERATOR_MODULES.flatMap((mod) => extractGeneraatorid(mod));
 }
 
 function difficultyKey(teemaId: TeemaId, raskus: Raskus): string {
@@ -131,3 +165,8 @@ export async function buildRegistry(
 ): Promise<GeneratorRegistry> {
   return indexGenerators(await discoverGenerators(root));
 }
+
+/** Re-exported so `generate-registry-index.ts` (and any other future
+ * codegen) can reuse the same discovery constants without duplicating
+ * them. */
+export { DEFAULT_ROOT, COURSE_DIR_PATTERN, listDirs, listGeneratorFiles };
