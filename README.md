@@ -1,168 +1,179 @@
 # Lai matemaatika
 
-Riigieksami ettevalmistusplatvorm laia matemaatika kursusele (eksam 2027) —
-teemapõhised selgitused, automaatselt genereeritud harjutusülesanded (koos
-täieliku lahenduskäiguga), kohandatud harjutustestid, eksamirežiim ja
-edenemise jälgimine.
+Riigieksami ettevalmistusplatvorm laia matemaatika kursusele (eksam 2027).
+Next.js 15 (App Router), TypeScript (strict), Tailwind CSS, Drizzle ORM over
+Postgres. All user-facing text is Estonian; code, comments, commits, and this
+file are English. See `todo.md` for the full ship-by-ship plan this project
+follows and `docs/FEATURES.md` for ambitious ideas beyond it.
 
-Next.js 15 (App Router), TypeScript strict, Tailwind CSS, Postgres (Drizzle
-ORM). Node 22 (see `.nvmrc`).
+## Setup
 
-## Quick start
+Requires Node 22 (see `.nvmrc`) and a local Postgres.
 
 ```bash
-cp .env.example .env       # fill in DATABASE_URL etc. — see below
-docker compose up -d       # local Postgres
+nvm use              # or install Node 22 some other way
 npm install
-npm run db:migrate
+cp .env.example .env # fill in DATABASE_URL if it isn't already Docker's default
+docker compose up -d # starts local Postgres on 5432
+npm run db:migrate   # applies drizzle/*.sql
 npm run dev
 ```
 
-Open `http://localhost:3000`. No account is needed to browse topics or
-practise — accounts (Ship 3) add persistent progress, notes and
-gamification on top of the same guest experience.
+`npm run dev` and `npm run build` both first run `npm run generate:registry`
+(see "The generator registry" below) via `predev`/`prebuild` hooks — you
+don't need to run it by hand in normal use.
 
-## Scripts
+Useful scripts (see `package.json` for the full list):
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` / `build` / `start` | Standard Next.js dev/build/start. |
-| `npm run check` | `generate:registry` + `tsc --noEmit` + `eslint` + `vitest run` — run this before every commit. |
-| `npm run coverage:content` | Per-course table of topics/explanations/generators/% complete — the project's progress meter. |
-| `npm run db:generate` / `db:migrate` | Drizzle migration generation/apply. |
-| `npm run generate:registry` | Regenerates `src/generators/generated-index.ts` (gitignored build artifact — see below). |
+- `npm run check` — typecheck (`tsc --noEmit`), lint, and the full test
+  suite. Run this before every commit; CI runs the same command.
+- `npm run coverage:content` — prints a per-course table of how many topics
+  have an explanation and full generator coverage. The project's progress
+  meter.
+- `npm run db:seed` — populates the local database with a demo user and
+  weeks of realistic attempt history, useful for building screens against
+  something that looks real.
 
-## Project structure
+## Project shape
 
-```
-src/content/<aine>/          curriculum data: courses, topics, explanations
-src/generators/<aine>/kursus-NN/   one file per topic, exports Generaator(s)
-src/app/                     routes (App Router)
-src/lib/                     server logic: practice sessions, exam mode,
-                              auth, mastery, srs, db, i18n, analytics
-src/components/              shared UI (math rendering, nav, practice input)
-docs/                        exam spec, curriculum diff, deploy/auth notes
-```
+- `src/content/<aine>/` — the curriculum itself, as plain TypeScript data:
+  course lists (`kursused.ts`), topic trees (`teemad/kursus-NN.ts`), and
+  worked explanations (`selgitused/kursus-NN.ts`). No file under
+  `src/content` imports from `src/app`, so content stays extractable to a
+  separate package later. **The database holds only user data — never
+  curriculum content.**
+- `src/generators/<aine>/kursus-NN/` — one file per topic, each exporting a
+  `generaatorid: Generaator[]` array (see "Adding a generator" below).
+  Auto-discovered at `predev`/`prebuild`/`pretest` time — dropping a file
+  here registers it, no central list to edit.
+- `src/lib/` — everything else server-side: the answer checker, mastery
+  model, spaced-repetition scheduler, gamification (XP/streaks/levels/
+  achievements), the friends/social layer, auth, database schema and
+  queries.
+- `src/app/` — routes. Server actions strip `vastus`/`lahendus` from every
+  question before it reaches the client (see `src/lib/practice/session.ts`)
+  — a generated question's answer and worked solution never reach the
+  browser before submission. This is enforced by a test, not just
+  convention.
+- `src/components/` — shared UI, notably `<Math>`/`<MathBlock>`
+  (server-rendered KaTeX with an Estonian macro set: `\tg`, `\ctg`,
+  `\arctg`) and `<Selgitus>` (renders an explanation's Intuitsioon/
+  Definitsioon/Näide/Tüüpvead/Valemid sections).
 
-Content (`src/content`) never imports from `src/app` — it's kept
-extractable to a separate package later. The database (`src/lib/db/schema.ts`)
-holds **only** user data; the curriculum itself lives in the repo as
-TypeScript, not the database.
+## Content-authoring workflow
 
-## Adding a generator (the core authoring loop)
+Authoring one topic end to end means writing three things, using an
+existing course as the concrete template — `src/content/lai-matemaatika/
+selgitused/kursus-13.ts` and `src/generators/lai-matemaatika/kursus-13/` are
+a good, complete example to copy the shape of:
 
-Every practice question comes from a **generator**: a small, pure, seeded
-function that returns a question, its answer, and a full worked solution.
-Generators are auto-discovered — dropping a file into
-`src/generators/<aine>/kursus-NN/` registers it, no central list to edit.
+1. **The topic itself**, in `src/content/lai-matemaatika/teemad/kursus-NN.ts`
+   — id, `opitulemused` (copied verbatim from the ainekava), `eeldused`
+   (prerequisite topic ids), `allikas` (which curriculum(s) it's from), and
+   `eksamiKate` (keyed by exam year, from `docs/eristuskiri-2027.md`'s
+   exclusion list — a topic excluded from one year's exam stays in the tree
+   fully authored, it just renders an "ei käsitleta" badge and sorts last).
+2. **The explanation**, in `src/content/lai-matemaatika/selgitused/
+   kursus-NN.ts` — a `SelgitusProps` object per topic id (`definitsioon`,
+   `naide`, and optionally `intuitsioon`/`tuupvead`/`valemid`), written as
+   markdown with inline `<Math>{"..."}</Math>` / `<MathBlock>{"..."}</MathBlock>`
+   for KaTeX. No bare `$...$` delimiters. Register it by re-exporting from
+   `selgitused/index.ts`.
+3. **At least three generators per difficulty** (`kerge`/`keskmine`/
+   `raske`), in `src/generators/lai-matemaatika/kursus-NN/<topic>.ts` — see
+   "Adding a generator" below.
+
+Then remove the topic's id from `TODO_ALLOWLIST` in
+`src/content/__tests__/coverage.test.ts` (this is the coverage gate — it
+fails the build if any non-allowlisted topic is missing an explanation,
+full generator coverage, or has a dangling prerequisite/empty
+`opitulemused`) and run `npm run coverage:content` to see the number move.
+
+## Adding a generator
+
+A generator is a plain object matching `Generaator` (`src/generators/
+types.ts`):
 
 ```ts
-// src/generators/lai-matemaatika/kursus-01/example-topic.ts
-import { int } from "@/generators/rng";
-import type { Generaator } from "@/generators/types";
-
-const TEEMA_ID = "01-example-topic"; // must match a Teema.id
-
-export const generaatorid: Generaator[] = [
-  {
-    aine: "lai-matemaatika",
-    teemaId: TEEMA_ID,
-    raskus: "kerge", // "kerge" | "keskmine" | "raske"
-    genereeri: (rng) => {
-      const a = int(rng, 2, 12);
-      return {
-        seed: 1,
-        kysimus: `\\text{Leia } ${a}+${a}\\text{.}`,
-        vastus: { tuup: "arv", kuju: "taisarv", vaartus: 2 * a },
-        lahendus: [`${a}+${a}=${2 * a}`],
-      };
-    },
-  },
-];
+{
+  aine: "lai-matemaatika",
+  teemaId: "13-kera",
+  raskus: "kerge", // | "keskmine" | "raske"
+  genereeri: (rng) => ({
+    seed: 1,
+    kysimus: `...`,       // LaTeX, no answer or solution leaked
+    vastus: { tuup: "arv", ... }, // or "tapne" | "valik" | "hulk" — see Vastus
+    lahendus: ["...", "..."],     // full worked solution, one string per step
+    vihje: "...",                 // optional
+  }),
+}
 ```
 
-Rules a generator must follow (enforced by the 500-iteration niceness
-harness in `src/generators/__tests__`, run as part of `npm run check`):
+`genereeri` must be deterministic in `rng` — the same seed always produces
+the same question — and its output must be "nice": an integer, a fraction
+with denominator ≤ 12, or an exact form like `k√n`/`kπ`. This is enforced
+by a 500-seed niceness harness (`src/generators/__tests__/niceness.test.ts`)
+run against every registered generator: it asserts the answer passes
+`isNice()`, no `NaN`/`Infinity`/`undefined`/raw `-0`/raw decimal point
+shows up anywhere, every KaTeX string actually parses, multiple-choice
+distractors are unique and none accidentally correct, and identical seeds
+produce identical output.
 
-- The answer must be "nice": an integer, a fraction with denominator ≤ 12,
-  or an exact form like `k√n` or `kπ` (`src/generators/nice.ts` has the
-  toolkit — `redrawUntilNice()`, curated Pythagorean/angle triples, etc.).
-  Never emit a raw decimal.
-- Same seed → same question, always (generators are pure functions of
-  `rng`).
-- No `NaN`, `Infinity`, `undefined`, or a raw `-0` in any rendered string.
-- All LaTeX must parse under KaTeX; multiple-choice distractors must be
-  unique and never equal to the correct answer.
-- A topic needs **3 or more generators spanning every difficulty** and a
-  matching explanation (see below) before it counts as covered — checked by
-  `src/content/__tests__/coverage.test.ts`'s `TODO_ALLOWLIST` gate.
+`src/generators/nice.ts` is the toolkit for staying inside those rules —
+`PYTHAGOREAN_TRIPLES`/`NICE_TRIG_TRIPLES`, `factorableQuadratic()`,
+`niceTriangle()`, `reduceFraction()`, and critically
+`redrawUntilNice(fn, rng, maxAttempts)`, which re-samples until `fn`
+returns a non-null "nice" candidate and **throws loudly** rather than ever
+emitting an ugly number. Reach for this instead of hoping a draw happens to
+come out clean. A few recurring traps worth knowing before writing a new
+generator (all previously hit and fixed — see `git log` for the actual
+bugs): a fraction whose denominator is the raw product of two independently
+drawn numbers is not automatically nice even if each factor looks small;
+building a term like `x - a` by string-concatenating a possibly
+negative-or-zero `a` needs a sign-aware formatter or you'll emit `x--3` or
+`x-0`; and most Pythagorean triples other than 3-4-5 (and its scalings)
+give trig ratios that don't reduce to a denominator ≤ 12.
 
-A topic also needs an explanation in
-`src/content/<aine>/selgitused/kursus-NN.ts` (`definitsioon`, `naide`, and
-optionally `intuitsioon`/`tuupvead`/`valemid` — rendered by
-`<Selgitus>`/`<MathBlock>`).
+## The generator registry
 
-## Registry generation — why it's a build step, not a runtime scan
-
-`src/generators/generated-index.ts` is a **gitignored** static-import index,
-regenerated by `scripts/generate-registry-index.ts` before every
-`dev`/`build`/`check`/`test` run. Next.js's bundler can't trace a purely
-dynamic `import()` built from a scanned filesystem path — only a real
-`discoverGenerators()` filesystem scan works, and only under a runtime that
-loads `.ts` directly (Vitest, via the `root` test-injection point). If you
-add a generator file and it doesn't show up, run `npm run generate:registry`
-(or just `npm run dev`, which does it automatically).
-
-## Testing
-
-`npx vitest run <path>` runs a subset; `npm run check` runs everything.
-Tests are split by Vitest "project": `*.test.ts` under `node` (for
-`src/lib`, `src/generators`), `*.test.tsx` under `jsdom` (for
-`src/app`/`src/components`). See `vitest.config.mts`.
-
-## Feature flags
-
-`src/lib/flags.ts` — unfinished features ship behind a flag (env var
-`NEXT_PUBLIC_FLAG_<NAME>`), defaulting off in production, so `main` stays
-deployable at every commit. A flag is deleted the same commit its feature
-ships.
+`src/generators/registry.ts` discovers every generator via a filesystem
+scan of `src/generators/<aine>/kursus-NN/` — but that scan uses Node's
+`fs`/`path`/`url`, so it only works when actually running under Node
+(scripts, tests, server actions). Next.js's bundler can't trace a raw
+filesystem scan, and webpack fails outright if anything reachable from a
+**client** component ends up importing `registry.ts` (directly or
+transitively) — it's happened twice in this project's history, once for
+the whole practice flow (fixed by generating a static import index) and
+once for the exam mode (fixed by splitting a client-needed constants file
+out of a server-only module). `scripts/generate-registry-index.ts` runs
+before dev/build/test and writes `src/generators/generated-index.ts`, a
+plain static import list Next's bundler can actually trace — this is what
+production code should end up depending on transitively. If you add a
+new file that a client component needs a *type* or *plain constant* from,
+and that file also (even indirectly) imports `registry.ts`, split the
+client-safe pieces into their own module rather than importing the mixed
+file directly — `src/lib/eksam/constants.ts` next to `src/lib/eksam/
+session.ts` is a worked example of the split.
 
 ## Extension points
 
-Designed in from Ship 0 so they're additive, not migrations:
+These were designed in from Ship 0 so they're additive, not migrations:
 
-1. **New subject.** Every topic carries `aine`. Adding kitsas matemaatika,
-   füüsika, etc. is new content files under a new `aine` value, not a
-   schema change.
-2. **New curriculum source.** Topics carry `allikas: ('rok2011'|'rok2023')[]`
-   — extend the union for a future curriculum revision.
-3. **Per-exam-year coverage.** `eksamiKate: Record<number, boolean>` per
-   topic. A topic excluded from one year's exam is never deleted, just
-   flagged.
-4. **New answer type.** `Vastus` is a discriminated union
-   (`arv | tapne | valik | hulk`) — a new type (free expression, graph-click,
-   ordering, ...) slots in without touching existing generators.
-5. **New locale.** `src/lib/i18n/` is per-locale from the first commit; the
-   exam is also published in Ukrainian, so a second catalogue (`uk.ts`) is a
-   plausible next step, not hypothetical.
-6. **Mastery/scheduling models.** `MasteryModel` and `ReviewScheduler` are
-   interfaces (`src/lib/mastery`, `src/lib/srs`) — swappable without
-   touching call sites.
-
-## Deployment and auth
-
-See `docs/deploy.md` (Vercel + Neon) and `docs/auth.md` (Auth.js — Google
-OAuth + email magic link, both opt-in per environment via env vars).
-
-## Contributing conventions
-
-- One commit per logical change, message is one line, lowercase imperative,
-  conventional-commit-style prefix (`feat:`, `fix:`, `content:`, `test:`,
-  `docs:`, `chore:`). No body, no signature trailer.
-- Run `npm run check` before every commit.
-- All user-facing text goes through `src/lib/i18n/et.ts`'s `t()` — enforced
-  by an ESLint rule against inline strings in `src/app`/`src/components`.
-  Estonian number formatting throughout (`src/lib/format/number.ts`): comma
-  decimals, space thousands separator, never a raw `.`.
-- See `todo.md` for the full ship-by-ship plan and `docs/FEATURES.md` for
-  the longer-term feature brainstorm.
+- **A new subject** (e.g. `kitsas-matemaatika`, `füüsika`): extend the
+  `Aine` union in `src/content/types.ts`, add a `src/content/<aine>/`
+  content tree and a `src/generators/<aine>/kursus-NN/` generator tree in
+  the same shape as `lai-matemaatika`'s. Routes are already parameterized
+  as `/[aine]/teemad/...` / `/[aine]/harjuta/...`.
+- **A new curriculum source**: extend the `allikas` union
+  (`'rok2011' | 'rok2023'`) on `Teema`.
+- **A new exam year's coverage**: `eksamiKate` is `Record<number, boolean>`
+  — add a new year's key across the topic tree from that year's
+  eristuskiri; never delete a topic for a year that excludes it.
+- **A new answer type**: `Vastus` is a discriminated union
+  (`src/generators/types.ts`) — add a new `tuup` member and a matching
+  branch in `src/lib/answer/check.ts`'s checker; existing generators and
+  branches are untouched.
+- **A second locale**: all user-facing copy already goes through `t()`
+  against a flat catalogue (`src/lib/i18n/et.ts`), enforced by a lint rule
+  against inline strings in `src/app`/`src/components` — a second
+  catalogue file plus locale resolution is additive, not a rewrite.
