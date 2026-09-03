@@ -37,6 +37,29 @@ body {
 }
 
 /*
+ * A visible focus ring everywhere, keyboard-only (`:focus-visible`, not
+ * `:focus`) so a mouse click never shows one — todo.md Ship 6.1. One rule
+ * here covers every interactive element site-wide rather than each
+ * component repeating its own outline.
+ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
  * Typographic scale for math-heavy content (explanations, worked solutions).
  * Generous line-height and vertical rhythm so KaTeX display blocks (added in
  * Ship 0.7) don't feel cramped against surrounding prose.
