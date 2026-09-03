@@ -5,6 +5,7 @@ import { selgitused as kursus01Selgitused } from "./kursus-01";
 import { selgitused as kursus02Selgitused } from "./kursus-02";
 import { selgitused as kursus03Selgitused } from "./kursus-03";
 import { selgitused as kursus04Selgitused } from "./kursus-04";
+import { selgitused as kursus05Selgitused } from "./kursus-05";
 import { selgitused as kursus07Selgitused } from "./kursus-07";
 import { selgitused as kursus08Selgitused } from "./kursus-08";
 import { selgitused as kursus09Selgitused } from "./kursus-09";
@@ -22,6 +23,7 @@ export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {
   ...kursus02Selgitused,
   ...kursus03Selgitused,
   ...kursus04Selgitused,
+  ...kursus05Selgitused,
   ...kursus07Selgitused,
   ...kursus08Selgitused,
   ...kursus09Selgitused,
