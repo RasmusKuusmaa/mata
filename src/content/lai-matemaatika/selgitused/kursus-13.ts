@@ -12,7 +12,7 @@ export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {
 **Prisma** on hulktahukas, mille kaks tahku (põhjad) on kongruentsed
 hulknurgad paralleelsetel tasanditel ning ülejäänud tahud (külgtahud) on
 rööpkülikud. Korrapärase prisma ruumala ja täispindala:
-<MathBlock>{"V = S_p \\\\cdot h \\\\qquad S = 2S_p + S_{külg}"}</MathBlock>
+<MathBlock>{"V = S_p \\\\cdot h \\\\qquad S = 2S_p + S_{\\\\text{külg}}"}</MathBlock>
 kus <Math>{"S_p"}</Math> on põhja pindala ja <Math>{"h"}</Math> kõrgus.
 `,
     naide: `
@@ -25,7 +25,7 @@ Korrapärase nelinurkse prisma põhiserv on <Math>{"a=4"}</Math> ja kõrgus
     definitsioon: `
 **Püramiid** on hulktahukas, mille üks tahk (põhi) on hulknurk ja ülejäänud
 tahud (külgtahud) on kolmnurgad, mis koonduvad ühte tippu.
-<MathBlock>{"V = \\\\dfrac13 S_p h \\\\qquad S_{külg} = \\\\dfrac12 P l"}</MathBlock>
+<MathBlock>{"V = \\\\dfrac13 S_p h \\\\qquad S_{\\\\text{külg}} = \\\\dfrac12 P l"}</MathBlock>
 kus <Math>{"P"}</Math> on põhja ümbermõõt ja <Math>{"l"}</Math> apoteem
 (külgtahu kõrgus).
 `,
@@ -68,12 +68,12 @@ Ruumala on <Math>{"V=\\\\pi\\\\cdot3^2\\\\cdot5=45\\\\pi"}</Math>.
 **Koonus** tekib täisnurkse kolmnurga pöörlemisel ümber ühe kaateti.
 Põhiraadius <Math>{"r"}</Math>, kõrgus <Math>{"h"}</Math>, moodustaja
 (külgjoon) <Math>{"l=\\\\sqrt{r^2+h^2}"}</Math>:
-<MathBlock>{"V = \\\\dfrac13\\\\pi r^2 h \\\\qquad S_{külg} = \\\\pi rl \\\\qquad S = \\\\pi r^2 + \\\\pi rl"}</MathBlock>
+<MathBlock>{"V = \\\\dfrac13\\\\pi r^2 h \\\\qquad S_{\\\\text{külg}} = \\\\pi rl \\\\qquad S = \\\\pi r^2 + \\\\pi rl"}</MathBlock>
 `,
     naide: `
 Koonuse põhiraadius on <Math>{"r=3"}</Math> ja moodustaja
 <Math>{"l=5"}</Math>. Külgpindala on
-<Math>{"S_{külg}=\\\\pi\\\\cdot3\\\\cdot5=15\\\\pi"}</Math>.
+<Math>{"S_{\\\\text{külg}}=\\\\pi\\\\cdot3\\\\cdot5=15\\\\pi"}</Math>.
 `,
   },
   "13-kera": {
@@ -94,11 +94,11 @@ Kera **segment** on osa kerast, mis jääb lõikava tasandi ühele poole; **kiht
 (vöö)** jääb kahe paralleelse lõikava tasandi vahele; **sektor** tekib
 segmendi ja koonuse ühendamisel kera keskpunktist. Raadiuse
 <Math>{"R"}</Math> ja segmendi/vöö kõrguse <Math>{"h"}</Math> kaudu:
-<MathBlock>{"S_{vöö}=2\\\\pi Rh \\\\qquad V_{segment}=\\\\dfrac13\\\\pi h^2(3R-h) \\\\qquad V_{sektor}=\\\\dfrac23\\\\pi R^2h"}</MathBlock>
+<MathBlock>{"S_{\\\\text{vöö}}=2\\\\pi Rh \\\\qquad V_{\\\\text{segment}}=\\\\dfrac13\\\\pi h^2(3R-h) \\\\qquad V_{\\\\text{sektor}}=\\\\dfrac23\\\\pi R^2h"}</MathBlock>
 `,
     naide: `
 Kera raadius on <Math>{"R=5"}</Math> ja vöö kõrgus <Math>{"h=2"}</Math>.
-Vöö pindala on <Math>{"S_{vöö}=2\\\\pi\\\\cdot5\\\\cdot2=20\\\\pi"}</Math>.
+Vöö pindala on <Math>{"S_{\\\\text{vöö}}=2\\\\pi\\\\cdot5\\\\cdot2=20\\\\pi"}</Math>.
 `,
   },
   "13-silindri-ruumala-tuletamine": {

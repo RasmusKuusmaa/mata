@@ -63,8 +63,8 @@ export const generaatorid: Generaator[] = [
           vorm: { kind: "pi", numerator, denominator: 3 },
         },
         lahendus: [
-          `V_{silinder} = \\pi r^2h = \\pi\\cdot ${r}^2\\cdot ${hSilinder} = ${cylinderPart}\\pi \\text{ m}^3`,
-          `V_{poolkera} = \\dfrac{2}{3}\\pi r^3 = \\dfrac{2}{3}\\pi\\cdot ${r}^3 = \\dfrac{${2 * r * r * r}\\pi}{3} \\text{ m}^3`,
+          `V_{\\text{silinder}} = \\pi r^2h = \\pi\\cdot ${r}^2\\cdot ${hSilinder} = ${cylinderPart}\\pi \\text{ m}^3`,
+          `V_{\\text{poolkera}} = \\dfrac{2}{3}\\pi r^3 = \\dfrac{2}{3}\\pi\\cdot ${r}^3 = \\dfrac{${2 * r * r * r}\\pi}{3} \\text{ m}^3`,
           `V = ${cylinderPart}\\pi + \\dfrac{${2 * r * r * r}\\pi}{3} = \\dfrac{${3 * cylinderPart}\\pi + ${2 * r * r * r}\\pi}{3} = \\dfrac{${numerator}\\pi}{3} \\text{ m}^3`,
         ],
       };

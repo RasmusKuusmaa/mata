@@ -18,7 +18,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Kera raadius on } R=${R}\\text{. Leia kera vöö (segmendipinna) pindala, kui vöö kõrgus on } h=${h} \\text{ (kordajana arvust } \\pi\\text{).}`,
         vastus: { tuup: "tapne", vorm: { kind: "pi", numerator } },
         lahendus: [
-          `S_{vöö} = 2\\pi Rh = 2\\pi\\cdot ${R}\\cdot ${h} = ${numerator}\\pi`,
+          `S_{\\text{vöö}} = 2\\pi Rh = 2\\pi\\cdot ${R}\\cdot ${h} = ${numerator}\\pi`,
         ],
       };
     },
@@ -40,7 +40,7 @@ export const generaatorid: Generaator[] = [
           vorm: { kind: "pi", numerator, denominator: 3 },
         },
         lahendus: [
-          `V_{sektor} = \\dfrac{2}{3}\\pi R^2 h = \\dfrac{2}{3}\\pi\\cdot ${R}^2\\cdot ${h} = \\dfrac{${numerator}\\pi}{3}`,
+          `V_{\\text{sektor}} = \\dfrac{2}{3}\\pi R^2 h = \\dfrac{2}{3}\\pi\\cdot ${R}^2\\cdot ${h} = \\dfrac{${numerator}\\pi}{3}`,
         ],
       };
     },
@@ -62,7 +62,7 @@ export const generaatorid: Generaator[] = [
           vorm: { kind: "pi", numerator, denominator: 3 },
         },
         lahendus: [
-          `V_{segment} = \\dfrac{1}{3}\\pi h^2(3R-h) = \\dfrac{1}{3}\\pi\\cdot ${h}^2\\cdot(3\\cdot ${R}-${h}) = \\dfrac{1}{3}\\pi\\cdot ${h * h}\\cdot ${3 * R - h} = \\dfrac{${numerator}\\pi}{3}`,
+          `V_{\\text{segment}} = \\dfrac{1}{3}\\pi h^2(3R-h) = \\dfrac{1}{3}\\pi\\cdot ${h}^2\\cdot(3\\cdot ${R}-${h}) = \\dfrac{1}{3}\\pi\\cdot ${h * h}\\cdot ${3 * R - h} = \\dfrac{${numerator}\\pi}{3}`,
         ],
       };
     },

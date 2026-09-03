@@ -46,7 +46,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Koonuse põhiraadius on } r=${r} \\text{ ja moodustaja (külgjoon) } l=${l}\\text{. Leia koonuse külgpindala (kordajana arvust } \\pi\\text{).}`,
         vastus: { tuup: "tapne", vorm: { kind: "pi", numerator } },
         lahendus: [
-          `S_{külg} = \\pi rl = \\pi\\cdot ${r}\\cdot ${l} = ${numerator}\\pi`,
+          `S_{\\text{külg}} = \\pi rl = \\pi\\cdot ${r}\\cdot ${l} = ${numerator}\\pi`,
         ],
       };
     },

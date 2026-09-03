@@ -42,7 +42,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Keha asukoht on } s(t) = ${a}t^2 ${b >= 0 ? "+" : "-"} ${Math.abs(b)}t\\text{. Leia keskmine kiirus ajavahemikul } [${t1}, ${t2}]\\text{.}`,
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
-          `v_{kesk} = \\dfrac{s(${t2})-s(${t1})}{${t2}-${t1}} = \\dfrac{${s2}-${s1}}{${t2 - t1}} = ${value}`,
+          `v_{\\text{kesk}} = \\dfrac{s(${t2})-s(${t1})}{${t2}-${t1}} = \\dfrac{${s2}-${s1}}{${t2 - t1}} = ${value}`,
         ],
       };
     },

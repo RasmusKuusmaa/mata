@@ -82,7 +82,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: half },
         lahendus: [
           `\\text{Lõiketasand on põhjaga sarnane kujund, mille lineaarmõõtmed on poole väiksemad, seega pindalade suhe on } \\left(\\dfrac{1}{2}\\right)^2=\\dfrac{1}{4}\\text{.}`,
-          `S_{lõige} = \\dfrac{1}{4}\\cdot ${baasipindala} = ${half}`,
+          `S_{\\text{lõige}} = \\dfrac{1}{4}\\cdot ${baasipindala} = ${half}`,
         ],
       };
     },

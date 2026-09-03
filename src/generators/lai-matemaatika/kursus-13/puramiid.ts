@@ -51,7 +51,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Korrapärase nelinurkse püramiidi põhiserv on } a=${a} \\text{ ja külgserva ehk apoteemi pikkus on } l=${l}\\text{. Leia püramiidi külgpindala.}`,
         vastus: { tuup: "arv", ...arvVaartus(lateral) },
         lahendus: [
-          `S_{külg} = \\dfrac{1}{2}Pl = \\dfrac{1}{2}\\cdot 4${a}\\cdot ${l} = 2\\cdot ${a}\\cdot ${l} = ${lateral}`,
+          `S_{\\text{külg}} = \\dfrac{1}{2}Pl = \\dfrac{1}{2}\\cdot 4${a}\\cdot ${l} = 2\\cdot ${a}\\cdot ${l} = ${lateral}`,
         ],
       };
     },
