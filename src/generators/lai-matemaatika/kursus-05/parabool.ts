@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { int, nonZeroInt, pick } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -16,7 +17,7 @@ export const generaatorid: Generaator[] = [
         seed: 1,
         kysimus: `\\text{Parabool on } y=${a}x^2\\text{. Leia } y\\text{, kui } x=${x}\\text{.}`,
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: a * x * x },
-        lahendus: [`y = ${a}\\cdot${x}^2 = ${a * x * x}`],
+        lahendus: [`y = ${a}\\cdot${alus(x)}^2 = ${a * x * x}`],
       };
     },
   },

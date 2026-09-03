@@ -1,4 +1,4 @@
-import { arvVaartus } from "@/generators/nice";
+import { alus, arvVaartus } from "@/generators/nice";
 import { int, pick } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -36,7 +36,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", ...arvVaartus(-1, x0 * x0) },
         lahendus: [
           `f'(x) = -1\\cdot x^{-2} = -\\dfrac{1}{x^2}`,
-          `f'(${x0}) = -\\dfrac{1}{${x0}^2} = -\\dfrac{1}{${x0 * x0}}`,
+          `f'(${x0}) = -\\dfrac{1}{${alus(x0)}^2} = -\\dfrac{1}{${x0 * x0}}`,
         ],
       };
     },

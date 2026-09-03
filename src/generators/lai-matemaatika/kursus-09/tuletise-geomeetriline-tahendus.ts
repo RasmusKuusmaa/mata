@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { int, nonZeroInt } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -60,7 +61,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `f'(x) = ${3 * a}x^2 ${2 * b >= 0 ? "+" : "-"} ${Math.abs(2 * b)}x ${c >= 0 ? "+" : "-"} ${Math.abs(c)}`,
-          `f'(${x0}) = ${3 * a} \\cdot ${x0}^2 ${2 * b >= 0 ? "+" : "-"} ${Math.abs(2 * b)} \\cdot ${x0} ${c >= 0 ? "+" : "-"} ${Math.abs(c)} = ${value}`,
+          `f'(${x0}) = ${3 * a} \\cdot ${alus(x0)}^2 ${2 * b >= 0 ? "+" : "-"} ${Math.abs(2 * b)} \\cdot ${x0} ${c >= 0 ? "+" : "-"} ${Math.abs(c)} = ${value}`,
         ],
       };
     },

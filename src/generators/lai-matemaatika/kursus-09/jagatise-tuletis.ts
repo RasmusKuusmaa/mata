@@ -1,4 +1,4 @@
-import { arvVaartus } from "@/generators/nice";
+import { alus, arvVaartus } from "@/generators/nice";
 import { int, pick } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -66,7 +66,7 @@ export const generaatorid: Generaator[] = [
         lahendus: [
           `\\left(\\dfrac{f}{g}\\right)'(x) = \\dfrac{f'(x)g(x)-f(x)g'(x)}{g(x)^2} = \\dfrac{2x\\cdot g(x) - x^2\\cdot1}{g(x)^2}`,
           `g(${x0}) = ${x0} ${c >= 0 ? "+" : "-"} ${Math.abs(c)} = ${q}`,
-          `\\left(\\dfrac{f}{g}\\right)'(${x0}) = \\dfrac{2\\cdot${x0}\\cdot${q} - ${x0}^2}{${q}^2} = \\dfrac{${numerator}}{${q * q}}`,
+          `\\left(\\dfrac{f}{g}\\right)'(${x0}) = \\dfrac{2\\cdot${x0}\\cdot${q} - ${alus(x0)}^2}{${q}^2} = \\dfrac{${numerator}}{${q * q}}`,
         ],
       };
     },

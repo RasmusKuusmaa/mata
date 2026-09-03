@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { int, nonZeroInt, pick } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -22,7 +23,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `\\displaystyle\\int ${fCoeff}x^{${n}}\\,dx = ${k}x^{${n + 1}} + C`,
-          `${k}\\cdot${x0}^{${n + 1}} + ${c} = ${value}`,
+          `${k}\\cdot${alus(x0)}^{${n + 1}} + ${c} = ${value}`,
         ],
       };
     },
@@ -45,7 +46,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `\\displaystyle\\int (${2 * a}x + ${b})\\,dx = ${a}x^2 + ${b}x + C`,
-          `${a}\\cdot${x0}^2 + ${b}\\cdot${x0} + ${c} = ${value}`,
+          `${a}\\cdot${alus(x0)}^2 + ${b}\\cdot${x0} + ${c} = ${value}`,
         ],
       };
     },
@@ -67,7 +68,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `\\displaystyle\\int (${3 * a}x^2 + ${2 * b}x)\\,dx = ${a}x^3 + ${b}x^2 + C`,
-          `${a}\\cdot${x0}^3 + ${b}\\cdot${x0}^2 + ${c} = ${value}`,
+          `${a}\\cdot${alus(x0)}^3 + ${b}\\cdot${alus(x0)}^2 + ${c} = ${value}`,
         ],
       };
     },

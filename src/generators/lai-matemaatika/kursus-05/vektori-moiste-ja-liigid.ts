@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { nonZeroInt, pick } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -50,7 +51,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Kas vektor } \\vec{a}=(${x}, ${y}) \\text{ on ühikvektor (pikkusega 1)?}`,
         vastus: { tuup: "valik", oige: isUnit ? "jah" : "ei", eksitajad: [isUnit ? "ei" : "jah"] },
         lahendus: [
-          `|\\vec{a}| = \\sqrt{${x}^2+${y}^2} = \\sqrt{${x * x + y * y}}${isUnit ? " = 1" : " \\ne 1"}`,
+          `|\\vec{a}| = \\sqrt{${alus(x)}^2+${alus(y)}^2} = \\sqrt{${x * x + y * y}}${isUnit ? " = 1" : " \\ne 1"}`,
         ],
       };
     },

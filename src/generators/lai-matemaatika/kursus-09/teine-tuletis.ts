@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { int, nonZeroInt } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -64,7 +65,7 @@ export const generaatorid: Generaator[] = [
         lahendus: [
           `f'(x) = ${4 * a}x^3 ${3 * b >= 0 ? "+" : "-"} ${Math.abs(3 * b)}x^2 ${2 * c >= 0 ? "+" : "-"} ${Math.abs(2 * c)}x`,
           `f''(x) = ${12 * a}x^2 ${6 * b >= 0 ? "+" : "-"} ${Math.abs(6 * b)}x ${2 * c >= 0 ? "+" : "-"} ${Math.abs(2 * c)}`,
-          `f''(${x0}) = ${12 * a} \\cdot ${x0}^2 ${6 * b >= 0 ? "+" : "-"} ${Math.abs(6 * b)} \\cdot ${x0} ${2 * c >= 0 ? "+" : "-"} ${Math.abs(2 * c)} = ${value}`,
+          `f''(${x0}) = ${12 * a} \\cdot ${alus(x0)}^2 ${6 * b >= 0 ? "+" : "-"} ${Math.abs(6 * b)} \\cdot ${x0} ${2 * c >= 0 ? "+" : "-"} ${Math.abs(2 * c)} = ${value}`,
         ],
       };
     },

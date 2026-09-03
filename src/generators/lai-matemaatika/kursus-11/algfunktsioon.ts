@@ -1,14 +1,8 @@
 import { int, nonZeroInt, pick } from "@/generators/rng";
+import { alus } from "@/generators/nice";
 import type { Generaator } from "@/generators/types";
 
 const TEEMA_ID = "11-algfunktsioon";
-
-/** Parenthesizes a negative value substituted as the base of a power —
- * bare `-2^2` reads as `-(2^2)=-4` under standard precedence, not the
- * intended `(-2)^2=4`. Positive/zero values need no parentheses. */
-function alus(v: number): string {
-  return v < 0 ? `(${v})` : `${v}`;
-}
 
 export const generaatorid: Generaator[] = [
   {

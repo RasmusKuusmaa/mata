@@ -1,3 +1,4 @@
+import { alus } from "@/generators/nice";
 import { int, nonZeroInt } from "@/generators/rng";
 import type { Generaator } from "@/generators/types";
 
@@ -64,7 +65,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `(fg)'(x) = f'(x)g(x) + f(x)g'(x) = ${2 * a}x \\cdot ${b}x + ${a}x^2 \\cdot ${b} = ${3 * a * b}x^2`,
-          `(fg)'(${x0}) = ${3 * a * b} \\cdot ${x0}^2 = ${value}`,
+          `(fg)'(${x0}) = ${3 * a * b} \\cdot ${alus(x0)}^2 = ${value}`,
         ],
       };
     },

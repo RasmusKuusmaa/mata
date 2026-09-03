@@ -83,6 +83,17 @@ export const SPECIAL_ANGLES: Readonly<Record<number, TrigValues>> = {
 };
 
 /**
+ * Parenthesizes a negative value substituted as the base of a power in a
+ * rendered LaTeX string — bare `-2^2` reads as `-(2^2)=-4` under standard
+ * precedence, not the intended `(-2)^2=4`. Use whenever a possibly-negative
+ * drawn value (a function input, a coordinate) is raised to a power in a
+ * `lahendus` step. Positive/zero values need no parentheses.
+ */
+export function alus(v: number): string {
+  return v < 0 ? `(${v})` : `${v}`;
+}
+
+/**
  * Checks whether a plain numeric answer counts as "nice": an integer, or a
  * fraction with denominator ≤ 12. Exact irrational forms are nice by
  * construction (`ExactValue`/`Vastus.tapne`) and never reach this check.
