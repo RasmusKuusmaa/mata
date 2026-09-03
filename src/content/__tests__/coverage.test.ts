@@ -9,22 +9,11 @@ import type { TeemaId } from "@/content/types";
  * that finishes its explanation and generators (Ship 1.8, 2.1-2.13) — never
  * add one back. `does not grow` below enforces that direction.
  */
-const TODO_ALLOWLIST = new Set<TeemaId>([
-  "14-matemaatilise-mudeli-moiste",
-  "14-modelleerimise-etapid",
-  "14-mudeli-headuse-hindamine",
-  "14-tekstulesanded-vorrandite-abil",
-  "14-protsentulesanded-mudelina",
-  "14-lineaarmudelid",
-  "14-ruutmudelid",
-  "14-eksponentmudelid",
-  "14-rakendused-loodusteaduses",
-  "14-rakendused-majanduses",
-  "14-rakendused-tehnoloogias",
-]);
+const TODO_ALLOWLIST = new Set<TeemaId>([]);
 
-/** High-water mark: the allowlist may only shrink from here, never grow. */
-const PREVIOUS_ALLOWLIST_SIZE = 275;
+/** High-water mark: the allowlist may only shrink from here, never grow.
+ * Now empty and locked — full curriculum coverage (Ship 2.14). */
+const PREVIOUS_ALLOWLIST_SIZE = 0;
 
 const remaining = allTeemad.length - TODO_ALLOWLIST.size;
 console.log(
