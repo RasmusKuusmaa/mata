@@ -70,7 +70,7 @@ export const generaatorid: Generaator[] = [
         lahendus: [
           `\\text{Kontrollime, kas suurima külje ruut võrdub teiste ruutude summaga:}`,
           `${p}^2 + ${q}^2 = ${p * p + q * q} \\quad ${onTaisnurkne ? "=" : "\\ne"} \\quad ${r}^2 = ${r * r}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },

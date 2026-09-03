@@ -41,7 +41,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [POSITIIVNE, NEGATIIVNE, NULL].filter((v) => v !== oige) },
         lahendus: [
           `\\text{Paigutame } x = ${x}\\text{: teeme kindlaks iga teguri märgi ja korrutame.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },
@@ -67,7 +67,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [POSITIIVNE, NEGATIIVNE, NULL].filter((v) => v !== oige) },
         lahendus: [
           `\\text{Nullkohad on } ${roots.join(", ")}\\text{. Paigutame } x = ${x} \\text{ igasse tegurisse ja korrutame märgid.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },
@@ -106,7 +106,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [POSITIIVNE, NEGATIIVNE, NULL].filter((v) => v !== oige) },
         lahendus: [
           `\\text{Ruudus tegur } (x-${r1})^2 \\text{ on alati mittenegatiivne — see ei muuda märki, ainult "läbib" nulli ilma märki vahetamata.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },

@@ -45,7 +45,7 @@ export const generaatorid: Generaator[] = [
 
       return {
         seed: 1,
-        kysimus: `\\text{Toote hind } ${alghind} \\text{ eurot } ${kasv ? "tõusis" : "langes"} \\text{ } ${p}\\%\\text{. Leia uus hind.}`,
+        kysimus: `\\text{Toote hind } ${alghind} \\text{ eurot } \\text{${kasv ? "tõusis" : "langes"}} \\text{ } ${p}\\%\\text{. Leia uus hind.}`,
         vastus: { tuup: "arv", ...arvVaartus(uusHind) },
         lahendus: [
           `\\text{Uus hind on } (1 ${opSymbol} \\dfrac{${p}}{100}) \\text{ kordne algsest hinnast:}`,

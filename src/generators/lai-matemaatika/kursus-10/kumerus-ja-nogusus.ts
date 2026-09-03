@@ -46,7 +46,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Funktsiooni } f(x)=${a}x^2 \\text{ teine tuletis on } f''(x)=${2 * a}\\text{ (konstant). Kas graafik on kumer või nõgus kogu määramispiirkonnas?}`,
         vastus: { tuup: "valik", oige: a > 0 ? "kumer" : "nõgus", eksitajad: [a > 0 ? "nõgus" : "kumer"] },
         lahendus: [
-          `f''(x)=${2 * a}\\text{, mis on } ${a > 0 ? "positiivne" : "negatiivne"}\\text{, seega on graafik kogu määramispiirkonnas } \\textbf{${a > 0 ? "kumer" : "nõgus"}}\\text{.}`,
+          `f''(x)=${2 * a}\\text{, mis on } \\text{${a > 0 ? "positiivne" : "negatiivne"}}\\text{, seega on graafik kogu määramispiirkonnas } \\textbf{${a > 0 ? "kumer" : "nõgus"}}\\text{.}`,
         ],
       };
     },

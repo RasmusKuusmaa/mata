@@ -25,7 +25,7 @@ export const generaatorid: Generaator[] = [
         lahendus: [
           `\\text{Paigutame } x = ${kandidaat} \\text{ võrrandisse:}`,
           `${a} \\cdot ${kandidaat} ${bSign} ${Math.abs(b)} = ${a * kandidaat + b}\\text{, aga peaks olema } ${c}\\text{.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },
@@ -55,7 +55,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [oige === "Jah" ? "Ei" : "Jah"] },
         lahendus: [
           `\\text{Lahendihulk on } \\{${r1}, ${r2}\\}\\text{, sest korrutis on null täpselt siis, kui üks tegur on null.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },
@@ -91,7 +91,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [oige === "Jah" ? "Ei" : "Jah"] },
         lahendus: [
           `\\text{Lahendihulk on } \\{${r1}, ${r2}, ${r3}\\}\\text{.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },

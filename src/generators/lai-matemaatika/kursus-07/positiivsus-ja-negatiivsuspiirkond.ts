@@ -37,7 +37,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Millise } x \\text{ korral on } f(x) = ${a}x ${b >= 0 ? "+" : "-"} ${Math.abs(b)} \\text{ positiivne?}`,
         vastus: { tuup: "valik", oige, eksitajad: [teine, `x = ${r}`] },
         lahendus: [
-          `\\text{Nullkoht on } x = ${r}\\text{. Kordaja on } ${kordajaSona}\\text{, seega on funktsioon positiivne, kui } ${oige}\\text{.}`,
+          `\\text{Nullkoht on } x = ${r}\\text{. Kordaja on } \\text{${kordajaSona}}\\text{, seega on funktsioon positiivne, kui } ${oige}\\text{.}`,
         ],
       };
     },

@@ -19,7 +19,7 @@ export const generaatorid: Generaator[] = [
         seed: 1,
         kysimus: `\\text{Kas } ${x} ${sign} ${a} \\text{ on tõene?}`,
         vastus: { tuup: "valik", oige, eksitajad: [oige === "Jah" ? "Ei" : "Jah"] },
-        lahendus: [`${x} \\text{ ja } ${a} \\text{ võrdlemine annab vastuseks: } ${oige}`],
+        lahendus: [`${x} \\text{ ja } ${a} \\text{ võrdlemine annab vastuseks: } \\text{${oige}}`],
       };
     },
   },
@@ -87,7 +87,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [oige === "Jah" ? "Ei" : "Jah"] },
         lahendus: [
           `\\text{Lahendihulk on vahemik } (${Math.min(a, b)}; ${Math.max(a, b)})\\text{.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },

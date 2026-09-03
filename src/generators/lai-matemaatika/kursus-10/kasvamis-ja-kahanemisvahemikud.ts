@@ -22,7 +22,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [teine, `x = ${h}`] },
         lahendus: [
           `f'(x) = 0 \\quad \\Rightarrow \\quad x = ${h}`,
-          `\\text{Kuna } f'(x) \\text{ kordaja } ${2 * a} \\text{ on } ${a > 0 ? "positiivne" : "negatiivne"}\\text{, kasvab funktsioon, kui } ${oige}\\text{.}`,
+          `\\text{Kuna } f'(x) \\text{ kordaja } ${2 * a} \\text{ on } \\text{${a > 0 ? "positiivne" : "negatiivne"}}\\text{, kasvab funktsioon, kui } ${oige}\\text{.}`,
         ],
       };
     },

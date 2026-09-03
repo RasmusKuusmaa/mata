@@ -52,7 +52,7 @@ export const generaatorid: Generaator[] = [
         kysimus: `\\text{Funktsiooni } f(x) = ${a}x^3 - ${3 * a * k * k}x \\text{ teine tuletis on } f''(x)=${6 * a}x\\text{. Ekstreemumikandidaat on } x=${k}\\text{. Kas see on miinimum või maksimum?}`,
         vastus: { tuup: "valik", oige: positiivne ? "miinimum" : "maksimum", eksitajad: [positiivne ? "maksimum" : "miinimum"] },
         lahendus: [
-          `f''(${k}) = ${6 * a} \\cdot ${k} = ${6 * a * k}\\text{, mis on } ${positiivne ? "positiivne" : "negatiivne"}\\text{, seega on } x=${k} \\text{ kohal } \\textbf{${positiivne ? "miinimum" : "maksimum"}}\\text{.}`,
+          `f''(${k}) = ${6 * a} \\cdot ${k} = ${6 * a * k}\\text{, mis on } \\text{${positiivne ? "positiivne" : "negatiivne"}}\\text{, seega on } x=${k} \\text{ kohal } \\textbf{${positiivne ? "miinimum" : "maksimum"}}\\text{.}`,
         ],
       };
     },

@@ -20,7 +20,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [oige === "Jah" ? "Ei" : "Jah"] },
         lahendus: [
           `\\text{Kinnine piirkond } [${a}; ${b}] \\text{ sisaldab mõlemat otspunkti ja kõiki vahepealseid arve.}`,
-          `${a} \\le ${x} \\le ${b} \\text{ on } ${oige === "Jah" ? "tõene" : "väär"}\\text{, seega vastus on } ${oige}\\text{.}`,
+          `${a} \\le ${x} \\le ${b} \\text{ on } \\text{${oige === "Jah" ? "tõene" : "väär"}}\\text{, seega vastus on } \\text{${oige}}\\text{.}`,
         ],
       };
     },
@@ -41,7 +41,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "valik", oige, eksitajad: [oige === "Jah" ? "Ei" : "Jah"] },
         lahendus: [
           `\\text{Lahtine piirkond } (${a}; ${b}) \\text{ ei sisalda otspunkte } ${a} \\text{ ja } ${b}\\text{, ainult nendevahelisi arve.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },
@@ -72,7 +72,7 @@ export const generaatorid: Generaator[] = [
           parempoolneKinnine
             ? `\\text{Piirkond } ${piirkond} \\text{ ei sisalda vasakut otspunkti } ${a}\\text{, aga sisaldab parempoolset otspunkti } ${b}\\text{.}`
             : `\\text{Piirkond } ${piirkond} \\text{ sisaldab vasakut otspunkti } ${a}\\text{, aga ei sisalda parempoolset otspunkti } ${b}\\text{.}`,
-          `\\text{Vastus: } ${oige}`,
+          `\\text{Vastus: } \\text{${oige}}`,
         ],
       };
     },
