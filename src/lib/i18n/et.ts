@@ -202,4 +202,7 @@ export const et = {
   "statistika.masteryJaotusSilt": "Oskustasemete jaotus",
   "statistika.viimased7GraafikSilt": "Küsimusi päevas",
   "statistika.tyhi": "Sul pole veel harjutuste ajalugu — statistika ilmub, kui oled mõnda teemat harjutanud.",
+
+  "konto.eksamiKuupaevSilt": "Eksami kuupäev",
+  "konto.salvesta": "Salvesta",
 } as const;
