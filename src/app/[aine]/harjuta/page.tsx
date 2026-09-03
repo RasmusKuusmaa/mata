@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { kursused } from "@/content/lai-matemaatika/kursused";
 import { teemad } from "@/content/lai-matemaatika/teemad";
 import { t } from "@/lib/i18n";
 import { TestiKoostaja } from "./TestiKoostaja";
+
+export const metadata: Metadata = { title: t("koostaTest.pealkiri") };
 
 export function generateStaticParams() {
   const aines = [...new Set(kursused.map((kursus) => kursus.aine))];

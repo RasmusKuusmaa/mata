@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
@@ -6,6 +7,8 @@ import { EksamSessioon } from "./EksamSessioon";
 /** The timed two-part mock exam (todo.md Ship 5.2) — behind the
  * `eksamirezhiim` flag until the ship gate passes. */
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = { title: t("nav.eksamirezhiim") };
 
 export default function EksamPage() {
   if (!getFlag("eksamirezhiim")) notFound();

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { t } from "@/lib/i18n";
 
 /**
@@ -7,6 +8,8 @@ import { t } from "@/lib/i18n";
  * used here — no per-year deep link is fabricated, since those haven't been
  * individually confirmed to exist.
  */
+export const metadata: Metadata = { title: t("varasemadEksamid.pealkiri") };
+
 export default function VarasemadEksamidPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">

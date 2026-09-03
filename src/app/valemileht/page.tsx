@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { MathBlock } from "@/components/math/MathBlock";
 import { valemileht } from "@/content/lai-matemaatika/valemileht";
 import { t } from "@/lib/i18n";
@@ -5,6 +6,8 @@ import { t } from "@/lib/i18n";
 /** The browsable formula sheet (todo.md Ship 5.1) — always available, not
  * gated behind the `eksamirezhiim` flag, since a learner benefits from it
  * long before mock-exam mode is ready. */
+export const metadata: Metadata = { title: t("valemileht.pealkiri") };
+
 export default function ValemilehtPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
