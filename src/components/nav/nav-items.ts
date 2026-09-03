@@ -19,5 +19,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   { labelKey: "nav.markmed", href: "/markmed" },
   { labelKey: "nav.valemileht", href: "/valemileht" },
+  { labelKey: "nav.saavutused", href: "/saavutused" },
+  { labelKey: "nav.sobrad", href: "/sobrad" },
   { labelKey: "nav.konto", href: "/konto" },
 ];
