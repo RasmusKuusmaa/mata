@@ -179,4 +179,15 @@ export const et = {
   "kordamine.pealkiri": "Tänane kordamine",
   "kordamine.tyhi": "Sul pole veel harjutuste ajalugu, millest kordamist koostada. Alusta mõne teema harjutamisega.",
   "kordamine.vaataTeemasid": "Vaata teemasid",
+
+  "kalender.eksaminiSilt": "Eksamini jäänud",
+  "kalender.paeva": "päeva",
+  "kalender.logiSisseKoht": "Logi sisse, et oma kalendrit näha.",
+  "kalender.kysimusiSilt": "Küsimusi",
+  "kalender.oigeidSilt": "Õigeid",
+  "kalender.teemasidPole": "Sel päeval ei harjutatud ühtegi teemat.",
+  "kalender.peegeldusSilt": "Mõte päeva kohta (valikuline)",
+  "kalender.peegeldusKoht": "Nt: täna läks trigonomeetria juba palju paremini.",
+  "kalender.salvestatud": "Salvestatud",
+  "kalender.salvestamine": "Salvestan…",
 } as const;

@@ -10,7 +10,7 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { labelKey: "nav.teemad", href: "/lai-matemaatika/teemad" },
   { labelKey: "nav.harjuta", href: "/lai-matemaatika/harjuta" },
-  { labelKey: "nav.kalender", href: "/kalender", flag: "kalender" },
+  { labelKey: "nav.kalender", href: "/kalender" },
   { labelKey: "nav.statistika", href: "/statistika", flag: "statistika" },
   {
     labelKey: "nav.eksamirezhiim",

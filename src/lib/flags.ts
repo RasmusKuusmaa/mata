@@ -18,10 +18,9 @@
 
 import { useMemo } from "react";
 
-export type FlagName = "kalender" | "statistika" | "eksamirezhiim";
+export type FlagName = "statistika" | "eksamirezhiim";
 
 const defaults: Record<FlagName, boolean> = {
-  kalender: false,
   statistika: false,
   eksamirezhiim: false,
 };
