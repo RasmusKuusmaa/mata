@@ -16,8 +16,7 @@ describe("HarjutusSessioon", () => {
   it("shows the first question and a 1-based progress indicator", () => {
     const html = renderToStaticMarkup(
       <HarjutusSessioon
-        aine="lai-matemaatika"
-        teemaId="01-arvuhulgad"
+        tagasiHref="/lai-matemaatika/teemad/01-arvuhulgad"
         token="token"
         ulesanded={[ulesanne(), ulesanne()]}
       />,
@@ -28,8 +27,7 @@ describe("HarjutusSessioon", () => {
   it("renders a free-text input for an arv answer", () => {
     const html = renderToStaticMarkup(
       <HarjutusSessioon
-        aine="lai-matemaatika"
-        teemaId="01-arvuhulgad"
+        tagasiHref="/lai-matemaatika/teemad/01-arvuhulgad"
         token="token"
         ulesanded={[ulesanne({ vastuseTuup: { tuup: "arv" } })]}
       />,
@@ -41,8 +39,7 @@ describe("HarjutusSessioon", () => {
   it("renders every option as a choice for a valik answer, in the order given", () => {
     const html = renderToStaticMarkup(
       <HarjutusSessioon
-        aine="lai-matemaatika"
-        teemaId="01-arvuhulgad"
+        tagasiHref="/lai-matemaatika/teemad/01-arvuhulgad"
         token="token"
         ulesanded={[
           ulesanne({
@@ -60,8 +57,7 @@ describe("HarjutusSessioon", () => {
   it("shows a hint toggle only when the question carries a hint", () => {
     const withHint = renderToStaticMarkup(
       <HarjutusSessioon
-        aine="lai-matemaatika"
-        teemaId="01-arvuhulgad"
+        tagasiHref="/lai-matemaatika/teemad/01-arvuhulgad"
         token="token"
         ulesanded={[ulesanne({ vihje: "x + 1" })]}
       />,
@@ -70,8 +66,7 @@ describe("HarjutusSessioon", () => {
 
     const withoutHint = renderToStaticMarkup(
       <HarjutusSessioon
-        aine="lai-matemaatika"
-        teemaId="01-arvuhulgad"
+        tagasiHref="/lai-matemaatika/teemad/01-arvuhulgad"
         token="token"
         ulesanded={[ulesanne()]}
       />,
@@ -82,8 +77,7 @@ describe("HarjutusSessioon", () => {
   it("uses a comma-separated placeholder for a hulk answer", () => {
     const html = renderToStaticMarkup(
       <HarjutusSessioon
-        aine="lai-matemaatika"
-        teemaId="01-arvuhulgad"
+        tagasiHref="/lai-matemaatika/teemad/01-arvuhulgad"
         token="token"
         ulesanded={[ulesanne({ vastuseTuup: { tuup: "hulk" } })]}
       />,

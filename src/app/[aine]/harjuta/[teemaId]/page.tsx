@@ -46,8 +46,7 @@ export default async function HarjutaPage({
         </>
       ) : (
         <HarjutusSessioon
-          aine={teema.aine}
-          teemaId={teema.id}
+          tagasiHref={`/${teema.aine}/teemad/${teema.id}`}
           token={seeria.token}
           ulesanded={seeria.ulesanded}
         />

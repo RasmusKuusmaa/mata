@@ -1,7 +1,12 @@
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { alustaSeeria, kontrolliVastust, toKlientUlesanne } from "./session";
+import {
+  alustaKohandatudSeeria,
+  alustaSeeria,
+  kontrolliVastust,
+  toKlientUlesanne,
+} from "./session";
 import { mulberry32 } from "@/generators/rng";
 import type { Ulesanne } from "@/generators/types";
 
@@ -47,6 +52,42 @@ describe("alustaSeeria", () => {
     await expect(
       alustaSeeria(TEEMA, "kerge", 1, {
         root: path.join(FIXTURES_ROOT, "does-not-exist"),
+      }),
+    ).rejects.toThrow();
+  });
+});
+
+describe("alustaKohandatudSeeria", () => {
+  it("draws from every requested topic/difficulty combination", async () => {
+    const seeria = await alustaKohandatudSeeria(
+      [
+        { teemaId: TEEMA, raskus: "kerge" },
+        { teemaId: TEEMA, raskus: "keskmine" },
+      ],
+      20,
+      { root: FIXTURES_ROOT, rng: mulberry32(1) },
+    );
+    const kysimused = new Set(seeria.ulesanded.map((u) => u.kysimus));
+    expect(kysimused.has("1 + 1 = ?")).toBe(true);
+    expect(kysimused.has("2 + 2 = ?")).toBe(true);
+  });
+
+  it("drops combinations with no registered generator instead of failing the whole series", async () => {
+    const seeria = await alustaKohandatudSeeria(
+      [
+        { teemaId: TEEMA, raskus: "kerge" },
+        { teemaId: "does-not-exist", raskus: "kerge" },
+      ],
+      3,
+      { root: FIXTURES_ROOT, rng: mulberry32(1) },
+    );
+    expect(seeria.ulesanded).toHaveLength(3);
+  });
+
+  it("throws when none of the requested combinations have a generator", async () => {
+    await expect(
+      alustaKohandatudSeeria([{ teemaId: "does-not-exist", raskus: "kerge" }], 1, {
+        root: FIXTURES_ROOT,
       }),
     ).rejects.toThrow();
   });

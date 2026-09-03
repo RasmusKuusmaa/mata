@@ -91,27 +91,35 @@ export function toKlientUlesanne(ulesanne: Ulesanne, rng: Rng): KlientUlesanne {
   return { ...klient, vastuseTuup: toKlientVastuseTuup(vastus, rng) };
 }
 
+/** One topic/difficulty combination a custom test may draw questions from. */
+export type TeemaRaskusValik = { teemaId: TeemaId; raskus: Raskus };
+
 /**
- * Starts a practice series: picks `kogus` questions for `teemaId`/`raskus`
- * from the generator registry, generates each server-side, and returns the
- * client-safe form of every question plus a token that lets a later
- * `kontrolliVastust` call regenerate and grade them.
+ * Starts a practice series drawing from any number of topic/difficulty
+ * combinations, sampled uniformly per question — the engine behind both the
+ * single-topic practice page (`alustaSeeria` below) and the custom test
+ * builder (Ship "koosta test"), which lets a learner mix topics, courses and
+ * difficulties into one session. Combinations with no registered generator
+ * are silently dropped rather than failing the whole series, since a mixed
+ * request naturally spans topics at very different completion levels.
  *
  * `rng` and `root` are injection points for tests — production callers
- * (Ship 1.5's `"use server"` wrapper) leave both at their defaults.
+ * leave both at their defaults.
  */
-export async function alustaSeeria(
-  teemaId: TeemaId,
-  raskus: Raskus,
+export async function alustaKohandatudSeeria(
+  valikud: TeemaRaskusValik[],
   kogus: number,
   options: { rng?: Rng; root?: string } = {},
 ): Promise<Seeria> {
   const rng = options.rng ?? mulberry32(Date.now());
   const registry = await buildRegistry(options.root);
-  const generaatorid = forDifficulty(registry, teemaId, raskus);
-  if (generaatorid.length === 0) {
+
+  const saadaval = valikud.filter(
+    (valik) => forDifficulty(registry, valik.teemaId, valik.raskus).length > 0,
+  );
+  if (saadaval.length === 0) {
     throw new Error(
-      `no generators registered for ${teemaId}:${raskus}`,
+      "no generators registered for any requested topic/difficulty combination",
     );
   }
 
@@ -119,15 +127,36 @@ export async function alustaSeeria(
   const ulesanded: KlientUlesanne[] = [];
 
   for (let i = 0; i < kogus; i++) {
+    const valik = saadaval[Math.floor(rng() * saadaval.length)];
+    const generaatorid = forDifficulty(registry, valik.teemaId, valik.raskus);
     const generaatorIndeks = Math.floor(rng() * generaatorid.length);
     const seed = Math.floor(rng() * 2 ** 31);
     const ulesanne = generaatorid[generaatorIndeks].genereeri(mulberry32(seed));
 
-    kirjed.push({ teemaId, raskus, generaatorIndeks, seed });
+    kirjed.push({
+      teemaId: valik.teemaId,
+      raskus: valik.raskus,
+      generaatorIndeks,
+      seed,
+    });
     ulesanded.push(toKlientUlesanne(ulesanne, rng));
   }
 
   return { token: encodeToken(kirjed), ulesanded };
+}
+
+/**
+ * Starts a single-topic practice series (todo.md Ship 1.5) — a thin
+ * wrapper over `alustaKohandatudSeeria` with exactly one topic/difficulty
+ * combination.
+ */
+export async function alustaSeeria(
+  teemaId: TeemaId,
+  raskus: Raskus,
+  kogus: number,
+  options: { rng?: Rng; root?: string } = {},
+): Promise<Seeria> {
+  return alustaKohandatudSeeria([{ teemaId, raskus }], kogus, options);
 }
 
 /**

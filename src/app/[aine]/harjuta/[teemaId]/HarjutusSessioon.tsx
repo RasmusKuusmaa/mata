@@ -9,8 +9,10 @@ import { kontrolliVastust } from "@/lib/practice/actions";
 import type { KlientUlesanne, KontrolliTulemus } from "@/lib/practice/session";
 
 type Props = {
-  aine: string;
-  teemaId: string;
+  /** Where "back" goes once the series is finished — a single-topic
+   * session links to that topic, a custom test links back to the test
+   * builder. */
+  tagasiHref: string;
   token: string;
   ulesanded: KlientUlesanne[];
 };
@@ -18,9 +20,11 @@ type Props = {
 /**
  * One question at a time, server-graded, keyboard-first: Enter submits the
  * current answer, and — once graded — Enter again advances to the next
- * question (todo.md Ship 1.6).
+ * question (todo.md Ship 1.6). Topic-agnostic: a series may draw every
+ * question from one topic or, for a custom test (Ship "koosta test"), mix
+ * several — the component itself never needs to know which.
  */
-export function HarjutusSessioon({ aine, teemaId, token, ulesanded }: Props) {
+export function HarjutusSessioon({ tagasiHref, token, ulesanded }: Props) {
   const [indeks, setIndeks] = useState(0);
   const [sisend, setSisend] = useState("");
   const [tulemus, setTulemus] = useState<KontrolliTulemus | null>(null);
@@ -76,10 +80,10 @@ export function HarjutusSessioon({ aine, teemaId, token, ulesanded }: Props) {
           {t("harjuta.tulemusSilt")}: {oigeidKokku} / {ulesanded.length}
         </p>
         <Link
-          href={`/${aine}/teemad/${teemaId}`}
+          href={tagasiHref}
           className="mt-6 inline-block text-sm text-accent hover:underline"
         >
-          {t("harjuta.tagasiTeemaJuurde")}
+          {t("harjuta.tagasi")}
         </Link>
       </div>
     );
