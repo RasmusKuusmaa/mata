@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { MathBlock } from "@/components/math/MathBlock";
 import { VastuseSisend } from "@/components/practice/VastuseSisend";
+import { HarjutusSessioon } from "@/app/[aine]/harjuta/[teemaId]/HarjutusSessioon";
+import { kursused } from "@/content/lai-matemaatika/kursused";
+import { teemad } from "@/content/lai-matemaatika/teemad";
 import {
   formatExact,
   formatFraction,
@@ -19,9 +22,23 @@ import {
   type EksamiKusimus,
   type EksamiSeeria,
 } from "@/lib/eksam/constants";
-import { kontrolliVastust } from "@/lib/practice/actions";
-import type { KontrolliTulemus } from "@/lib/practice/session";
+import { koostaTest, kontrolliVastust } from "@/lib/practice/actions";
+import type { KontrolliTulemus, Seeria, TeemaRaskusValik } from "@/lib/practice/session";
 import type { ArvVaartus, Vastus } from "@/generators/types";
+
+const TEEMA_KURSUS: Record<string, string> = Object.fromEntries(
+  teemad.map((teema) => [teema.id, teema.kursusId]),
+);
+const KURSUSE_NIMI: Record<string, string> = Object.fromEntries(
+  kursused.map((kursus) => [kursus.id, kursus.nimi]),
+);
+
+/** Caps how many questions a "harjuta nõrku kohti" set draws — a learner
+ * who missed one question shouldn't be handed a single-question set, and
+ * one who missed everything shouldn't be handed fifty. */
+function norgaSeeriaKogus(teemaArv: number): number {
+  return Math.min(20, Math.max(5, teemaArv * 2));
+}
 
 type Faas = "sissejuhatus" | "osaI" | "vaheaeg" | "osaII" | "labivaatus";
 
@@ -62,6 +79,8 @@ export function EksamSessioon() {
   >({});
   const [alustamisel, alustaTransition] = useTransition();
   const [esitamisel, esitaTransition] = useTransition();
+  const [norkSeeria, setNorkSeeria] = useState<Seeria | null>(null);
+  const [norkKoostamisel, norkKoostamiseTransition] = useTransition();
 
   useEffect(() => {
     if (faas !== "osaI" && faas !== "vaheaeg" && faas !== "osaII") return;
@@ -178,12 +197,74 @@ export function EksamSessioon() {
     );
   }
 
+  if (faas === "labivaatus" && eksam && norkSeeria) {
+    return (
+      <div className="mt-6">
+        <button
+          type="button"
+          onClick={() => setNorkSeeria(null)}
+          className="text-sm text-accent hover:underline"
+        >
+          {t("eksam.tagasiLabivaatusesse")}
+        </button>
+        <HarjutusSessioon
+          tagasiHref="/eksam"
+          token={norkSeeria.token}
+          ulesanded={norkSeeria.ulesanded}
+        />
+      </div>
+    );
+  }
+
   if (faas === "labivaatus" && eksam) {
     const koik = [...eksam.osaI, ...eksam.osaII];
     const punktidKokku = koik.reduce(
       (summa, k) => summa + (tulemused[k.token]?.oige ? k.punktid : 0),
       0,
     );
+
+    const kursusteKaupa = new Map<
+      string,
+      { punktid: number; punktidKokku: number; oigeid: number; kokku: number }
+    >();
+    for (const k of koik) {
+      const kursusId = TEEMA_KURSUS[k.teemaId] ?? "?";
+      const rida = kursusteKaupa.get(kursusId) ?? {
+        punktid: 0,
+        punktidKokku: 0,
+        oigeid: 0,
+        kokku: 0,
+      };
+      rida.punktidKokku += k.punktid;
+      rida.kokku += 1;
+      if (tulemused[k.token]?.oige) {
+        rida.punktid += k.punktid;
+        rida.oigeid += 1;
+      }
+      kursusteKaupa.set(kursusId, rida);
+    }
+
+    const norgadTeemad = [
+      ...new Map(
+        koik
+          .filter((k) => tulemused[k.token] && !tulemused[k.token].oige)
+          .map((k): [string, TeemaRaskusValik] => [
+            k.teemaId,
+            { teemaId: k.teemaId, raskus: k.raskus },
+          ]),
+      ).values(),
+    ];
+
+    function harjutaNorku() {
+      if (norgadTeemad.length === 0) return;
+      norkKoostamiseTransition(async () => {
+        const seeria = await koostaTest(
+          norgadTeemad,
+          norgaSeeriaKogus(norgadTeemad.length),
+        );
+        setNorkSeeria(seeria);
+      });
+    }
 
     return (
       <div className="mt-6">
@@ -193,12 +274,47 @@ export function EksamSessioon() {
         <p className="mt-2 text-2xl font-semibold">
           {punktidKokku} / {EKSAMI_MAKSIMUMPUNKTID}
         </p>
-        <Link
-          href="/lai-matemaatika/harjuta"
-          className="mt-3 inline-block text-sm text-accent hover:underline"
-        >
-          {t("eksam.harjutaNorku")}
-        </Link>
+
+        {norgadTeemad.length > 0 && (
+          <button
+            type="button"
+            onClick={harjutaNorku}
+            disabled={norkKoostamisel}
+            className="mt-3 text-sm text-accent hover:underline disabled:opacity-50"
+          >
+            {norkKoostamisel ? t("eksam.esitamisel") : t("eksam.harjutaNorku")}
+          </button>
+        )}
+
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[24rem] border-collapse text-sm">
+            <caption className="mb-2 text-left text-xs font-semibold text-foreground/70">
+              {t("eksam.kursusteKaupa")}
+            </caption>
+            <thead>
+              <tr className="border-b border-border text-left text-xs text-foreground/60">
+                <th className="py-1 pr-2 font-medium">{t("eksam.kursusSilt")}</th>
+                <th className="py-1 pr-2 font-medium">{t("eksam.punktiSilt")}</th>
+                <th className="py-1 font-medium">{t("harjuta.tulemusSilt")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...kursusteKaupa.entries()].map(([kursusId, rida]) => (
+                <tr key={kursusId} className="border-b border-border/50">
+                  <td className="py-1 pr-2">
+                    {KURSUSE_NIMI[kursusId] ?? kursusId}
+                  </td>
+                  <td className="py-1 pr-2 tabular-nums">
+                    {rida.punktid} / {rida.punktidKokku}
+                  </td>
+                  <td className="py-1 tabular-nums">
+                    {rida.oigeid} / {rida.kokku}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         <div className="mt-8 flex flex-col gap-6">
           {koik.map((k, i) => {

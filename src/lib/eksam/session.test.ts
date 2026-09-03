@@ -63,4 +63,16 @@ describe("alustaEksam", () => {
     );
     expect(tokens.size).toBe(12);
   });
+
+  it("carries the source topic id and difficulty on every question", async () => {
+    const eksam = await alustaEksam({
+      root: FIXTURES_ROOT,
+      teemad: FIXTURE_TEEMAD,
+      rng: mulberry32(1),
+    });
+    for (const kusimus of [...eksam.osaI, ...eksam.osaII]) {
+      expect(kusimus.teemaId).toBe("99-fixture-teema");
+      expect(["kerge", "keskmine", "raske"]).toContain(kusimus.raskus);
+    }
+  });
 });

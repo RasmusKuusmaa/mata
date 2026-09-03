@@ -1,4 +1,4 @@
-import type { Raskus } from "@/content/types";
+import type { Raskus, TeemaId } from "@/content/types";
 import type { KlientUlesanne } from "@/lib/practice/session";
 
 /**
@@ -48,6 +48,11 @@ export const EKSAMI_SLOTID: EksamiSlot[] = [
 export type EksamiKusimus = {
   osa: 1 | 2;
   punktid: number;
+  raskus: Raskus;
+  /** Which topic this question was drawn from — carried through so the
+   * review screen (Ship 5.3) can group results per course and build a
+   * targeted "harjuta nõrku kohti" set from exactly the missed topics. */
+  teemaId: TeemaId;
   /** Grades independently via the existing `kontrolliVastust` — an exam
    * question is not structurally different from a practice one, just
    * scheduled and scored differently by the caller. */

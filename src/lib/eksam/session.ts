@@ -69,6 +69,8 @@ export async function alustaEksam(
     kusimused.push({
       osa: slot.osa,
       punktid: slot.punktid,
+      raskus: slot.raskus,
+      teemaId,
       token: seeria.token,
       ulesanne: seeria.ulesanded[0],
     });
