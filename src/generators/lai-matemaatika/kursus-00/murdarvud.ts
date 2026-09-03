@@ -1,5 +1,10 @@
 import { nonZeroInt, pick } from "@/generators/rng";
-import { arvVaartus, isNice, redrawUntilNice } from "@/generators/nice";
+import {
+  arvVaartus,
+  isNice,
+  reduceFraction,
+  redrawUntilNice,
+} from "@/generators/nice";
 import type { Generaator } from "@/generators/types";
 
 /**
@@ -64,15 +69,32 @@ export const generaatorid: Generaator[] = [
       const tulemusLugeja = opLiitmine
         ? yhisLugeja1 + yhisLugeja2
         : yhisLugeja1 - yhisLugeja2;
+      const [taandatudLugeja, taandatudNimetaja] = reduceFraction(
+        tulemusLugeja,
+        yhisNimetaja,
+      );
+      const onTaandatud =
+        taandatudLugeja === tulemusLugeja && taandatudNimetaja === yhisNimetaja;
+      const liitmiseSamm = `${murd(n1, d1)} ${opSymbol} ${murd(n2, d2)} = ${murd(yhisLugeja1, yhisNimetaja)} ${opSymbol} ${murd(yhisLugeja2, yhisNimetaja)} = ${murd(tulemusLugeja, yhisNimetaja)}`;
 
       return {
         seed: 2,
         kysimus: `\\text{Arvuta: } ${murd(n1, d1)} ${opSymbol} ${murd(n2, d2)}`,
         vastus: { tuup: "arv", ...arvVaartus(tulemusLugeja, yhisNimetaja) },
-        lahendus: [
-          `\\text{Viime murrud ühisele nimetajale } ${yhisNimetaja}\\text{:}`,
-          `${murd(n1, d1)} ${opSymbol} ${murd(n2, d2)} = ${murd(yhisLugeja1, yhisNimetaja)} ${opSymbol} ${murd(yhisLugeja2, yhisNimetaja)} = ${murd(tulemusLugeja, yhisNimetaja)}`,
-        ],
+        lahendus: onTaandatud
+          ? [
+              `\\text{Viime murrud ühisele nimetajale } ${yhisNimetaja}\\text{:}`,
+              liitmiseSamm,
+            ]
+          : [
+              `\\text{Viime murrud ühisele nimetajale } ${yhisNimetaja}\\text{:}`,
+              liitmiseSamm,
+              `\\text{Taandame murru:} \\ ${murd(tulemusLugeja, yhisNimetaja)} = ${
+                taandatudNimetaja === 1
+                  ? `${taandatudLugeja}`
+                  : murd(taandatudLugeja, taandatudNimetaja)
+              }`,
+            ],
       };
     },
   },
@@ -101,19 +123,33 @@ export const generaatorid: Generaator[] = [
       const opSymbol = opKorrutamine ? "\\cdot" : ":";
       const tulemusLugeja = opKorrutamine ? n1 * n2 : n1 * d2;
       const tulemusNimetaja = opKorrutamine ? d1 * d2 : d1 * n2;
+      const [taandatudLugeja, taandatudNimetaja] = reduceFraction(
+        tulemusLugeja,
+        tulemusNimetaja,
+      );
+      const onTaandatud =
+        taandatudLugeja === tulemusLugeja && taandatudNimetaja === tulemusNimetaja;
       const teineTegur = opKorrutamine ? murd(n2, d2) : murd(d2, n2);
       const selgitus = opKorrutamine
         ? "\\text{Murdude korrutamisel korrutatakse lugejad omavahel ja nimetajad omavahel:}"
         : "\\text{Murdude jagamisel korrutatakse esimene murd teise pöördarvuga:}";
+      const korrutamiseSamm = `${murd(n1, d1)} ${opSymbol} ${murd(n2, d2)} = ${murd(n1, d1)} \\cdot ${teineTegur} = ${murd(tulemusLugeja, tulemusNimetaja)}`;
 
       return {
         seed: 3,
         kysimus: `\\text{Arvuta: } ${murd(n1, d1)} ${opSymbol} ${murd(n2, d2)}`,
         vastus: { tuup: "arv", ...arvVaartus(tulemusLugeja, tulemusNimetaja) },
-        lahendus: [
-          selgitus,
-          `${murd(n1, d1)} ${opSymbol} ${murd(n2, d2)} = ${murd(n1, d1)} \\cdot ${teineTegur} = ${murd(tulemusLugeja, tulemusNimetaja)}`,
-        ],
+        lahendus: onTaandatud
+          ? [selgitus, korrutamiseSamm]
+          : [
+              selgitus,
+              korrutamiseSamm,
+              `\\text{Taandame murru:} \\ ${murd(tulemusLugeja, tulemusNimetaja)} = ${
+                taandatudNimetaja === 1
+                  ? `${taandatudLugeja}`
+                  : murd(taandatudLugeja, taandatudNimetaja)
+              }`,
+            ],
       };
     },
   },
