@@ -190,4 +190,16 @@ export const et = {
   "kalender.peegeldusKoht": "Nt: täna läks trigonomeetria juba palju paremini.",
   "kalender.salvestatud": "Salvestatud",
   "kalender.salvestamine": "Salvestan…",
+
+  "statistika.pealkiri": "Statistika",
+  "statistika.logiSisseKoht": "Logi sisse, et oma statistikat näha.",
+  "statistika.kokkuKysimusi": "Küsimusi kokku",
+  "statistika.viimased7": "Viimased 7 päeva",
+  "statistika.oigsusKokku": "Õigsus kokku",
+  "statistika.trendSilt": "eelmise 7 päevaga võrreldes",
+  "statistika.kursusedSilt": "Kursuste kaupa",
+  "statistika.teemadSilt": "Teemad, nõrgimast",
+  "statistika.masteryJaotusSilt": "Oskustasemete jaotus",
+  "statistika.viimased7GraafikSilt": "Küsimusi päevas",
+  "statistika.tyhi": "Sul pole veel harjutuste ajalugu — statistika ilmub, kui oled mõnda teemat harjutanud.",
 } as const;

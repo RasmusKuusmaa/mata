@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 import { getFlag } from "./flags";
 
-const ENV_KEY = "NEXT_PUBLIC_FLAG_STATISTIKA";
+const ENV_KEY = "NEXT_PUBLIC_FLAG_EKSAMIREZHIIM";
 
 describe("getFlag", () => {
   afterEach(() => {
@@ -9,21 +9,21 @@ describe("getFlag", () => {
   });
 
   it("defaults to false when unset", () => {
-    expect(getFlag("statistika")).toBe(false);
+    expect(getFlag("eksamirezhiim")).toBe(false);
   });
 
   it("reads true from the env var", () => {
     process.env[ENV_KEY] = "true";
-    expect(getFlag("statistika")).toBe(true);
+    expect(getFlag("eksamirezhiim")).toBe(true);
   });
 
   it("reads 1 as true", () => {
     process.env[ENV_KEY] = "1";
-    expect(getFlag("statistika")).toBe(true);
+    expect(getFlag("eksamirezhiim")).toBe(true);
   });
 
   it("treats any other value as false", () => {
     process.env[ENV_KEY] = "nope";
-    expect(getFlag("statistika")).toBe(false);
+    expect(getFlag("eksamirezhiim")).toBe(false);
   });
 });
