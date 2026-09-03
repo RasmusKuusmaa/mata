@@ -1,6 +1,7 @@
 import type { SelgitusProps } from "@/components/explanation/Selgitus";
 import type { TeemaId } from "@/content/types";
 import { selgitused as eeldusteSelgitused } from "./eeldused";
+import { selgitused as kursus01Selgitused } from "./kursus-01";
 
 /**
  * Per-topic explanation content, keyed by topic id. Split into one sibling
@@ -9,4 +10,5 @@ import { selgitused as eeldusteSelgitused } from "./eeldused";
  */
 export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {
   ...eeldusteSelgitused,
+  ...kursus01Selgitused,
 };
