@@ -3,6 +3,13 @@ import type { Generaator } from "@/generators/types";
 
 const TEEMA_ID = "11-algfunktsioon";
 
+/** Parenthesizes a negative value substituted as the base of a power —
+ * bare `-2^2` reads as `-(2^2)=-4` under standard precedence, not the
+ * intended `(-2)^2=4`. Positive/zero values need no parentheses. */
+function alus(v: number): string {
+  return v < 0 ? `(${v})` : `${v}`;
+}
+
 export const generaatorid: Generaator[] = [
   {
     aine: "lai-matemaatika",
@@ -21,7 +28,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `F(x) = ${k}x^{${n + 1}} \\text{ (sest } F'(x)=${k}\\cdot${n + 1}x^{${n}}=${fCoeff}x^{${n}}=f(x)\\text{)}`,
-          `F(${x0}) = ${k} \\cdot ${x0}^{${n + 1}} = ${value}`,
+          `F(${x0}) = ${k} \\cdot ${alus(x0)}^{${n + 1}} = ${value}`,
         ],
       };
     },
@@ -42,7 +49,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `F(x) = ${k1}x^2 + ${k2}x \\text{ (sest } F'(x)=${2 * k1}x+${k2}=f(x)\\text{)}`,
-          `F(${x0}) = ${k1}\\cdot${x0}^2 + ${k2}\\cdot${x0} = ${value}`,
+          `F(${x0}) = ${k1}\\cdot${alus(x0)}^2 + ${k2}\\cdot${x0} = ${value}`,
         ],
       };
     },
@@ -64,7 +71,7 @@ export const generaatorid: Generaator[] = [
         vastus: { tuup: "arv", kuju: "taisarv", vaartus: value },
         lahendus: [
           `F(x) = ${k1}x^3 + ${k2}x^2 + ${c} \\text{ (sest } F'(x)=${3 * k1}x^2+${2 * k2}x=f(x) \\text{ ja } F(0)=${c}\\text{)}`,
-          `F(${x0}) = ${k1}\\cdot${x0}^3 + ${k2}\\cdot${x0}^2 + ${c} = ${value}`,
+          `F(${x0}) = ${k1}\\cdot${alus(x0)}^3 + ${k2}\\cdot${alus(x0)}^2 + ${c} = ${value}`,
         ],
       };
     },
