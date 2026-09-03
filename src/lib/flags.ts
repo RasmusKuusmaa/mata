@@ -18,13 +18,12 @@
 
 import { useMemo } from "react";
 
-export type FlagName = "kalender" | "statistika" | "eksamirezhiim" | "markmed";
+export type FlagName = "kalender" | "statistika" | "eksamirezhiim";
 
 const defaults: Record<FlagName, boolean> = {
   kalender: false,
   statistika: false,
   eksamirezhiim: false,
-  markmed: false,
 };
 
 function readEnvFlag(name: FlagName): boolean | undefined {

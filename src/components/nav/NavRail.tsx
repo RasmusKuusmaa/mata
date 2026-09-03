@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { t } from "@/lib/i18n";
 import { visibleNavItems } from "./visible-nav-items";
 
-export function NavRail() {
+export function NavRail({ account }: { account?: ReactNode } = {}) {
   const pathname = usePathname();
   const items = visibleNavItems();
 
@@ -31,6 +32,7 @@ export function NavRail() {
           </Link>
         );
       })}
+      <div className="mt-auto border-t border-border pt-2">{account}</div>
     </nav>
   );
 }

@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { type DefaultSession } from "next-auth";
 import type { Provider } from "next-auth/providers";
 import Google from "next-auth/providers/google";
 import Nodemailer from "next-auth/providers/nodemailer";
@@ -10,6 +10,12 @@ import {
   users,
   verificationTokens,
 } from "@/lib/db/schema";
+
+declare module "next-auth" {
+  interface Session {
+    user: DefaultSession["user"] & { id: string };
+  }
+}
 
 /**
  * Real credentials aren't available in this environment (no Google OAuth
@@ -43,6 +49,16 @@ function configuredProviders(): Provider[] {
   return providers;
 }
 
+/** Which providers are actually configured right now — read once here and
+ * reused by both the NextAuth setup below and the sign-in page, so the two
+ * never drift out of sync on what counts as "configured". */
+export function konfigureeritudPakkujad(): { google: boolean; email: boolean } {
+  return {
+    google: Boolean(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET),
+    email: Boolean(process.env.EMAIL_SERVER && process.env.EMAIL_FROM),
+  };
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {
     usersTable: users,
@@ -54,4 +70,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "database" },
   secret: process.env.AUTH_SECRET,
   trustHost: true,
+  callbacks: {
+    // Database session strategy only exposes name/email/image by default —
+    // every call site that needs to scope a query to "this user" needs the
+    // id too.
+    session({ session, user }) {
+      session.user.id = user.id;
+      return session;
+    },
+  },
 });
