@@ -205,4 +205,8 @@ export const et = {
 
   "konto.eksamiKuupaevSilt": "Eksami kuupäev",
   "konto.salvesta": "Salvesta",
+
+  "kodu.eesmarkSilt": "Tänane eesmärk",
+  "kodu.kordamineCta": "Alusta tänast kordamist",
+  "kodu.norgadTeemadSilt": "Nõrgimad teemad",
 } as const;
