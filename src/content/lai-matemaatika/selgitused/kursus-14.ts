@@ -17,11 +17,14 @@ import type { TeemaId } from "@/content/types";
  * special one — `\\v`, `\\t`, `\\n`, `\\r`, `\\b`, `\\f` — e.g. `\\vec`
  * throws a KaTeX parse error over an invisible vertical-tab character).
  * Confirmed directly against `@mdx-js/mdx`'s `evaluateSync`, not just
- * reasoned about — see this course's own commit and `QUESTIONS.md`'s
- * 2026-09-04 entry for the story. Every other `selgitused/kursus-NN.ts`
- * file already shipped uses the two-backslash (broken) form; this is a
- * live, site-wide rendering defect worth a dedicated fix pass, out of
- * scope for course 14 itself.
+ * reasoned about — see `QUESTIONS.md`'s 2026-09-04 entries for the story,
+ * including a correction: every other `selgitused/kursus-NN.ts` file
+ * already shipped was checked directly (a `grep` for the broken pattern,
+ * validated against a synthetic test case first) and already correctly
+ * uses four backslashes throughout — this was a course-12/14-authoring-time
+ * mistake caught and fixed in these two files, not a pre-existing,
+ * site-wide defect. Kept as a comment here purely as a warning for anyone
+ * writing a *new* `selgitused` file by hand.
  */
 export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {
   "14-matemaatilise-mudeli-moiste": {
