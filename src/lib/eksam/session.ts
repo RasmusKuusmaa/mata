@@ -3,56 +3,17 @@ import type { Raskus, Teema, TeemaId } from "@/content/types";
 import { buildRegistry, forDifficulty } from "@/generators/registry";
 import { mulberry32 } from "@/generators/rng";
 import type { Rng } from "@/generators/types";
-import {
-  alustaKohandatudSeeria,
-  type KlientUlesanne,
-} from "@/lib/practice/session";
+import { alustaKohandatudSeeria } from "@/lib/practice/session";
+import { EKSAMI_SLOTID, type EksamiKusimus, type EksamiSeeria } from "./constants";
 
-/** todo.md Ship 5.2's exam structure, verbatim from `docs/eristuskiri-2027.md`
- * — kept as named constants rather than magic numbers since the UI's timers
- * and the exam-review screen both need to agree with them exactly. */
-export const OSA_I_MINUTID = 120;
-export const VAHEAEG_MINUTID = 45;
-export const OSA_II_MINUTID = 150;
-
-/**
- * One exam slot: which part it belongs to, its point value, and the
- * thinking-level-derived difficulty it should be drawn from (I ~20% → kerge,
- * II ~30% → keskmine, III ~50% → raske, per the eristuskiri's mõtlemistasand
- * distribution). Twelve slots total — 4×5p + 3×10p in Osa I, 5×10p in Osa
- * II — mirrors the real exam's exact structure.
- */
-type EksamiSlot = { osa: 1 | 2; punktid: number; raskus: Raskus };
-
-const EKSAMI_SLOTID: EksamiSlot[] = [
-  { osa: 1, punktid: 5, raskus: "kerge" },
-  { osa: 1, punktid: 5, raskus: "kerge" },
-  { osa: 1, punktid: 5, raskus: "keskmine" },
-  { osa: 1, punktid: 5, raskus: "keskmine" },
-  { osa: 1, punktid: 10, raskus: "keskmine" },
-  { osa: 1, punktid: 10, raskus: "raske" },
-  { osa: 1, punktid: 10, raskus: "raske" },
-  { osa: 2, punktid: 10, raskus: "keskmine" },
-  { osa: 2, punktid: 10, raskus: "raske" },
-  { osa: 2, punktid: 10, raskus: "raske" },
-  { osa: 2, punktid: 10, raskus: "raske" },
-  { osa: 2, punktid: 10, raskus: "raske" },
-];
-
-export type EksamiKusimus = {
-  osa: 1 | 2;
-  punktid: number;
-  /** Grades independently via the existing `kontrolliVastust` — an exam
-   * question is not structurally different from a practice one, just
-   * scheduled and scored differently by the caller. */
-  token: string;
-  ulesanne: KlientUlesanne;
-};
-
-export type EksamiSeeria = {
-  osaI: EksamiKusimus[];
-  osaII: EksamiKusimus[];
-};
+export {
+  OSA_I_MINUTID,
+  VAHEAEG_MINUTID,
+  OSA_II_MINUTID,
+  EKSAMI_MAKSIMUMPUNKTID,
+  type EksamiKusimus,
+  type EksamiSeeria,
+} from "./constants";
 
 /**
  * Builds a full two-part mock exam: for every slot in `EKSAMI_SLOTID`, picks
@@ -118,9 +79,3 @@ export async function alustaEksam(
     osaII: kusimused.filter((k) => k.osa === 2),
   };
 }
-
-/** Maximum possible score — Osa I (4×5 + 3×10 = 50) + Osa II (5×10 = 50). */
-export const EKSAMI_MAKSIMUMPUNKTID = EKSAMI_SLOTID.reduce(
-  (summa, slot) => summa + slot.punktid,
-  0,
-);

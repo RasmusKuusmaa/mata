@@ -18,7 +18,7 @@ import {
   EKSAMI_MAKSIMUMPUNKTID,
   type EksamiKusimus,
   type EksamiSeeria,
-} from "@/lib/eksam/session";
+} from "@/lib/eksam/constants";
 import { kontrolliVastust } from "@/lib/practice/actions";
 import type { KontrolliTulemus } from "@/lib/practice/session";
 import type { ArvVaartus, Vastus } from "@/generators/types";
