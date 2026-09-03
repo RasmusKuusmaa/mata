@@ -131,6 +131,13 @@ export function EksamSessioon() {
         >
           {t("eksam.valemilehtLink")}
         </Link>
+        <Link
+          href="/varasemad-eksamid"
+          target="_blank"
+          className="mt-2 block text-sm text-accent hover:underline"
+        >
+          {t("varasemadEksamid.pealkiri")}
+        </Link>
         <div>
           <button
             type="button"

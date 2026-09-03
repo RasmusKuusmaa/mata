@@ -97,4 +97,10 @@ export const et = {
   "eksam.harjutaNorku": "Harjuta nõrku kohti",
   "eksam.sinuVastus": "Sinu vastus",
   "eksam.oigeVastus": "Õige vastus",
+  "varasemadEksamid.pealkiri": "Varasemad eksamitööd",
+  "varasemadEksamid.selgitus": "Ametlikud varasemate aastate eksamitööd ja hindamisjuhendid avaldab Harno — need lingid viivad otse sinna, mitte platvormi enda koopiatele.",
+  "varasemadEksamid.harnoLink": "harno.ee/riigieksamid",
+  "varasemadEksamid.harnoSelgitus": "Riigieksamite ametlik lehekülg — varasemate aastate eksamitööd ja hindamisjuhendid.",
+  "varasemadEksamid.thoLink": "projektid.edu.ee — 2027. aasta materjalid",
+  "varasemadEksamid.thoSelgitus": "2027. aasta eristuskiri ja muud avaldatud materjalid.",
 } as const;
