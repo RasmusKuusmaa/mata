@@ -8,6 +8,7 @@ import { selgitused as kursus04Selgitused } from "./kursus-04";
 import { selgitused as kursus07Selgitused } from "./kursus-07";
 import { selgitused as kursus08Selgitused } from "./kursus-08";
 import { selgitused as kursus09Selgitused } from "./kursus-09";
+import { selgitused as kursus10Selgitused } from "./kursus-10";
 
 /**
  * Per-topic explanation content, keyed by topic id. Split into one sibling
@@ -23,4 +24,5 @@ export const selgitused: Partial<Record<TeemaId, SelgitusProps>> = {
   ...kursus07Selgitused,
   ...kursus08Selgitused,
   ...kursus09Selgitused,
+  ...kursus10Selgitused,
 };
