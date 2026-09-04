@@ -45,3 +45,9 @@ next-env.d.ts
 
 # generated at build/dev/check time — see scripts/generate-registry-index.ts
 src/generators/generated-index.ts
+
+# playwright (Ship 6.5)
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

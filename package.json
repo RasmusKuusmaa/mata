@@ -19,7 +19,8 @@
     "coverage:content": "npm run generate:registry && tsx scripts/coverage-content.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "test:e2e": "npm run generate:registry && playwright test"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.3",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/katex": "^0.16.8",
     "@types/node": "^20",
