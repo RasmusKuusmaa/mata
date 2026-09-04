@@ -18,14 +18,17 @@
 
 import { useMemo } from "react";
 
-export type FlagName = "eksamirezhiim";
+/** Empty as of Ship 6.7 — every flag that shipped has been flipped on and
+ * deleted per the delete-on-launch rule above. Add a member here the next
+ * time an unfinished feature needs to sit dormant in the bundle. */
+export type FlagName = never;
 
-const defaults: Record<FlagName, boolean> = {
-  eksamirezhiim: false,
-};
+const defaults: Record<FlagName, boolean> = {};
 
 function readEnvFlag(name: FlagName): boolean | undefined {
-  const raw = process.env[`NEXT_PUBLIC_FLAG_${name.toUpperCase()}`];
+  // `name` is `never` while `FlagName` has no members — this body is
+  // unreachable until a flag exists again, but still needs to typecheck.
+  const raw = process.env[`NEXT_PUBLIC_FLAG_${(name as string).toUpperCase()}`];
   if (raw === undefined) return undefined;
   return raw === "true" || raw === "1";
 }

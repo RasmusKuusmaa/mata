@@ -12,11 +12,7 @@ export const NAV_ITEMS: NavItem[] = [
   { labelKey: "nav.harjuta", href: "/lai-matemaatika/harjuta" },
   { labelKey: "nav.kalender", href: "/kalender" },
   { labelKey: "nav.statistika", href: "/statistika" },
-  {
-    labelKey: "nav.eksamirezhiim",
-    href: "/eksam",
-    flag: "eksamirezhiim",
-  },
+  { labelKey: "nav.eksamirezhiim", href: "/eksam" },
   { labelKey: "nav.markmed", href: "/markmed" },
   { labelKey: "nav.valemileht", href: "/valemileht" },
   { labelKey: "nav.saavutused", href: "/saavutused" },
