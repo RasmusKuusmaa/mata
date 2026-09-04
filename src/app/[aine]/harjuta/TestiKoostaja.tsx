@@ -221,7 +221,7 @@ export function TestiKoostaja({ aine, kursused, teemad }: Props) {
         {t("koostaTest.valitudSilt")}: {valitud.size}
       </p>
 
-      {viga !== null && <p className="mt-2 text-sm text-red-600">{viga}</p>}
+      {viga !== null && <p className="mt-2 text-sm text-danger">{viga}</p>}
 
       <button
         type="button"

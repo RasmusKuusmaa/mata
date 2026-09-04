@@ -333,7 +333,7 @@ export function EksamSessioon() {
                   </p>
                   <span
                     className={`text-xs font-medium ${
-                      tulemus?.oige ? "text-accent" : "text-red-600"
+                      tulemus?.oige ? "text-accent" : "text-danger"
                     }`}
                   >
                     {tulemus?.oige ? t("harjuta.oige") : t("harjuta.vale")}

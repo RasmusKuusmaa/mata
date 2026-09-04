@@ -7,6 +7,10 @@
   --border: #e7e5e4;
   --accent: #0f5b52;
   --accent-foreground: #f4faf9;
+  /* WCAG AA (4.5:1) against --background in both themes — verified
+   * numerically, not eyeballed, since the plain Tailwind red-600 this
+   * replaced only hit 3.79:1 in dark mode (todo.md Ship 6.1). */
+  --danger: #b91c1c;
 }
 
 @theme inline {
@@ -16,6 +20,7 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
 }
@@ -28,6 +33,7 @@
     --border: #33312a;
     --accent: #6fbdb0;
     --accent-foreground: #0c1614;
+    --danger: #f87171;
   }
 }
 
