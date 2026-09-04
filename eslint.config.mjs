@@ -60,7 +60,13 @@ const eslintConfig = [
     },
   },
   {
-    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
+    // `.claude/**` covers any nested git worktree Claude Code creates for a
+    // parallel agent (e.g. `.claude/worktrees/<id>/`) — its own `.next/**`
+    // build output isn't excluded by the bare `.next/**` pattern below,
+    // since that only matches at this config's own root, not nested copies
+    // several directories down. Caught when a full `npm run check` reported
+    // thousands of errors from a sibling worktree's generated files.
+    ignores: [".next/**", "out/**", "build/**", "next-env.d.ts", ".claude/**"],
   },
 ];
 
