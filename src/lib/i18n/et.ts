@@ -128,6 +128,7 @@ export const et = {
   "sisene.epostKoht": "sinu@epost.ee",
   "sisene.saadaLink": "Saada sisselogimislink",
   "sisene.puudubPakkuja": "Sisselogimine pole hetkel seadistatud (kohalik arenduskeskkond) — kontosid vajavad funktsioonid ei ole praegu kättesaadavad.",
+  "sisene.testiga": "Logi sisse (test)",
   "sisene.avalehele": "Tagasi avalehele",
   "konto.logiValja": "Logi välja",
   "konto.logiSisse": "Logi sisse",
