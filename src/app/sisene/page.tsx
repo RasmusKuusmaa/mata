@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { konfigureeritudPakkujad } from "@/lib/auth/config";
 import { t } from "@/lib/i18n";
-import { logiSisseGoogleiga, saadaMagicLink } from "./actions";
+import { logiSisseGoogleiga, logiSisseTestiga, saadaMagicLink } from "./actions";
 
 export default function SisenePage() {
   const pakkujad = konfigureeritudPakkujad();
@@ -13,7 +13,7 @@ export default function SisenePage() {
       </h1>
       <p className="mt-2 text-sm text-foreground/70">{t("sisene.selgitus")}</p>
 
-      {!pakkujad.google && !pakkujad.email && (
+      {!pakkujad.google && !pakkujad.email && !pakkujad.test && (
         <p className="mt-6 rounded-md border border-border bg-surface p-3 text-sm text-foreground/70">
           {t("sisene.puudubPakkuja")}
         </p>
@@ -37,6 +37,7 @@ export default function SisenePage() {
               {t("sisene.voiEpostiga")}
             </p>
           )}
+          <input type="hidden" name="redirectTo" value="/" />
           <input
             type="email"
             name="email"
@@ -49,6 +50,31 @@ export default function SisenePage() {
             className="mt-3 w-full rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
           >
             {t("sisene.saadaLink")}
+          </button>
+        </form>
+      )}
+
+      {pakkujad.test && (
+        <form
+          action={logiSisseTestiga}
+          className="mt-6"
+          data-testid="e2e-sisene-vorm"
+        >
+          <input type="hidden" name="redirectTo" value="/" />
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="e2e@test.local"
+            data-testid="e2e-sisene-epost"
+            className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm"
+          />
+          <button
+            type="submit"
+            data-testid="e2e-sisene-nupp"
+            className="mt-3 w-full rounded-md border border-border bg-surface px-4 py-2 text-sm font-medium hover:bg-border/50"
+          >
+            {t("sisene.testiga")}
           </button>
         </form>
       )}
