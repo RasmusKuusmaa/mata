@@ -1,29 +1,57 @@
 import { eq } from "drizzle-orm";
 import Link from "next/link";
-import { getEksamiKuupaev } from "@/app/konto/actions";
 import { rankWeakestTopics } from "@/lib/analytics/weakest";
 import { db } from "@/lib/db/client";
 import { userStats } from "@/lib/db/schema";
 import { getAllTopicStates } from "@/lib/db/topic-state";
 import { getEesmark, getTananeKysimusteArv } from "@/lib/gamification/goal";
-import { paevaEksamini } from "@/lib/gamification/countdown";
 import { t } from "@/lib/i18n";
 
-/** The signed-in home page (todo.md Ship 4.11): countdown, daily goal ring,
- * today's review CTA, weakest topics, current streak. Additive — the
- * signed-out marketing page in `page.tsx` is unchanged for guests. */
-export async function SisseloginudKodu({ userId }: { userId: string }) {
+/**
+ * The site's home page (todo.md Ship 4.11; the guest-only marketing page
+ * this replaced is gone — every visitor lands here now). A guest gets a
+ * minimal welcome and two CTAs; a signed-in user gets their daily goal
+ * ring, streak, and weakest topics. The exam countdown itself lives in the
+ * persistent header widget (`EksamiLoendur`, in every page's layout), not
+ * here, so it isn't duplicated.
+ */
+export async function Kodu({ userId }: { userId: string | null }) {
+  if (!userId) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-12">
+        <h1 className="font-display text-2xl font-semibold">
+          {t("kodu.kylalaneTervitus")}
+        </h1>
+        <p className="mt-3 max-w-xl text-foreground/80">
+          {t("kodu.kylalaneSelgitus")}
+        </p>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            href="/lai-matemaatika/harjuta"
+            className="rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-accent-foreground transition-colors hover:opacity-90"
+          >
+            {t("kodu.alustaHarjutamist")}
+          </Link>
+          <Link
+            href="/lai-matemaatika/teekaart"
+            className="rounded-md border border-border px-5 py-2.5 text-sm font-medium transition-colors hover:bg-surface"
+          >
+            {t("nav.teekaart")}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const today = new Date().toISOString().slice(0, 10);
 
-  const [eksamiKuupaev, eesmark, tananeArv, seisud, statsRows] = await Promise.all([
-    getEksamiKuupaev(userId),
+  const [eesmark, tananeArv, seisud, statsRows] = await Promise.all([
     getEesmark(userId),
     getTananeKysimusteArv(userId, today),
     getAllTopicStates(userId),
     db.select().from(userStats).where(eq(userStats.userId, userId)),
   ]);
 
-  const eksamiPaevi = paevaEksamini(eksamiKuupaev);
   const eesmargiProtsent = Math.min(
     100,
     Math.round((tananeArv / Math.max(1, eesmark.siht)) * 100),
@@ -42,14 +70,7 @@ export async function SisseloginudKodu({ userId }: { userId: string }) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-md border border-border bg-surface p-4">
-          <p className="text-xs text-foreground/60">{t("kalender.eksaminiSilt")}</p>
-          <p className="mt-1 font-display text-2xl font-semibold">
-            {eksamiPaevi} <span className="text-sm font-normal">{t("kalender.paeva")}</span>
-          </p>
-        </div>
-
+      <div className="grid gap-4 sm:grid-cols-2">
         <div className="rounded-md border border-border bg-surface p-4">
           <p className="text-xs text-foreground/60">{t("kodu.eesmarkSilt")}</p>
           <div className="mt-2 flex items-center gap-2">

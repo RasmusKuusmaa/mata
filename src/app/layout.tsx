@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Fraunces, Source_Sans_3 } from "next/font/google";
 import { AccountStatus } from "@/components/nav/AccountStatus";
+import { EksamiLoendur } from "@/components/nav/EksamiLoendur";
 import { GamificationBadge } from "@/components/nav/GamificationBadge";
 import { NavRail } from "@/components/nav/NavRail";
 import { OfflineBanner } from "@/components/nav/OfflineBanner";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }
         />
         <div className="flex flex-1 flex-col">
+          <EksamiLoendur />
           <OfflineBanner />
           <main className="flex-1 pb-16 md:pb-0">{children}</main>
         </div>
