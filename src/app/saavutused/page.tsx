@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { getUnlockedAchievementIds } from "@/lib/db/achievements";
+import { getFlag } from "@/lib/flags";
 import { SAAVUTUSED } from "@/lib/gamification/achievements";
 import { t } from "@/lib/i18n";
 import { getCurrentUserId } from "@/lib/session/user";
@@ -6,6 +8,8 @@ import { getCurrentUserId } from "@/lib/session/user";
 export const dynamic = "force-dynamic";
 
 export default async function SaavutusedPage() {
+  if (!getFlag("kontosusteem")) notFound();
+
   const userId = await getCurrentUserId();
 
   return (

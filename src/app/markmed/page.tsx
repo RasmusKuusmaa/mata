@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import { kursused } from "@/content/lai-matemaatika/kursused";
 import { kokkuTeemad } from "@/app/[aine]/teemad/[teemaId]/lookup";
 import { getAllNotes } from "@/lib/db/notes";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import { getCurrentUserId } from "@/lib/session/user";
 import { MarkmedList, type MarkmeKirje } from "./MarkmedList";
@@ -13,6 +15,8 @@ const KURSUSE_NIMED = new Map<string, string>([
 ]);
 
 export default async function MarkmedPage() {
+  if (!getFlag("kontosusteem")) notFound();
+
   const userId = await getCurrentUserId();
 
   return (

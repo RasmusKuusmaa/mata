@@ -7,6 +7,7 @@ import { GamificationBadge } from "@/components/nav/GamificationBadge";
 import { NavRail } from "@/components/nav/NavRail";
 import { OfflineBanner } from "@/components/nav/OfflineBanner";
 import { TabBar } from "@/components/nav/TabBar";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import "katex/dist/katex.min.css";
 import "./globals.css";
@@ -28,6 +29,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const kontosusteem = getFlag("kontosusteem");
+
   return (
     <html
       lang="et"
@@ -36,10 +39,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="flex min-h-full flex-col font-sans md:flex-row">
         <NavRail
           account={
-            <>
-              <GamificationBadge />
-              <AccountStatus />
-            </>
+            kontosusteem ? (
+              <>
+                <GamificationBadge />
+                <AccountStatus />
+              </>
+            ) : undefined
           }
         />
         <div className="flex flex-1 flex-col">

@@ -48,9 +48,11 @@ export default defineConfig({
     env: {
       E2E_TEST_AUTH: "1",
       AUTH_SECRET: "e2e-test-only-secret-never-used-in-production",
-      // Exam mode ships behind this flag (todo.md Ship 6.7) — the e2e
-      // suite needs it reachable regardless of the flag's default.
-      NEXT_PUBLIC_FLAG_EKSAMIREZHIIM: "true",
+      // The account system ships behind this flag for the initial public
+      // launch (`src/lib/flags.ts`) — the e2e suite covers sign-in,
+      // progress, and social flows, so it needs them reachable regardless
+      // of the flag's default.
+      NEXT_PUBLIC_FLAG_KONTOSUSTEEM: "true",
     },
   },
 });

@@ -1,4 +1,6 @@
+import { notFound } from "next/navigation";
 import { AccountStatus } from "@/components/nav/AccountStatus";
+import { getFlag } from "@/lib/flags";
 import { VAIKIMISI_EKSAMI_KUUPAEV } from "@/lib/gamification/countdown";
 import { t } from "@/lib/i18n";
 import { getCurrentUserId } from "@/lib/session/user";
@@ -7,6 +9,8 @@ import { getEksamiKuupaev, seadistaEksamiKuupaev } from "./actions";
 export const dynamic = "force-dynamic";
 
 export default async function KontoPage() {
+  if (!getFlag("kontosusteem")) notFound();
+
   const userId = await getCurrentUserId();
   const eksamiKuupaev = userId ? await getEksamiKuupaev(userId) : null;
 

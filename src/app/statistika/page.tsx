@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import {
   getKokkuvote,
   getKursusteStatistika,
@@ -8,6 +9,7 @@ import {
 } from "@/lib/analytics/statistics";
 import type { TeemaSeis } from "@/lib/analytics/weakest";
 import { getAllTopicStates } from "@/lib/db/topic-state";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import { getCurrentUserId } from "@/lib/session/user";
 import { Statistika } from "./Statistika";
@@ -16,6 +18,8 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: t("statistika.pealkiri") };
 
 export default async function StatistikaPage() {
+  if (!getFlag("kontosusteem")) notFound();
+
   const userId = await getCurrentUserId();
 
   return (

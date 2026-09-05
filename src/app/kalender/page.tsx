@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { getKuuAndmed } from "@/lib/analytics/calendar";
 import { paevaEksamini } from "@/lib/gamification/countdown";
 import { db } from "@/lib/db/client";
 import { userStats } from "@/lib/db/schema";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import { getCurrentUserId } from "@/lib/session/user";
 import { KalendriRuudustik, type PaevaAndmed } from "./KalendriRuudustik";
@@ -39,6 +41,8 @@ export default async function KalenderPage({
 }: {
   searchParams: Promise<{ aasta?: string; kuu?: string }>;
 }) {
+  if (!getFlag("kontosusteem")) notFound();
+
   const userId = await getCurrentUserId();
   const params = await searchParams;
   const now = new Date();

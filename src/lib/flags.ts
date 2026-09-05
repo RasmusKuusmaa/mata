@@ -18,17 +18,20 @@
 
 import { useMemo } from "react";
 
-/** Empty as of Ship 6.7 — every flag that shipped has been flipped on and
- * deleted per the delete-on-launch rule above. Add a member here the next
- * time an unfinished feature needs to sit dormant in the bundle. */
-export type FlagName = never;
+/** Gates the whole account system — sign-in, progress tracking, streaks,
+ * gamification, calendar, statistics, notes, achievements, friends, and
+ * exam mode — for the initial public launch, which ships content-browsing
+ * only (`/teemad`, `/valemileht`). Off by default; flip it on with
+ * `NEXT_PUBLIC_FLAG_KONTOSUSTEEM=true` once the account system is ready to
+ * open up, then delete this flag per the rule above. */
+export type FlagName = "kontosusteem";
 
-const defaults: Record<FlagName, boolean> = {};
+const defaults: Record<FlagName, boolean> = {
+  kontosusteem: false,
+};
 
 function readEnvFlag(name: FlagName): boolean | undefined {
-  // `name` is `never` while `FlagName` has no members — this body is
-  // unreachable until a flag exists again, but still needs to typecheck.
-  const raw = process.env[`NEXT_PUBLIC_FLAG_${(name as string).toUpperCase()}`];
+  const raw = process.env[`NEXT_PUBLIC_FLAG_${name.toUpperCase()}`];
   if (raw === undefined) return undefined;
   return raw === "true" || raw === "1";
 }

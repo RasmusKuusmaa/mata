@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { selgitused } from "@/content/lai-matemaatika/selgitused";
 import { Selgitus } from "@/components/explanation/Selgitus";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import { findEeldused, findTeema, kokkuTeemad } from "./lookup";
 import { TeemaKontoPaneel } from "./TeemaKontoPaneel";
@@ -64,14 +65,18 @@ export default async function TeemaDetailPage({
         </section>
       )}
 
-      <Link
-        href={`/${teema.aine}/harjuta/${teema.id}`}
-        className="mt-8 inline-block rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
-      >
-        {t("teema.harjuta")}
-      </Link>
+      {getFlag("kontosusteem") && (
+        <>
+          <Link
+            href={`/${teema.aine}/harjuta/${teema.id}`}
+            className="mt-8 inline-block rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
+          >
+            {t("teema.harjuta")}
+          </Link>
 
-      <TeemaKontoPaneel teemaId={teema.id} />
+          <TeemaKontoPaneel teemaId={teema.id} />
+        </>
+      )}
     </div>
   );
 }

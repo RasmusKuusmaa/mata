@@ -1,9 +1,13 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { konfigureeritudPakkujad } from "@/lib/auth/config";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import { logiSisseGoogleiga, logiSisseTestiga, saadaMagicLink } from "./actions";
 
 export default function SisenePage() {
+  if (!getFlag("kontosusteem")) notFound();
+
   const pakkujad = konfigureeritudPakkujad();
 
   return (

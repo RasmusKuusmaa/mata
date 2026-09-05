@@ -1,6 +1,8 @@
+import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/client";
 import { userStats } from "@/lib/db/schema";
+import { getFlag } from "@/lib/flags";
 import { kursuseKatvusProtsent } from "@/lib/gamification/context";
 import { t } from "@/lib/i18n";
 import { getCurrentUserId } from "@/lib/session/user";
@@ -10,6 +12,8 @@ import { eemaldaVoiLoobu, kinnitaKutse, saadaKutseEpostiga } from "./actions";
 export const dynamic = "force-dynamic";
 
 export default async function SobradPage() {
+  if (!getFlag("kontosusteem")) notFound();
+
   const userId = await getCurrentUserId();
 
   return (
