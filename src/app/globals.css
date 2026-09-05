@@ -95,3 +95,20 @@ body {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
+
+/*
+ * A wide display formula must scroll inside its own block, never widen the
+ * page — otherwise a single long equation makes every page on a phone
+ * scroll sideways. `padding-block` keeps the scrollbar off the glyphs.
+ */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.5rem;
+}
+
+/* Long inline math (and any stray wide element) wraps rather than pushing
+ * the layout wider than the viewport. */
+body {
+  overflow-x: hidden;
+}

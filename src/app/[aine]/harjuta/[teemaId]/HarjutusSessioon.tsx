@@ -149,7 +149,7 @@ export function HarjutusSessioon({ tagasiHref, token, ulesanded }: Props) {
           type="button"
           onClick={esita}
           disabled={esitamisel || sisend.trim().length === 0}
-          className="mt-4 rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground disabled:opacity-50"
+          className="mt-4 min-h-12 w-full rounded-md bg-accent px-4 py-3 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90 disabled:opacity-50 sm:w-auto sm:py-2"
         >
           {t("harjuta.kontrolli")}
         </button>
@@ -169,7 +169,7 @@ export function HarjutusSessioon({ tagasiHref, token, ulesanded }: Props) {
           <button
             type="button"
             onClick={jargmine}
-            className="mt-4 rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
+            className="mt-4 min-h-12 w-full rounded-md bg-accent px-4 py-3 text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90 sm:w-auto sm:py-2"
           >
             {t("harjuta.jargmine")}
           </button>

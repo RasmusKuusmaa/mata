@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { kursused } from "@/content/lai-matemaatika/kursused";
 import { teemad } from "@/content/lai-matemaatika/teemad";
+import { getFlag } from "@/lib/flags";
 import { t } from "@/lib/i18n";
 import { TestiKoostaja } from "./TestiKoostaja";
 
@@ -19,6 +20,8 @@ export default async function HarjutaIndexPage({
 }: {
   params: Promise<{ aine: string }>;
 }) {
+  if (!getFlag("kontosusteem")) notFound();
+
   const { aine } = await params;
   const aineKursused = kursused
     .filter((kursus) => kursus.aine === aine)

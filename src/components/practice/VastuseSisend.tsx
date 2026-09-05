@@ -38,12 +38,12 @@ export function VastuseSisend({
               type="button"
               disabled={disabled}
               onClick={() => onChange(valik)}
-              className={`rounded-md border px-3 py-2 text-left text-sm ${
+              className={`flex min-h-12 items-center rounded-md border px-4 py-3 text-left text-base transition-colors sm:text-sm ${
                 onOigeVastus
                   ? "border-accent bg-accent/10"
                   : value === valik
-                    ? "border-foreground/40"
-                    : "border-border bg-surface"
+                    ? "border-foreground/40 bg-surface"
+                    : "border-border bg-surface hover:border-foreground/30"
               }`}
             >
               {valik}
@@ -67,7 +67,8 @@ export function VastuseSisend({
           ? t("harjuta.hulgiKoht")
           : t("harjuta.sisendKoht")
       }
-      className="w-full rounded-md border border-border bg-surface px-3 py-2 text-sm"
+      // `text-base` on mobile: iOS Safari zooms in on focus below 16px.
+      className="w-full rounded-md border border-border bg-surface px-3 py-3 text-base sm:py-2 sm:text-sm"
     />
   );
 }

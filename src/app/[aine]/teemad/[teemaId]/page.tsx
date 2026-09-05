@@ -65,18 +65,14 @@ export default async function TeemaDetailPage({
         </section>
       )}
 
-      {getFlag("kontosusteem") && (
-        <>
-          <Link
-            href={`/${teema.aine}/harjuta/${teema.id}`}
-            className="mt-8 inline-block rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground"
-          >
-            {t("teema.harjuta")}
-          </Link>
+      <Link
+        href={`/${teema.aine}/harjuta/${teema.id}`}
+        className="mt-8 block w-full rounded-md bg-accent px-4 py-3 text-center text-sm font-medium text-accent-foreground transition-opacity hover:opacity-90 sm:inline-block sm:w-auto sm:py-2"
+      >
+        {t("teema.harjuta")}
+      </Link>
 
-          <TeemaKontoPaneel teemaId={teema.id} />
-        </>
-      )}
+      {getFlag("kontosusteem") && <TeemaKontoPaneel teemaId={teema.id} />}
     </div>
   );
 }
